@@ -1,28 +1,151 @@
+'use client';
+
+import { useEffect, useMemo, useRef, useState } from 'react';
+
+type NavItem = { label: string; href: string };
+
 export default function Home() {
+  const navRef = useRef<HTMLElement | null>(null);
+  const linksRef = useRef<HTMLDivElement | null>(null);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [useBurger, setUseBurger] = useState(false);
+
+  const navItems: NavItem[] = useMemo(
+    () => [
+      { label: 'What we do', href: '#what-we-do' },
+      { label: 'Different', href: '#different' },
+      { label: 'Products', href: '#products' },
+      { label: 'QuantCertify', href: '#quantcertify' },
+      { label: 'QuantVault', href: '#quantvault' },
+      { label: 'QuantData', href: '#quantdata' },
+      { label: 'Capabilities', href: '#capabilities' },
+      { label: 'Services', href: '#services' },
+      { label: 'About', href: '#about' },
+      { label: 'Contact', href: '#contact' },
+    ],
+    []
+  );
+
+  // Cierra menú con ESC
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  // Bloquea scroll del body cuando el drawer está abierto
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
+  useEffect(() => {
+    const check = () => {
+      const navEl = navRef.current;
+      const linksEl = linksRef.current;
+      if (!navEl || !linksEl) return;
+
+      // Si los links ocupan más de una línea (wrap), su height aumenta
+      const singleLineHeight = 44; // aproximación segura (con padding)
+      const isWrapped = linksEl.offsetHeight > singleLineHeight;
+
+      // También: si el nav no cabe horizontalmente, activa burger
+      const overflowed = linksEl.scrollWidth > linksEl.clientWidth;
+
+      const shouldBurger = isWrapped || overflowed;
+
+      setUseBurger(shouldBurger);
+      if (!shouldBurger) setMenuOpen(false);
+    };
+
+    check();
+
+    const ro = new ResizeObserver(() => check());
+    if (navRef.current) ro.observe(navRef.current);
+    if (linksRef.current) ro.observe(linksRef.current);
+
+    window.addEventListener('resize', check);
+    return () => {
+      window.removeEventListener('resize', check);
+      ro.disconnect();
+    };
+  }, []);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <>
       {/* STICKY NAV */}
-      <header className="nav">
-        <div className="nav-inner container">
+      <header className="nav" ref={navRef}>
+        <div className="nav-inner nav-container">
           <a className="nav-brand" href="#top" aria-label="Go to top">
             QuantEnt
           </a>
 
-          <nav className="nav-links" aria-label="Primary">
-            <a href="#what-we-do">What we do</a>
-            <a href="#different">Different</a>
-            <a href="#products">Products</a>
-            <a href="#quantcertify">QuantCertify</a>
-            <a href="#quantvault">QuantVault</a>
-            <a href="#quantdata">QuantData</a>
-            <a href="#capabilities">Capabilities</a>
-            <a href="#services">Services</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+          {/* Links desktop (se ocultan cuando useBurger=true) */}
+          <nav
+            className={`nav-links ${useBurger ? 'is-hidden' : ''}`}
+            aria-label="Primary"
+          >
+            <div className="nav-links-row" ref={linksRef}>
+              {navItems.map((item) => (
+                <a key={item.href} href={item.href}>
+                  {item.label}
+                </a>
+              ))}
+            </div>
           </nav>
+
+          {/* Botón hamburguesa: aparece cuando haga falta (wrap/overflow) */}
+          <button
+            className={`nav-burger ${useBurger ? '' : 'is-hidden'}`}
+            type="button"
+            aria-label="Open menu"
+            aria-haspopup="dialog"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(true)}
+          >
+            <span className="burger-lines" aria-hidden="true" />
+          </button>
         </div>
       </header>
 
+      {/* Overlay */}
+      <div
+        className={`drawer-overlay ${menuOpen ? 'is-open' : ''}`}
+        onClick={closeMenu}
+      />
+
+      {/* Drawer right */}
+      <aside className={`drawer ${menuOpen ? 'is-open' : ''}`} role="dialog" aria-label="Navigation menu">
+        <div className="drawer-header">
+          <span className="drawer-title">Menu</span>
+          <button
+            className="drawer-close"
+            type="button"
+            aria-label="Close menu"
+            onClick={closeMenu}
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+
+        <nav className="drawer-nav" aria-label="Mobile navigation">
+          {navItems.map((item) => (
+            <a key={item.href} href={item.href} onClick={closeMenu}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </aside>
+
+      {/* CONTENT */}
       <main id="top" className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
@@ -207,9 +330,7 @@ export default function Home() {
             </div>
             <div className="card">
               <h4 className="card-title">Forces clarity</h4>
-              <p className="card-text">
-                Forces clarity and ownership during certification.
-              </p>
+              <p className="card-text">Forces clarity and ownership during certification.</p>
             </div>
             <div className="card">
               <h4 className="card-title">Prevents rubber-stamping</h4>
@@ -229,9 +350,7 @@ export default function Home() {
           <div className="cards-grid cards-grid--2">
             <div className="card">
               <h4 className="card-title">Quantifies entitlements</h4>
-              <p className="card-text">
-                The only certification system that quantifies entitlements.
-              </p>
+              <p className="card-text">The only certification system that quantifies entitlements.</p>
             </div>
             <div className="card">
               <h4 className="card-title">AI-first architecture</h4>
@@ -257,12 +376,11 @@ export default function Home() {
           <p className="section-note">
             QuantCertify integrates with and enhances your existing IAM solutions.
             It works alongside SailPoint, Okta, Active Directory, and other IAM
-            platforms, adding quantitative insight to existing certification
-            workflows — without disrupting current systems.
+            platforms, adding quantitative insight to existing certification workflows
+            — without disrupting current systems.
           </p>
           <p className="section-note strong">
-            QuantCertify does not replace your IAM stack. It makes it measurably
-            better.
+            QuantCertify does not replace your IAM stack. It makes it measurably better.
           </p>
 
           <h3 className="subhead">Outcomes</h3>
@@ -295,23 +413,18 @@ export default function Home() {
           <p className="section-lead">Enterprise Entitlement Intelligence</p>
 
           <p className="section-note">
-            QuantVault provides a system-level view of entitlements across your
-            organization.
+            QuantVault provides a system-level view of entitlements across your organization.
           </p>
 
           <h3 className="subhead">What It Does</h3>
           <div className="cards-grid cards-grid--2">
             <div className="card">
               <h4 className="card-title">Aggregates entitlements</h4>
-              <p className="card-text">
-                Aggregates entitlements across IAM platforms and systems.
-              </p>
+              <p className="card-text">Aggregates entitlements across IAM platforms and systems.</p>
             </div>
             <div className="card">
               <h4 className="card-title">Unified view</h4>
-              <p className="card-text">
-                Creates a unified view of users, resources, roles, and access.
-              </p>
+              <p className="card-text">Creates a unified view of users, resources, roles, and access.</p>
             </div>
             <div className="card">
               <h4 className="card-title">Cross-system analysis</h4>
@@ -335,16 +448,13 @@ export default function Home() {
             </div>
             <div className="card">
               <h4 className="card-title">System context</h4>
-              <p className="card-text">
-                QuantVault provides the system-wide context.
-              </p>
+              <p className="card-text">QuantVault provides the system-wide context.</p>
             </div>
           </div>
 
           <h3 className="subhead">Integration Philosophy</h3>
           <p className="section-note">
-            QuantVault plugs into and enhances your existing IAM solutions. It does
-            not replace them.
+            QuantVault plugs into and enhances your existing IAM solutions. It does not replace them.
           </p>
         </section>
 
@@ -354,17 +464,14 @@ export default function Home() {
           <p className="section-lead">Semantic Governance for Enterprise Data</p>
 
           <p className="section-note">
-            QuantData governs what enterprise data means and how it evolves safely
-            over time.
+            QuantData governs what enterprise data means and how it evolves safely over time.
           </p>
 
           <h3 className="subhead">What It Does</h3>
           <div className="cards-grid cards-grid--2">
             <div className="card">
               <h4 className="card-title">Canonical models</h4>
-              <p className="card-text">
-                Establishes canonical data models and nomenclature.
-              </p>
+              <p className="card-text">Establishes canonical data models and nomenclature.</p>
             </div>
             <div className="card">
               <h4 className="card-title">Controlled evolution</h4>
@@ -390,21 +497,16 @@ export default function Home() {
           <div className="cards-grid cards-grid--2">
             <div className="card">
               <h4 className="card-title">Access + meaning</h4>
-              <p className="card-text">
-                Entitlement governance fails if data meaning is broken.
-              </p>
+              <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
             </div>
             <div className="card">
               <h4 className="card-title">Meaning + access</h4>
-              <p className="card-text">
-                Data governance fails if access governance is broken.
-              </p>
+              <p className="card-text">Data governance fails if access governance is broken.</p>
             </div>
           </div>
 
           <p className="section-note">
-            QuantData and QuantCertify are designed to work together so data meaning
-            and permissions evolve in lockstep.
+            QuantData and QuantCertify are designed to work together so data meaning and permissions evolve in lockstep.
           </p>
         </section>
 
@@ -416,32 +518,29 @@ export default function Home() {
             <div className="card">
               <h3 className="card-title">Quantitative Governance</h3>
               <p className="card-text">
-                Mathematical modeling of exposure, drift, and structure. Prioritization
-                of ambiguity by business impact. Governance focused on material risk.
+                Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact.
+                Governance focused on material risk.
               </p>
             </div>
 
             <div className="card">
               <h3 className="card-title">Semantic Data Modeling</h3>
               <p className="card-text">
-                Canonical models for complex enterprises. Consistent nomenclature and
-                meaning. Financial-grade rigor.
+                Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.
               </p>
             </div>
 
             <div className="card">
               <h3 className="card-title">Safe Model Evolution</h3>
               <p className="card-text">
-                Controlled, governed change instead of ad-hoc drift. Explicit
-                compatibility and upgrade paths. Early warnings before breakage.
+                Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.
               </p>
             </div>
 
             <div className="card">
               <h3 className="card-title">Financial Services Depth</h3>
               <p className="card-text">
-                Trading systems. Risk and margin. Regulatory reporting. Counterparty
-                exposure. Built by people who’ve operated these systems at scale.
+                Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.
               </p>
             </div>
           </div>
@@ -460,8 +559,7 @@ export default function Home() {
             <div className="card">
               <h3 className="card-title">Tech review & scorecarding</h3>
               <p className="card-text">
-                Full stack technology review and scorecarding of data, AI, and
-                entitlements.
+                Full stack technology review and scorecarding of data, AI, and entitlements.
               </p>
             </div>
             <div className="card">
@@ -478,9 +576,7 @@ export default function Home() {
             </div>
             <div className="card">
               <h3 className="card-title">Architecture & operating model</h3>
-              <p className="card-text">
-                Architecture and operating-model design.
-              </p>
+              <p className="card-text">Architecture and operating-model design.</p>
             </div>
           </div>
 
@@ -503,14 +599,11 @@ export default function Home() {
           <h2 className="section-title">About QuantEnt</h2>
 
           <p className="section-lead">
-            QuantEnt was founded to solve a problem we’ve repeatedly seen inside
-            large, complex organizations: systems scale faster than shared
-            understanding.
+            QuantEnt was founded to solve a problem we’ve repeatedly seen inside large, complex organizations: systems scale faster than shared understanding.
           </p>
 
           <p className="section-note">
-            When meaning decays, governance fails — quietly. We build systems that
-            prevent semantic decay, even as organizations evolve.
+            When meaning decays, governance fails — quietly. We build systems that prevent semantic decay, even as organizations evolve.
           </p>
 
           <h3 className="subhead">Leadership</h3>
@@ -518,16 +611,13 @@ export default function Home() {
             <div className="card">
               <h4 className="card-title">Trent Walker — Founder & CEO</h4>
               <p className="card-text">
-                Former Head of Enterprise Architecture and Risk Technology at Point72;
-                Managing Director at MSCI and Barclays; CTO roles across global
-                financial institutions.
+                Former Head of Enterprise Architecture and Risk Technology at Point72; Managing Director at MSCI and Barclays; CTO roles across global financial institutions.
               </p>
             </div>
             <div className="card">
               <h4 className="card-title">Justo Ruiz — Co-Founder & CTO</h4>
               <p className="card-text">
-                Enterprise architect and technologist with deep experience in data
-                modeling, trading systems, and evolvable platforms.
+                Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
               </p>
             </div>
           </div>
@@ -536,9 +626,7 @@ export default function Home() {
         {/* CONTACT */}
         <section id="contact" className="section">
           <h2 className="section-title">Talk to Us</h2>
-          <p className="section-lead muted">
-            Email addresses and Contact Phone Numbers
-          </p>
+          <p className="section-lead muted">Email addresses and Contact Phone Numbers</p>
 
           <div className="cta-strip">
             <p className="cta-text">Start with QuantCertify</p>
