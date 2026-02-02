@@ -6,9 +6,12 @@ type NavItem = { label: string; href: string };
 
 export default function Home() {
   const navRef = useRef<HTMLElement | null>(null);
-  const linksWrapRef = useRef<HTMLElement | null>(null);
+
+  const navInnerRef = useRef<HTMLDivElement | null>(null);
+  const brandRef = useRef<HTMLAnchorElement | null>(null);
+  const burgerRef = useRef<HTMLButtonElement | null>(null);
+
   const linksRef = useRef<HTMLDivElement | null>(null);
-  
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
@@ -46,35 +49,59 @@ export default function Home() {
     };
   }, [menuOpen]);
 
-  // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
+   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
-const check = () => {
-  const navEl = navRef.current;
-  const linksRowEl = linksRef.current;       // .nav-links-row (fila real)
-  const linksWrapEl = linksWrapRef.current;  // .nav-links (ancho disponible real)
-  if (!navEl || !linksRowEl || !linksWrapEl) return;
+    const check = () => {
+      const navEl = navRef.current;
+      const navInnerEl = navInnerRef.current;
+      const brandEl = brandRef.current;
+      const burgerEl = burgerRef.current;
+      const linksRowEl = linksRef.current;
 
-  const singleLineHeight = 44;
-  const isWrapped = linksRowEl.offsetHeight > singleLineHeight;
+      if (!navEl || !navInnerEl || !brandEl || !burgerEl || !linksRowEl) return;
 
-  // overflow REAL: fila vs contenedor disponible
-  const overflowed = linksRowEl.scrollWidth > linksWrapEl.clientWidth;
+      // Altura de una sola línea (tu mismo valor)
+      const singleLineHeight = 44;
+      const isWrapped = linksRowEl.offsetHeight > singleLineHeight;
 
-  const shouldBurger = isWrapped || overflowed;
+      // gap real del flex (nav-inner)
+      const styles = window.getComputedStyle(navInnerEl);
+      const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
 
-  setUseBurger(shouldBurger);
-  if (!shouldBurger) setMenuOpen(false);
-};
+      // ancho disponible REAL dentro del nav-inner para los links
+      const availableWidth =
+        navInnerEl.clientWidth -
+        brandEl.offsetWidth -
+        burgerEl.offsetWidth -
+        gap * 2;
 
-    check();
+      const neededWidth = linksRowEl.scrollWidth;
+
+      // tolerancia para evitar “parpadeos”
+      const overflowed = neededWidth > availableWidth + 4;
+
+      const shouldBurger = isWrapped || overflowed;
+
+      setUseBurger(shouldBurger);
+      if (!shouldBurger) setMenuOpen(false);
+    };
+
+    const raf = requestAnimationFrame(check);
+
+    // Re-medir cuando cargan las fuentes (evita falsos cálculos)
+    // @ts-ignore
+    document.fonts?.ready?.then(() => check());
 
     const ro = new ResizeObserver(() => check());
-    if (navRef.current) ro.observe(navRef.current);
-    if (linksWrapRef.current) ro.observe(linksWrapRef.current); 
-    if (linksRef.current) ro.observe(linksRef.current);
+    ro.observe(navRef.current);
+    ro.observe(navInnerRef.current!);
+    ro.observe(brandRef.current!);
+    ro.observe(burgerRef.current!);
+    ro.observe(linksRef.current!);
 
     window.addEventListener('resize', check);
     return () => {
+      cancelAnimationFrame(raf);
       window.removeEventListener('resize', check);
       ro.disconnect();
     };
@@ -86,17 +113,16 @@ const check = () => {
     <>
       {/* STICKY NAV */}
       <header className="nav" ref={navRef}>
-        <div className="nav-inner nav-container">
-          <a className="nav-brand" href="#top" aria-label="Go to top">
+        <div className="nav-inner nav-container" ref={navInnerRef}>
+         <a className="nav-brand" href="#top" aria-label="Go to top" ref={brandRef}>
             QuantEnt
           </a>
 
           {/* Links desktop (se ocultan cuando useBurger=true) */}
-          <nav
-            ref={linksWrapRef}
-            className={`nav-links ${useBurger ? 'is-hidden' : ''}`}
-            aria-label="Primary"
-          >
+       <nav
+  className={`nav-links ${useBurger ? 'is-hidden' : ''}`}
+  aria-label="Primary"
+>
             <div className="nav-links-row" ref={linksRef}>
               {navItems.map((item) => (
                 <a key={item.href} href={item.href}>
@@ -108,7 +134,8 @@ const check = () => {
 
           {/* Botón hamburguesa: aparece cuando haga falta (wrap/overflow) */}
           <button
-            className={`nav-burger ${useBurger ? '' : 'is-hidden'}`}
+  ref={burgerRef}
+  className={`nav-burger ${useBurger ? '' : 'is-hidden'}`}
             type="button"
             aria-label="Open menu"
             aria-haspopup="dialog"
