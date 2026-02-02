@@ -536,9 +536,6 @@ section[id] {
   .cards-grid--3 {
     grid-template-columns: 1fr;
   }
-    /* prueba
-  .nav-links {
-    display: none; /* simple y limpio por ahora; luego hacemos menú */
-  }
+  
+
 }
-*/
