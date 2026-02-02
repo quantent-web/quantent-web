@@ -1,41 +1,64 @@
 /* =========================
-   Cards (What We Do)
+   Components (mínimos)
+   (solo para la landing)
 ========================= */
 
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-4);
-  margin-top: var(--space-6);
+.section-title {
+  font-size: clamp(20px, 2.2vw, 28px);
+  margin-bottom: var(--space-3);
 }
 
-.card {
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: var(--radius);
-  padding: var(--space-5);
-  background: #fff;
-}
-
-.card-title {
+.section-lead {
+  max-width: 70ch;
   font-size: 16px;
+  margin-top: var(--space-2);
+}
+
+.bullets {
+  margin: var(--space-5) 0 0 0;
+  padding-left: 1.1rem;
+  max-width: 80ch;
+  color: var(--color-text);
+}
+
+.bullets li {
   margin-bottom: var(--space-2);
 }
 
-.card-text {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--color-muted);
+.hero-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  flex-wrap: wrap;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-weight: 400;
+  line-height: 1;
+  border: 1px solid transparent;
 }
 
-@media (max-width: 640px) {
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
+.btn-primary {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
 }
