@@ -135,7 +135,7 @@ export default function Home() {
           {/* Botón hamburguesa: aparece cuando haga falta (wrap/overflow) */}
           <button
   ref={burgerRef}
-  className={`nav-burger ${useBurger ? '' : 'is-hidden'}`}
+  className={`nav-burger ${useBurger ? '' : 'is-invisible'}`}
             type="button"
             aria-label="Open menu"
             aria-haspopup="dialog"
