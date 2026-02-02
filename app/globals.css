@@ -548,3 +548,8 @@ section[id] {
   white-space: nowrap;
   flex: 0 0 auto;
 }
+
+.is-invisible {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
