@@ -537,9 +537,7 @@ section[id] {
     grid-template-columns: 1fr;
   }
   
-  .nav-links {
-    display: none; /* simple y limpio por ahora; luego hacemos menú */
-  }
+
 }
 
 .nav-links-row {
