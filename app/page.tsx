@@ -30,12 +30,35 @@ export default function Home() {
           means — using quantitative models instead of static rules.
         </p>
 
-        <ul className="bullets">
-          <li>Analyze users, roles, entitlements, and data as interconnected systems</li>
-          <li>Certify access and meaning with mathematical rigor</li>
-          <li>Detect drift, over-exposure, and structural risk early</li>
-          <li>Maintain control as systems, data, and organizations evolve</li>
-        </ul>
+        <div className="cards-grid">
+  <div className="card">
+    <h3 className="card-title">System Analysis</h3>
+    <p className="card-text">
+      Analyze users, roles, entitlements, and data as interconnected systems.
+    </p>
+  </div>
+
+  <div className="card">
+    <h3 className="card-title">Quantitative Certification</h3>
+    <p className="card-text">
+      Certify access and meaning with mathematical rigor.
+    </p>
+  </div>
+
+  <div className="card">
+    <h3 className="card-title">Risk Detection</h3>
+    <p className="card-text">
+      Detect drift, over-exposure, and structural risk early.
+    </p>
+  </div>
+
+  <div className="card">
+    <h3 className="card-title">Continuous Control</h3>
+    <p className="card-text">
+      Maintain control as systems, data, and organizations evolve.
+    </p>
+  </div>
+</div>
       </section>
 
       {/* CONTACT (placeholder) */}
