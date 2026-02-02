@@ -221,6 +221,12 @@ p {
 ========================= */
 :root {
   --nav-h: 64px;
+
+  /* NAV más ancho que el contenido, para que no salte de línea tan pronto */
+  --nav-container: 1440px;
+
+  /* Drawer */
+  --drawer-w: 360px;
 }
 
 html {
@@ -242,6 +248,15 @@ section[id] {
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
+/* Contenedor SOLO para NAV (más ancho que .container) */
+.nav-container {
+  width: 100%;
+  max-width: var(--nav-container);
+  margin: 0 auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
 .nav-inner {
   height: var(--nav-h);
   display: flex;
@@ -254,13 +269,21 @@ section[id] {
   font-family: var(--font-space-mono), ui-monospace, monospace;
   font-weight: 700;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
+/* Links: una sola línea, si no cabe -> hamburguesa */
 .nav-links {
+  flex: 1;
   display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-links-row {
+  display: flex;
+  gap: var(--space-2);
   align-items: center;
+  white-space: nowrap; /* clave: evita dos líneas */
 }
 
 .nav-links a {
@@ -273,6 +296,163 @@ section[id] {
 .nav-links a:hover {
   color: var(--color-text);
   background: rgba(0, 0, 0, 0.04);
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+/* =========================
+   Hamburger button
+========================= */
+.nav-burger {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-burger:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.burger-lines {
+  width: 18px;
+  height: 12px;
+  position: relative;
+  display: inline-block;
+}
+
+.burger-lines::before,
+.burger-lines::after,
+.burger-lines {
+  content: '';
+  background: rgba(0, 0, 0, 0.7);
+  height: 2px;
+  border-radius: 2px;
+  display: block;
+}
+
+.burger-lines::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+}
+
+.burger-lines {
+  position: relative;
+  top: 5px;
+  width: 18px;
+}
+
+.burger-lines::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 18px;
+}
+
+/* =========================
+   Drawer (panel derecho)
+========================= */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  z-index: 60;
+}
+
+.drawer-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(var(--drawer-w), 92vw);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  transform: translateX(100%);
+  transition: transform 220ms ease;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer.is-open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-5);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.drawer-title {
+  font-family: var(--font-space-mono), ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.drawer-close {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-close:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.drawer-nav {
+  padding: var(--space-3) var(--space-5);
+  overflow: auto;
+}
+
+.drawer-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  color: var(--color-text);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* divisor fino */
+}
+
+.drawer-nav a:hover {
+  color: var(--color-text);
+}
+
+/* Seguridad: si la pantalla es pequeña, el nav ancho no debe causar problemas */
+@media (max-width: 640px) {
+  :root {
+    --nav-h: 56px;
+  }
+
+  .nav-container {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
 }
 
 /* =========================
