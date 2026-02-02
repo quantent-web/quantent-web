@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Space_Mono, Poppins } from 'next/font/google';
+import { Spline_Sans_Mono, Poppins } from 'next/font/google';
 import './globals.css';
 
-const spaceMono = Space_Mono({
+const splineSansMono = Spline_Sans_Mono({
   subsets: ['latin'],
-  weight: ['700'],
-  variable: '--font-space-mono',
+  weight: ['500', '600', '700'],
+  variable: '--font-space-mono', // mantenemos el nombre para no tocar globals.css
 });
 
 const poppins = Poppins({
@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${spaceMono.variable} ${poppins.variable}`}>
+      <body className={`${splineSansMono.variable} ${poppins.variable}`}>
         {children}
       </body>
     </html>
