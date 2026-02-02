@@ -6,7 +6,9 @@ type NavItem = { label: string; href: string };
 
 export default function Home() {
   const navRef = useRef<HTMLElement | null>(null);
+  const linksWrapRef = useRef<HTMLElement | null>(null);
   const linksRef = useRef<HTMLDivElement | null>(null);
+  
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
@@ -46,28 +48,29 @@ export default function Home() {
 
   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
-    const check = () => {
-      const navEl = navRef.current;
-      const linksEl = linksRef.current;
-      if (!navEl || !linksEl) return;
+const check = () => {
+  const navEl = navRef.current;
+  const linksRowEl = linksRef.current;       // .nav-links-row (fila real)
+  const linksWrapEl = linksWrapRef.current;  // .nav-links (ancho disponible real)
+  if (!navEl || !linksRowEl || !linksWrapEl) return;
 
-      // Si los links ocupan más de una línea (wrap), su height aumenta
-      const singleLineHeight = 44; // aproximación segura (con padding)
-      const isWrapped = linksEl.offsetHeight > singleLineHeight;
+  const singleLineHeight = 44;
+  const isWrapped = linksRowEl.offsetHeight > singleLineHeight;
 
-      // También: si el nav no cabe horizontalmente, activa burger
-      const overflowed = linksEl.scrollWidth > linksEl.clientWidth;
+  // overflow REAL: fila vs contenedor disponible
+  const overflowed = linksRowEl.scrollWidth > linksWrapEl.clientWidth;
 
-      const shouldBurger = isWrapped || overflowed;
+  const shouldBurger = isWrapped || overflowed;
 
-      setUseBurger(shouldBurger);
-      if (!shouldBurger) setMenuOpen(false);
-    };
+  setUseBurger(shouldBurger);
+  if (!shouldBurger) setMenuOpen(false);
+};
 
     check();
 
     const ro = new ResizeObserver(() => check());
     if (navRef.current) ro.observe(navRef.current);
+    if (linksWrapRef.current) ro.observe(linksWrapRef.current); 
     if (linksRef.current) ro.observe(linksRef.current);
 
     window.addEventListener('resize', check);
@@ -90,6 +93,7 @@ export default function Home() {
 
           {/* Links desktop (se ocultan cuando useBurger=true) */}
           <nav
+            ref={linksWrapRef}
             className={`nav-links ${useBurger ? 'is-hidden' : ''}`}
             aria-label="Primary"
           >
