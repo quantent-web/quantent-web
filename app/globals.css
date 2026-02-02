@@ -541,3 +541,12 @@ section[id] {
     display: none; /* simple y limpio por ahora; luego hacemos menú */
   }
 }
+
+.nav-links-row {
+  width: max-content;
+}
+
+.nav-links a {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
