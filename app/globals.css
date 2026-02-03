@@ -553,3 +553,11 @@ section[id] {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+.burger-lines::before {
+  top: -6px;
+}
+
+.burger-lines::after {
+  top: 6px;
+}
