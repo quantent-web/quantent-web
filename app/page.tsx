@@ -104,7 +104,6 @@ observeIf(navRef.current);
 observeIf(navInnerRef.current);
 observeIf(brandRef.current);
 observeIf(burgerRef.current);
-observeIf(linksRef.current);
 
     window.addEventListener('resize', check);
     return () => {
