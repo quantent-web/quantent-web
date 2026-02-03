@@ -95,11 +95,16 @@ export default function Home() {
     document.fonts?.ready?.then(() => check());
 
     const ro = new ResizeObserver(() => check());
-    ro.observe(navRef.current);
-    ro.observe(navInnerRef.current!);
-    ro.observe(brandRef.current!);
-    ro.observe(burgerRef.current!);
-    ro.observe(linksRef.current!);
+
+const observeIf = (el: Element | null) => {
+  if (el) ro.observe(el);
+};
+
+observeIf(navRef.current);
+observeIf(navInnerRef.current);
+observeIf(brandRef.current);
+observeIf(burgerRef.current);
+observeIf(linksRef.current);
 
     window.addEventListener('resize', check);
     return () => {
