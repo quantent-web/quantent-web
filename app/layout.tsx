@@ -19,11 +19,7 @@ export const metadata: Metadata = {
   description:
     'Quantitative models and mathematics for entitlement and data governance.',
 };
-export const metadata = {
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
+
 
 export default function RootLayout({
   children,
