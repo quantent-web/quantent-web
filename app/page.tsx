@@ -94,17 +94,15 @@ export default function Home() {
     // @ts-ignore
     document.fonts?.ready?.then(() => check());
 
-    const ro = new ResizeObserver(() => check());
 
-const observeIf = (el: Element | null) => {
-  if (el) ro.observe(el);
-};
+const ro = new ResizeObserver(() => check());
 
-observeIf(navRef.current);
-observeIf(navInnerRef.current);
-observeIf(brandRef.current);
-observeIf(burgerRef.current);
+if (navRef.current) ro.observe(navRef.current);
+if (navInnerRef.current) ro.observe(navInnerRef.current);
+if (brandRef.current) ro.observe(brandRef.current);
+if (burgerRef.current) ro.observe(burgerRef.current);
 
+    
     window.addEventListener('resize', check);
     return () => {
       cancelAnimationFrame(raf);
