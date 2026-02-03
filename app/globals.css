@@ -554,6 +554,11 @@ section[id] {
   pointer-events: none !important;
 }
 
+.burger-lines {
+    width: 18px;
+    position: relative;
+    top: 0px;
+}
 .burger-lines::before {
   top: -6px;
 }
