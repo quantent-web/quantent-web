@@ -49,7 +49,7 @@ export default function Home() {
     };
   }, [menuOpen]);
 
-   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
+  // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
     const check = () => {
       const navEl = navRef.current;
@@ -59,6 +59,8 @@ export default function Home() {
       const linksRowEl = linksRef.current;
 
       if (!navEl || !navInnerEl || !brandEl || !burgerEl || !linksRowEl) return;
+
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
       // Altura de una sola línea (tu mismo valor)
       const singleLineHeight = 44;
@@ -80,7 +82,7 @@ export default function Home() {
       // tolerancia para evitar “parpadeos”
       const overflowed = neededWidth > availableWidth + 4;
 
-      const shouldBurger = isWrapped || overflowed;
+      const shouldBurger = isMobile || isWrapped || overflowed;
 
       setUseBurger(shouldBurger);
       if (!shouldBurger) setMenuOpen(false);
@@ -140,7 +142,7 @@ export default function Home() {
             aria-label="Open menu"
             aria-haspopup="dialog"
             aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(true)}
+            onClick={() => setMenuOpen((open) => !open)}
           >
             <span className="burger-lines" aria-hidden="true" />
           </button>
