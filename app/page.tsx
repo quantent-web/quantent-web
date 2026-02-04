@@ -151,13 +151,14 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 
     {/* Toggle tema */}
     <button
-      type="button"
-      className="theme-toggle"
-      onClick={toggleTheme}
-      aria-label="Toggle theme"
-    >
-      Theme
-    </button>
+  type="button"
+  className="theme-toggle"
+  onClick={toggleTheme}
+  aria-label="Toggle theme"
+>
+  <span className="theme-icon theme-icon-light" aria-hidden="true">☀️</span>
+  <span className="theme-icon theme-icon-dark" aria-hidden="true">🌙</span>
+</button>
 
     {/* Botón hamburguesa */}
     <button
