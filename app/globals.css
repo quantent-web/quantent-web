@@ -740,7 +740,7 @@ html[data-theme="dark"] .theme-icon-dark {
 .header-bg__grid {
   position: absolute;
   inset: 0;
-  height: 90vh;
+  height: 100vh;
    z-index:-2;
 }
 
