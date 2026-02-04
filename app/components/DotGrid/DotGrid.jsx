@@ -14,11 +14,13 @@ export default function DotGrid({
   gap = 15,
   baseColor = '#271E37',
   activeColor = '#5227FF',
+  proximity = 120,
   className = '',
   style,
 }) {
   const wrapRef = useRef(null);
   const canvasRef = useRef(null);
+  const pointerRef = useRef({ x: -99999, y: -99999 });
 
   const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
   const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
@@ -31,7 +33,9 @@ export default function DotGrid({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const draw = () => {
+    let rafId = 0;
+
+    const resize = () => {
       const { width, height } = wrap.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
 
@@ -41,6 +45,10 @@ export default function DotGrid({
       canvas.style.height = `${height}px`;
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const draw = () => {
+      const { width, height } = wrap.getBoundingClientRect();
       ctx.clearRect(0, 0, width, height);
 
       const step = dotSize + gap;
@@ -53,32 +61,69 @@ export default function DotGrid({
       const startX = (width - gridW) / 2 + dotSize / 2;
       const startY = (height - gridH) / 2 + dotSize / 2;
 
-      // (por ahora) degradado estático suave entre baseColor y activeColor
-      // solo para comprobar que todo dibuja OK
+      const px = pointerRef.current.x;
+      const py = pointerRef.current.y;
+      const proxSq = proximity * proximity;
+
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
-          const t = (x + y) / Math.max(1, cols + rows - 2);
-          const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
-          const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
-          const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
-
-          ctx.fillStyle = `rgb(${r},${g},${b})`;
           const cx = startX + x * step;
           const cy = startY + y * step;
+
+          const dx = cx - px;
+          const dy = cy - py;
+          const dsq = dx * dx + dy * dy;
+
+          let fill = baseColor;
+
+          if (dsq <= proxSq) {
+            const dist = Math.sqrt(dsq);
+            const t = 1 - dist / proximity;
+            const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
+            const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
+            const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
+            fill = `rgb(${r},${g},${b})`;
+          }
+
+          ctx.fillStyle = fill;
           ctx.beginPath();
           ctx.arc(cx, cy, dotSize / 2, 0, Math.PI * 2);
           ctx.fill();
         }
       }
+
+      rafId = requestAnimationFrame(draw);
     };
 
+    const onMove = (e) => {
+      const rect = wrap.getBoundingClientRect();
+      pointerRef.current.x = e.clientX - rect.left;
+      pointerRef.current.y = e.clientY - rect.top;
+    };
+
+    const onLeave = () => {
+      pointerRef.current.x = -99999;
+      pointerRef.current.y = -99999;
+    };
+
+    resize();
     draw();
 
-    const ro = new ResizeObserver(draw);
+    const ro = new ResizeObserver(() => resize());
     ro.observe(wrap);
 
-    return () => ro.disconnect();
-  }, [dotSize, gap, baseRgb, activeRgb]);
+    // OJO: el wrapper está pointer-events:none por CSS para no molestar al nav,
+    // así que escuchamos el movimiento en window.
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseleave', onLeave);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseleave', onLeave);
+      cancelAnimationFrame(rafId);
+    };
+  }, [dotSize, gap, baseColor, activeColor, proximity, baseRgb, activeRgb]);
 
   return (
     <div ref={wrapRef} className={`dotgrid-wrap ${className}`} style={style}>
