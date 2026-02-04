@@ -111,8 +111,10 @@ export default function DotGrid({
 
             if (dist < shockRadius) {
               const k = 1 - dist / shockRadius; // 1 center -> 0 edge
-              const decay = 1 - elapsed / shockDuration; // 1 -> 0
-              const push = shockStrength * k * decay;
+             const t = elapsed / shockDuration; // 0..1
+// easing con overshoot tipo "punch": sube rápido, pasa un poco, y vuelve
+const punch = Math.sin(t * Math.PI) * (1 - t); // 0..~0.7..0
+const push = shockStrength * k * punch;
 
               ox = (sx / (dist || 1)) * push;
               oy = (sy / (dist || 1)) * push;
