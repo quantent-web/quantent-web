@@ -25,13 +25,68 @@ a {
   text-decoration: none;
 }
 
+
 /* =========================
-   Tokens base (CSS variables)
-========================= */
+   QuantEnt — Design Tokens
+   ========================= */
+
+/* Light theme (por defecto) */
 :root {
-  --color-bg: #ffffff;
-  --color-text: #111111;
-  --color-muted: #5e5e5e;
+  /* Brand */
+  --primary: #05cd98;        /* CTAs, links activos */
+  --primary-contrast: #ffffff;
+
+  /* Backgrounds */
+  --bg: #f5f5f5;             /* background.default */
+  --surface: #ffffff;        /* paper / cards */
+
+  /* Text */
+  --text-primary: #242424;
+  --text-secondary: #a2a2a2;
+  --text-disabled: #757575;
+
+  /* UI */
+  --border: #393939;
+  --divider: #393939;
+
+  /* States */
+  --error: #ec2149;
+  --warning: #ffd700;
+  --success: #05cd34;
+  --info: #059ecd;
+}
+
+/* Dark theme */
+html[data-theme="dark"] {
+  /* Brand (NO cambia) */
+  --primary: #05cd98;
+  --primary-contrast: #ffffff;
+
+  /* Backgrounds */
+  --bg: #242424;
+  --surface: #2d2d2d;
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #757575;
+  --text-disabled: #a0a0a0;
+
+  /* UI */
+  --border: #ffffff;
+  --divider: #ffffff;
+
+  /* States */
+  --error: #ec2149;
+  --warning: #ffd700;
+  --success: #05cd34;
+  --info: #059ecd;
+}
+
+/* Aplicación global mínima */
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
 
   /* Ancho de lectura cómodo */
   --container: 1120px;
