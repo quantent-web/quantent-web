@@ -272,6 +272,16 @@ section[id] {
   white-space: nowrap;
 }
 
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-brand img {
+  height: 24px;
+  width: auto;
+}
+
 /* Links: una sola línea, si no cabe -> hamburguesa */
 .nav-links {
   flex: 1;
