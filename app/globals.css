@@ -46,8 +46,8 @@ a {
   --text-disabled: #757575;
 
   /* UI */
-  --border: #1b2b28;;
-  --divider: #1b2b28;;
+  --border: #a2a2a2;
+  --divider: #a2a2a2;
 
   /* States */
   --error: #ec2149;
