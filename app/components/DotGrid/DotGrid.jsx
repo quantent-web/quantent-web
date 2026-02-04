@@ -15,12 +15,20 @@ export default function DotGrid({
   baseColor = '#182323',
   activeColor = '#05CD98',
   proximity = 120,
+
+  // shock config (click)
+  shockRadius = 220,
+  shockStrength = 18,
+  shockDuration = 450, // ms
+
   className = '',
   style,
 }) {
   const wrapRef = useRef(null);
   const canvasRef = useRef(null);
+
   const pointerRef = useRef({ x: -99999, y: -99999 });
+  const shockRef = useRef({ x: 0, y: 0, t0: -1 });
 
   const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
   const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
@@ -65,11 +73,18 @@ export default function DotGrid({
       const py = pointerRef.current.y;
       const proxSq = proximity * proximity;
 
+      // shock state
+      const s = shockRef.current;
+      const now = performance.now();
+      const elapsed = s.t0 < 0 ? Infinity : now - s.t0;
+      const shockActive = elapsed >= 0 && elapsed <= shockDuration;
+
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
           const cx = startX + x * step;
           const cy = startY + y * step;
 
+          // proximity color
           const dx = cx - px;
           const dy = cy - py;
           const dsq = dx * dx + dy * dy;
@@ -85,9 +100,28 @@ export default function DotGrid({
             fill = `rgb(${r},${g},${b})`;
           }
 
+          // click shock offset (displace dots)
+          let ox = 0;
+          let oy = 0;
+
+          if (shockActive) {
+            const sx = cx - s.x;
+            const sy = cy - s.y;
+            const dist = Math.hypot(sx, sy);
+
+            if (dist < shockRadius) {
+              const k = 1 - dist / shockRadius; // 1 center -> 0 edge
+              const decay = 1 - elapsed / shockDuration; // 1 -> 0
+              const push = shockStrength * k * decay;
+
+              ox = (sx / (dist || 1)) * push;
+              oy = (sy / (dist || 1)) * push;
+            }
+          }
+
           ctx.fillStyle = fill;
           ctx.beginPath();
-          ctx.arc(cx, cy, dotSize / 2, 0, Math.PI * 2);
+          ctx.arc(cx + ox, cy + oy, dotSize / 2, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -106,24 +140,47 @@ export default function DotGrid({
       pointerRef.current.y = -99999;
     };
 
+    const onClick = (e) => {
+      const rect = wrap.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // only trigger if click is inside DotGrid bounds
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+
+      shockRef.current = { x, y, t0: performance.now() };
+    };
+
     resize();
     draw();
 
     const ro = new ResizeObserver(() => resize());
     ro.observe(wrap);
 
-    // OJO: el wrapper está pointer-events:none por CSS para no molestar al nav,
-    // así que escuchamos el movimiento en window.
+    // wrapper has pointer-events:none, so listen globally
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseleave', onLeave);
+    window.addEventListener('click', onClick);
 
     return () => {
       ro.disconnect();
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseleave', onLeave);
+      window.removeEventListener('click', onClick);
       cancelAnimationFrame(rafId);
     };
-  }, [dotSize, gap, baseColor, activeColor, proximity, baseRgb, activeRgb]);
+  }, [
+    dotSize,
+    gap,
+    baseColor,
+    activeColor,
+    proximity,
+    baseRgb,
+    activeRgb,
+    shockRadius,
+    shockStrength,
+    shockDuration,
+  ]);
 
   return (
     <div ref={wrapRef} className={`dotgrid-wrap ${className}`} style={style}>
