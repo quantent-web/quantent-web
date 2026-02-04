@@ -33,12 +33,12 @@ a {
 /* Light theme (por defecto) */
 :root {
   /* Brand */
-  --primary: #05cd98;        /* CTAs, links activos */
+  --primary: #05cd98;
   --primary-contrast: #ffffff;
 
   /* Backgrounds */
-  --bg: #f5f5f5;             /* background.default */
-  --surface: #ffffff;        /* paper / cards */
+  --bg: #f5f5f5;
+  --surface: #ffffff;
 
   /* Text */
   --text-primary: #242424;
@@ -54,41 +54,7 @@ a {
   --warning: #ffd700;
   --success: #05cd34;
   --info: #059ecd;
-}
 
-/* Dark theme */
-html[data-theme="dark"] {
-  /* Brand (NO cambia) */
-  --primary: #05cd98;
-  --primary-contrast: #ffffff;
-
-  /* Backgrounds */
-  --bg: #242424;
-  --surface: #2d2d2d;
-
-  /* Text */
-  --text-primary: #ffffff;
-  --text-secondary: #757575;
-  --text-disabled: #a0a0a0;
-
-  /* UI */
-  --border: #ffffff;
-  --divider: #ffffff;
-
-  /* States */
-  --error: #ec2149;
-  --warning: #ffd700;
-  --success: #05cd34;
-  --info: #059ecd;
-}
-
-/* Aplicación global mínima */
-body {
-  background-color: var(--bg);
-  color: var(--text-primary);
-}
-
-  
   /* Layout */
   --container: 1120px;
 
@@ -104,6 +70,7 @@ body {
 
   /* Radius */
   --radius: 14px;
+}
 
 /* =========================
    Tipografía base
