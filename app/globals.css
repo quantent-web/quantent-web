@@ -150,8 +150,43 @@ p {
   padding-bottom: var(--space-8);
 }
 #home {
-  height: 900vh;
+  height: 90vh;
 }
+#what-we-do {
+  height: 90vh;
+}
+#different {
+  height: 90vh;
+}
+products {
+  height: 90vh;
+}
+#quantcertify {
+  height: 90vh;
+}
+#quantvault {
+  height: 90vh;
+}
+#quantdata {
+  height: 90vh;
+}
+#capabilities {
+  height: 90vh;
+}
+#services {
+  height: 90vh;
+}
+#about{
+  height: 90vh;
+}
+#home {
+  height: 90vh;
+}
+
+
+
+
+
 
 
 
