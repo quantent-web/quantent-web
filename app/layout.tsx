@@ -26,11 +26,25 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={`${splineSansMono.variable} ${poppins.variable}`}>
-        {children}
-      </body>
-    </html>
-  );
-}
+return (
+  <html lang="en">
+    <head>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+(function () {
+  try {
+    var saved = localStorage.getItem('theme');
+    var theme = saved ? saved : 'dark';
+    document.documentElement.dataset.theme = theme;
+  } catch (e) {}
+})();
+`,
+        }}
+      />
+    </head>
+    <body className={`${splineSansMono.variable} ${poppins.variable}`}>
+      {children}
+    </body>
+  </html>
+);
