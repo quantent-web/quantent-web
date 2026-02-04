@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { usePathname } from "next/navigation";
 
 type NavItem = { label: string; href: string };
 
 export default function Home() {
   const navRef = useRef<HTMLElement | null>(null);
-
+  const pathname = usePathname();
+  
   const navInnerRef = useRef<HTMLDivElement | null>(null);
   const brandRef = useRef<HTMLAnchorElement | null>(null);
   const burgerRef = useRef<HTMLButtonElement | null>(null);
@@ -39,6 +41,8 @@ export default function Home() {
     ],
     []
   );
+
+  
 
   // Cierra menú con ESC
   useEffect(() => {
@@ -141,10 +145,19 @@ if (burgerRef.current) ro.observe(burgerRef.current);
       aria-label="Primary"
     >
       <div className="nav-links-row" ref={linksRef}>
-        {navItems.map((item) => (
-          <a key={item.href} href={item.href}>
-            {item.label}
-          </a>
+        {navItems.map((item) => {
+  const isActive = pathname === item.href;
+
+  return (
+    <a
+      key={item.href}
+      href={item.href}
+      className={isActive ? "is-active" : ""}
+    >
+      {item.label}
+    </a>
+  );
+})}
         ))}
       </div>
     </nav>
