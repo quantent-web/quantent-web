@@ -136,6 +136,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
       gap={15}
       baseColor="#271E37"
       activeColor="#5227FF"
+      style={{}}
     />
   </div>
 
