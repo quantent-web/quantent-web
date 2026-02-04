@@ -16,6 +16,14 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
 
+  const toggleTheme = () => {
+  const current =
+    document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem("theme", next);
+};
+
   const navItems: NavItem[] = useMemo(
     () => [
       { label: 'What we do', href: '#what-we-do' },
@@ -115,41 +123,56 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 
   return (
     <>
-      {/* STICKY NAV */}
-      <header className="nav" ref={navRef}>
-        <div className="nav-inner nav-container" ref={navInnerRef}>
-        <a className="nav-brand" href="#top" aria-label="Go to top" ref={brandRef}>
-  <img src="/logo-quantent.svg" alt="QuantEnt logo" />
-</a>
+     {/* STICKY NAV */}
+<header className="nav" ref={navRef}>
+  <div className="nav-inner nav-container" ref={navInnerRef}>
+    <a
+      className="nav-brand"
+      href="#top"
+      aria-label="Go to top"
+      ref={brandRef}
+    >
+      <img src="/logo-quantent.svg" alt="QuantEnt logo" />
+    </a>
 
-          {/* Links desktop (se ocultan cuando useBurger=true) */}
-       <nav
-  className={`nav-links ${useBurger ? 'is-hidden' : ''}`}
-  aria-label="Primary"
->
-            <div className="nav-links-row" ref={linksRef}>
-              {navItems.map((item) => (
-                <a key={item.href} href={item.href}>
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </nav>
+    {/* Links desktop (se ocultan cuando useBurger=true) */}
+    <nav
+      className={`nav-links ${useBurger ? "is-hidden" : ""}`}
+      aria-label="Primary"
+    >
+      <div className="nav-links-row" ref={linksRef}>
+        {navItems.map((item) => (
+          <a key={item.href} href={item.href}>
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </nav>
 
-          {/* Botón hamburguesa: aparece cuando haga falta (wrap/overflow) */}
-          <button
-  ref={burgerRef}
-  className={`nav-burger ${useBurger ? '' : 'is-invisible'}`}
-            type="button"
-            aria-label="Open menu"
-            aria-haspopup="dialog"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <span className="burger-lines" aria-hidden="true" />
-          </button>
-        </div>
-      </header>
+    {/* Toggle tema */}
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={toggleTheme}
+      aria-label="Toggle theme"
+    >
+      Theme
+    </button>
+
+    {/* Botón hamburguesa */}
+    <button
+      ref={burgerRef}
+      className={`nav-burger ${useBurger ? "" : "is-invisible"}`}
+      type="button"
+      aria-label="Open menu"
+      aria-haspopup="dialog"
+      aria-expanded={menuOpen}
+      onClick={() => setMenuOpen((open) => !open)}
+    >
+      <span className="burger-lines" aria-hidden="true" />
+    </button>
+  </div>
+</header>
 
       {/* Overlay */}
       <div
