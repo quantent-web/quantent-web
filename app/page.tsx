@@ -118,9 +118,9 @@ if (burgerRef.current) ro.observe(burgerRef.current);
       {/* STICKY NAV */}
       <header className="nav" ref={navRef}>
         <div className="nav-inner nav-container" ref={navInnerRef}>
-         <a className="nav-brand" href="#top" aria-label="Go to top" ref={brandRef}>
-            QuantEnt
-          </a>
+        <a className="nav-brand" href="#top" aria-label="Go to top" ref={brandRef}>
+  <img src="/logo-quantent.svg" alt="QuantEnt logo" />
+</a>
 
           {/* Links desktop (se ocultan cuando useBurger=true) */}
        <nav
