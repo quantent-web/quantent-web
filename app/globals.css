@@ -158,7 +158,7 @@ p {
   display: grid;
   place-items: center;
   height: 90vh;
-  align-items:center;
+  align-content:center;
   justify-content:center;
 }
 #what-we-do {
