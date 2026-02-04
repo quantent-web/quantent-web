@@ -148,6 +148,7 @@ p {
 .section {
   padding-top: var(--space-8);
   padding-bottom: var(--space-8);
+  height:90vh;
 }
 
 .hero-title {
