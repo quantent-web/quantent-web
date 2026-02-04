@@ -78,7 +78,7 @@ a {
 html[data-theme="dark"] {
   /* Backgrounds */
   --bg: #0e1414;          /* Fondo principal */
-  --surface: #101616;     /* Cards, nav, CTAs */
+  --surface: #182323;     /* Cards, nav, CTAs */
 
   /* Text */
   --text-primary: #ffffff;
