@@ -676,24 +676,18 @@ html[data-theme="dark"] .theme-icon-dark {
   display: inline;
 }
 
-/* Header background layer */
+/* Header background wrapper (DotGrid behind sticky nav) */
 .header-bg {
   position: relative;
 }
 
-.header-bg::before {
-  content: "";
+.header-bg__grid {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
 
-/* DotGrid stays behind header */
-.header-bg .dotgrid-wrap {
-  z-index: 0;
-}
-
-.header-bg .nav {
+.header-bg__nav {
   position: relative;
   z-index: 1;
 }
