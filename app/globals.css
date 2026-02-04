@@ -599,3 +599,8 @@ section[id] {
 .burger-lines::after {
   top: 6px;
 }
+
+html[data-theme="dark"] body {
+  background-color: var(--bg) !important;
+  color: var(--text-primary) !important;
+}
