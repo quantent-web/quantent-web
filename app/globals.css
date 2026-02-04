@@ -86,8 +86,8 @@ html[data-theme="dark"] {
   --text-disabled: #9bd3bb;
 
   /* UI */
-  --border: #1b2b28;
-  --divider: #1b2b28;
+  --border: #1E3D36;
+  --divider: #1E3D36;
 
   /* Brand (constante) */
   --primary: #05cd98;
@@ -253,15 +253,13 @@ p {
 }
 
 .btn-primary {
-  background: var(--color-text);
-  color: var(--color-bg);
-  border-color: var(--color-text);
-}
+  background: var(--primary);
+  color: var(--color-bg);}
 
 .btn-secondary {
-  background: transparent;
-  color: var(--color-text);
-  border-color: rgba(0, 0, 0, 0.2);
+  background: var(--surface);
+  color: var(--text-secondary);
+  border-color: var(--border);
 }
 
 .btn:hover {
