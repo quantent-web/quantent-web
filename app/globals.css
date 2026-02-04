@@ -689,9 +689,8 @@ html[data-theme="dark"] .theme-icon-dark {
 .header-bg__grid {
   position: absolute;
   inset: 0;
-  z-index: 0;
   height: 90vh;
-   z-index:99;
+   z-index:2;
 }
 
 .header-bg__nav {
