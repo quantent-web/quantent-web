@@ -128,9 +128,9 @@ if (burgerRef.current) ro.observe(burgerRef.current);
   return (
     <>
 {/* STICKY NAV + DOT GRID BACKGROUND */}
-<div style={{ position: 'relative' }}>
+<div className="header-bg">
   {/* DotGrid fondo */}
-  <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+  <div className="header-bg__grid">
     <DotGrid
       dotSize={5}
       gap={15}
@@ -141,7 +141,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
   </div>
 
   {/* STICKY NAV */}
-  <header className="nav" ref={navRef} style={{ position: 'relative', zIndex: 1 }}>
+  <header className="nav header-bg__nav" ref={navRef}>
     <div className="nav-inner nav-container" ref={navInnerRef}>
       <a
         className="nav-brand"
