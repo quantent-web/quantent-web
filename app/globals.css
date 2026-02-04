@@ -155,9 +155,11 @@ p {
 }
 
 #home {
-   display: grid;
+  display: grid;
   place-items: center;
   height: 90vh;
+   align-items:center;
+   justify-content:center;
 }
 #what-we-do {
   height: 90vh;
