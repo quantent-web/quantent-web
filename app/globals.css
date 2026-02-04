@@ -161,7 +161,12 @@ p {
   font-size: 18px;
   color: var(--color-muted);
 }
-
+/* Hero content must sit ABOVE DotGrid */
+.header-bg__nav,
+.header-bg__content {
+  position: relative;
+  z-index: 2;
+}
 /* =========================
    Components (mínimos)
    (solo para la landing)
@@ -692,4 +697,5 @@ html[data-theme="dark"] .theme-icon-dark {
   position: relative;
   z-index: 1;
 }
+
 
