@@ -1,13 +1,12 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { usePathname } from "next/navigation";
 
 type NavItem = { label: string; href: string };
 
 export default function Home() {
   const navRef = useRef<HTMLElement | null>(null);
-  const pathname = usePathname();
+
   
   const navInnerRef = useRef<HTMLDivElement | null>(null);
   const brandRef = useRef<HTMLAnchorElement | null>(null);
