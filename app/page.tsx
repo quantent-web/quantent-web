@@ -144,20 +144,11 @@ if (burgerRef.current) ro.observe(burgerRef.current);
       aria-label="Primary"
     >
       <div className="nav-links-row" ref={linksRef}>
-        {navItems.map((item) => {
-  const isActive = pathname === item.href;
-
-  return (
-    <a
-      key={item.href}
-      href={item.href}
-      className={isActive ? "is-active" : ""}
-    >
-      {item.label}
-    </a>
-  );
-})}
-        ))}
+ {navItems.map((item) => (
+  <a key={item.href} href={item.href}>
+    {item.label}
+  </a>
+))}
       </div>
     </nav>
 
