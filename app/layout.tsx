@@ -26,12 +26,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-return (
-  <html lang="en">
-    <head>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
+  return (
+    <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
 (function () {
   try {
     var saved = localStorage.getItem('theme');
@@ -40,11 +40,12 @@ return (
   } catch (e) {}
 })();
 `,
-        }}
-      />
-    </head>
-    <body className={`${splineSansMono.variable} ${poppins.variable}`}>
-      {children}
-    </body>
-  </html>
-);
+          }}
+        />
+      </head>
+      <body className={`${splineSansMono.variable} ${poppins.variable}`}>
+        {children}
+      </body>
+    </html>
+  );
+}
