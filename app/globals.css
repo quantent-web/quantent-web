@@ -73,6 +73,34 @@ a {
 }
 
 /* =========================
+   Dark theme — QuantEnt
+========================= */
+html[data-theme="dark"] {
+  /* Backgrounds */
+  --bg: #0e1414;          /* Fondo principal */
+  --surface: #101616;     /* Cards, nav, CTAs */
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #9bd3bb;
+  --text-disabled: #9bd3bb;
+
+  /* UI */
+  --border: #1b2b28;
+  --divider: #1b2b28;
+
+  /* Brand (constante) */
+  --primary: #05cd98;
+  --primary-contrast: #ffffff;
+
+  /* States */
+  --error: #ec2149;
+  --warning: #ffd700;
+  --success: #05cd34;
+  --info: #059ecd;
+}
+
+/* =========================
    Tipografía base
 ========================= */
 body {
