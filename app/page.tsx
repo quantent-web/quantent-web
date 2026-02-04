@@ -134,7 +134,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
  <DotGrid
     dotSize={5}
     gap={15}
-    baseColor="#182323"
+    baseColor="#253535"
     activeColor="#05CD98"
     proximity={120}
     style={{}}
