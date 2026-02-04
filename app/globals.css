@@ -295,9 +295,9 @@ section[id] {
   top: 0;
   z-index: 50;
   height: var(--nav-h);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--surface); /* fondo secundario */
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--border);
 }
 
 /* Contenedor SOLO para NAV (más ancho que .container) */
@@ -350,14 +350,19 @@ section[id] {
 
 .nav-links a {
   font-size: 14px;
-  color: var(--color-muted);
+  color: var(--text-secondary); /* texto secciones */
   padding: 8px 10px;
   border-radius: 999px;
 }
 
 .nav-links a:hover {
-  color: var(--color-text);
-  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-primary); /* hover blanco en dark */
+  background: transparent;
+}
+
+/* Activo (si añades esta clase al link actual) */
+.nav-links a.is-active {
+  color: var(--primary); /* verde */
 }
 
 .is-hidden {
@@ -371,15 +376,15 @@ section[id] {
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border);
+  background: var(--bg); /* caja icono: fondo dark */
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
 .nav-burger:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--surface);
 }
 
 .burger-lines {
@@ -393,7 +398,7 @@ section[id] {
 .burger-lines::after,
 .burger-lines {
   content: '';
-  background: rgba(0, 0, 0, 0.7);
+  background: var(--text-secondary); /* líneas: texto secundario */
   height: 2px;
   border-radius: 2px;
   display: block;
@@ -443,9 +448,9 @@ section[id] {
   right: 0;
   height: 100vh;
   width: min(var(--drawer-w), 92vw);
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--surface); /* fondo drawer: fondo secundario */
   backdrop-filter: blur(12px);
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-left: 1px solid var(--border);
   transform: translateX(100%);
   transition: transform 220ms ease;
   z-index: 70;
@@ -463,28 +468,29 @@ section[id] {
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--space-5);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--border);
 }
 
 .drawer-title {
   font-family: var(--font-space-mono), ui-monospace, monospace;
   font-weight: 700;
   font-size: 14px;
+  color: var(--text-primary);
 }
 
 .drawer-close {
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border);
+  background: var(--bg);
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
 .drawer-close:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--surface);
 }
 
 .drawer-nav {
@@ -497,14 +503,18 @@ section[id] {
   align-items: center;
   justify-content: space-between;
   padding: 14px 0;
-  color: var(--color-text);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* divisor fino */
+  color: var(--text-secondary); /* texto panel drawer */
+  border-bottom: 1px solid var(--border); /* divisor */
 }
 
 .drawer-nav a:hover {
-  color: var(--color-text);
+  color: var(--text-primary);
 }
 
+/* Activo drawer (si añades esta clase al link actual) */
+.drawer-nav a.is-active {
+  color: var(--primary); /* verde */
+}
 /* Seguridad: si la pantalla es pequeña, el nav ancho no debe causar problemas */
 @media (max-width: 640px) {
   :root {
