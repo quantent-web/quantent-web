@@ -151,8 +151,12 @@ p {
 .section {
   padding-top: var(--space-8);
   padding-bottom: var(--space-8);
+
 }
+
 #home {
+   display: grid;
+  place-items: center;
   height: 90vh;
 }
 #what-we-do {
