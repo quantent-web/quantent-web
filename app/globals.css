@@ -88,10 +88,11 @@ body {
   color: var(--text-primary);
 }
 
-  /* Ancho de lectura cómodo */
+  
+  /* Layout */
   --container: 1120px;
 
-  /* Espaciado base */
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -101,8 +102,8 @@ body {
   --space-7: 48px;
   --space-8: 64px;
 
+  /* Radius */
   --radius: 14px;
-}
 
 /* =========================
    Tipografía base
