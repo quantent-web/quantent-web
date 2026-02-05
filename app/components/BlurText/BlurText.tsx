@@ -22,6 +22,7 @@ const buildKeyframes = (from: Snapshot, steps: Snapshot[]) => {
 type EasingFn = (t: number) => number;
 
 type BlurTextProps = {
+  as?: keyof JSX.IntrinsicElements; // ✅ permite h1, p, div, etc.
   text?: string;
   delay?: number;
   className?: string;
@@ -37,6 +38,7 @@ type BlurTextProps = {
 };
 
 const BlurText = ({
+  as = 'p', // ✅ default
   text = '',
   delay = 200,
   className = '',
@@ -50,26 +52,28 @@ const BlurText = ({
   onAnimationComplete,
   stepDuration = 0.35,
 }: BlurTextProps) => {
+  const Tag = as as any; // ✅ evita pelea de tipos con refs + JSX tag dinámico
 
-
-  
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!ref.current) return;
+
+    const el = ref.current;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-        if (ref.current) observer.unobserve(ref.current);
-
+          observer.unobserve(el); // ✅ el no es null
         }
       },
       { threshold, rootMargin }
     );
-    observer.observe(ref.current);
+
+    observer.observe(el);
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
@@ -103,7 +107,11 @@ const BlurText = ({
   );
 
   return (
-    <p ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <Tag
+      ref={ref as any}
+      className={className}
+      style={{ display: 'flex', flexWrap: 'wrap' }}
+    >
       {elements.map((segment, index) => {
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
@@ -115,21 +123,22 @@ const BlurText = ({
         };
 
         return (
-        <motion.span
-  className="inline-block will-change-[transform,filter,opacity]"
-  key={index}
-  initial={fromSnapshot as any}
-  animate={(inView ? animateKeyframes : fromSnapshot) as any}
-  transition={spanTransition as any}
-  onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
->
-
+          <motion.span
+            className="inline-block will-change-[transform,filter,opacity]"
+            key={index}
+            initial={fromSnapshot as any}
+            animate={(inView ? animateKeyframes : fromSnapshot) as any}
+            transition={spanTransition as any}
+            onAnimationComplete={
+              index === elements.length - 1 ? onAnimationComplete : undefined
+            }
+          >
             {segment === ' ' ? '\u00A0' : segment}
             {animateBy === 'words' && index < elements.length - 1 && '\u00A0'}
           </motion.span>
         );
       })}
-    </p>
+    </Tag>
   );
 };
 
