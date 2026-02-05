@@ -115,7 +115,11 @@ body {
 }
 
 /* Titulares */
-h1,
+h1 {
+  font-family: "Spline Sans Mono", monospace;
+  font-weight: 700;
+  font-size: 56px;
+}
 h2,
 h3,
 h4 {
