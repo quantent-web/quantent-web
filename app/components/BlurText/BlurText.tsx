@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ElementType } from 'react';
 
 type Snapshot = Record<string, string | number | undefined>;
 
@@ -21,24 +22,8 @@ const buildKeyframes = (from: Snapshot, steps: Snapshot[]) => {
 
 type EasingFn = (t: number) => number;
 
-// ✅ sin JSX namespace: lista simple de tags válidos
-type AsTag =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'p'
-  | 'span'
-  | 'div'
-  | 'label'
-  | 'strong'
-  | 'em'
-  | 'small';
-
 type BlurTextProps = {
-  as?: AsTag;
+  as?: ElementType; // ✅ permite 'h1', 'p', 'div', etc (sin JSX namespace)
   text?: string;
   delay?: number;
   className?: string;
@@ -54,7 +39,7 @@ type BlurTextProps = {
 };
 
 const BlurText = ({
-  as = 'p',
+  as: Component = 'p',
   text = '',
   delay = 200,
   className = '',
@@ -68,27 +53,25 @@ const BlurText = ({
   onAnimationComplete,
   stepDuration = 0.35,
 }: BlurTextProps) => {
-  const Tag = as as any;
-
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
+    const node = ref.current;
+    if (!node) return;
 
-    const el = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          observer.unobserve(el);
+          observer.unobserve(entry.target);
         }
       },
       { threshold, rootMargin }
     );
 
-    observer.observe(el);
+    observer.observe(node);
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
@@ -122,7 +105,7 @@ const BlurText = ({
   );
 
   return (
-    <Tag
+    <Component
       ref={ref as any}
       className={className}
       style={{ display: 'flex', flexWrap: 'wrap' }}
@@ -153,7 +136,7 @@ const BlurText = ({
           </motion.span>
         );
       })}
-    </Tag>
+    </Component>
   );
 };
 
