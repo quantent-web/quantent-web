@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import DotGrid from './components/DotGrid/DotGrid';
+import BlurText from './components/BlurText/BlurText';
+
 
 type NavItem = { label: string; href: string };
 
@@ -227,9 +229,14 @@ if (burgerRef.current) ro.observe(burgerRef.current);
       <main id="top" className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
-          <h1 className="hero-title">
-            Creating Institutional Control over Entitlements and Data
-          </h1>
+         <BlurText
+            text="Creating Institutional Control over Entitlements and Data"
+              delay={120}
+              animateBy="words"
+              direction="top"
+              className="hero-title"
+          />
+
 
           <p className="hero-subtitle">
             Quantitative models and mathematics for entitlement and data governance.
