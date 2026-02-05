@@ -230,11 +230,12 @@ if (burgerRef.current) ro.observe(burgerRef.current);
         {/* HOME / HERO */}
         <section id="home" className="section">
          <BlurText
-            text="Creating Institutional Control over Entitlements and Data"
-              delay={120}
-              animateBy="words"
-              direction="top"
-              className="hero-title"
+           as="h1"
+           text="Creating Institutional Control over Entitlements and Data"
+           delay={120}
+           animateBy="words"
+           direction="top"
+           className="hero-title"
           />
 
 
