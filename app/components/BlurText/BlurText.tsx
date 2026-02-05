@@ -3,15 +3,22 @@
 import { motion } from 'motion/react';
 import { useEffect, useRef, useState, useMemo } from 'react';
 
-const buildKeyframes = (from, steps) => {
-  const keys = new Set([...Object.keys(from), ...steps.flatMap((s) => Object.keys(s))]);
+type Snapshot = Record<string, string | number | undefined>;
 
-  const keyframes = {};
+const buildKeyframes = (from: Snapshot, steps: Snapshot[]) => {
+  const keys = new Set<string>([
+    ...Object.keys(from),
+    ...steps.flatMap((s) => Object.keys(s)),
+  ]);
+
+  const keyframes: Record<string, Array<string | number | undefined>> = {};
   keys.forEach((k) => {
     keyframes[k] = [from[k], ...steps.map((s) => s[k])];
   });
+
   return keyframes;
 };
+
 
 const BlurText = ({
   text = '',
