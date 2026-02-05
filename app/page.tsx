@@ -229,14 +229,15 @@ if (burgerRef.current) ro.observe(burgerRef.current);
       <main id="top" className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
-         <BlurText
-           as="h1"
-           text="Creating Institutional Control over Entitlements and Data"
-           delay={120}
-           animateBy="words"
-           direction="top"
-           className="hero-title"
-          />
+     <BlurText
+  as="h1"
+  className="hero-title"
+  text="Creating Institutional Control over Entitlements and Data"
+  delay={120}
+  animateBy="words"
+  direction="top"
+/>
+
 
 
           <p className="hero-subtitle">
