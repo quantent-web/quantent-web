@@ -21,8 +21,24 @@ const buildKeyframes = (from: Snapshot, steps: Snapshot[]) => {
 
 type EasingFn = (t: number) => number;
 
+// ✅ sin JSX namespace: lista simple de tags válidos
+type AsTag =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'p'
+  | 'span'
+  | 'div'
+  | 'label'
+  | 'strong'
+  | 'em'
+  | 'small';
+
 type BlurTextProps = {
-  as?: keyof JSX.IntrinsicElements; // ✅ permite h1, p, div, etc.
+  as?: AsTag;
   text?: string;
   delay?: number;
   className?: string;
@@ -38,7 +54,7 @@ type BlurTextProps = {
 };
 
 const BlurText = ({
-  as = 'p', // ✅ default
+  as = 'p',
   text = '',
   delay = 200,
   className = '',
@@ -52,7 +68,7 @@ const BlurText = ({
   onAnimationComplete,
   stepDuration = 0.35,
 }: BlurTextProps) => {
-  const Tag = as as any; // ✅ evita pelea de tipos con refs + JSX tag dinámico
+  const Tag = as as any;
 
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
@@ -62,12 +78,11 @@ const BlurText = ({
     if (!ref.current) return;
 
     const el = ref.current;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          observer.unobserve(el); // ✅ el no es null
+          observer.unobserve(el);
         }
       },
       { threshold, rootMargin }
