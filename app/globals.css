@@ -207,6 +207,9 @@ p {
   font-size: clamp(32px, 4vw, 56px);
   letter-spacing: -0.02em;
   text-align: center;
+     font-family: "Spline Sans Mono", monospace;
+  font-weight: 700;
+  font-size: 56px;
 }
 
 .hero-subtitle {
