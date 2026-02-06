@@ -8,16 +8,32 @@ export default function DotGrid({
   gap = 15,
   baseColor = '#253535',
   activeColor = '#05CD98',
-  proximity = 200,
+  proximity = 140,
 }) {
   const canvasRef = useRef(null);
-  const mouse = useRef({ x: -9999, y: -9999 });
-  const lastMouse = useRef({ x: 0, y: 0, t: 0 });
-  const hasEntered = useRef(false);
-  const lastShock = useRef(0);
 
-  const SHOCK_COOLDOWN = 250;
-  const SPEED_THRESHOLD = 1.2;
+  // Hover (spotlight)
+  const hover = useRef({ x: -9999, y: -9999 });
+
+  // Shock (impulso/onda) con decaimiento
+  const shock = useRef({
+    x: -9999,
+    y: -9999,
+    force: 0,
+    t: 0,
+  });
+
+  // Para detectar “movimiento rápido”
+  const lastMouse = useRef({ x: 0, y: 0, t: 0 });
+
+  // Para disparar shock 1 vez al entrar
+  const hasEntered = useRef(false);
+
+  // Tuning (suave, sin “mancha” gigante)
+  const SHOCK_RADIUS = 180;
+  const SHOCK_DECAY_MS = 550;
+  const SHOCK_COOLDOWN_MS = 350;
+  const SPEED_THRESHOLD = 1.6; // más alto = menos shocks
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -31,25 +47,28 @@ export default function DotGrid({
     resize();
     window.addEventListener('resize', resize);
 
-    const shock = (x, y, force = 1) => {
-      lastShock.current = Date.now();
-      mouse.current = { x, y, force };
+    const triggerShock = (x, y, force = 1) => {
+      const now = Date.now();
+      // cooldown
+      if (now - shock.current.t < SHOCK_COOLDOWN_MS) return;
+
+      shock.current = { x, y, force, t: now };
     };
 
     const onMove = (e) => {
+      // spotlight
+      hover.current = { x: e.clientX, y: e.clientY };
+
+      // velocidad del cursor
       const now = performance.now();
       const dx = e.clientX - lastMouse.current.x;
       const dy = e.clientY - lastMouse.current.y;
       const dt = now - lastMouse.current.t || 16;
       const speed = Math.sqrt(dx * dx + dy * dy) / dt;
 
-      mouse.current = { x: e.clientX, y: e.clientY };
-
-      if (
-        speed > SPEED_THRESHOLD &&
-        Date.now() - lastShock.current > SHOCK_COOLDOWN
-      ) {
-        shock(e.clientX, e.clientY, 0.6);
+      // shock si movimiento es rápido
+      if (speed > SPEED_THRESHOLD) {
+        triggerShock(e.clientX, e.clientY, 0.55);
       }
 
       lastMouse.current = { x: e.clientX, y: e.clientY, t: now };
@@ -58,12 +77,12 @@ export default function DotGrid({
     const onEnter = (e) => {
       if (!hasEntered.current) {
         hasEntered.current = true;
-        shock(e.clientX, e.clientY, 1);
+        triggerShock(e.clientX, e.clientY, 0.9);
       }
     };
 
     const onClick = (e) => {
-      shock(e.clientX, e.clientY, 1.2);
+      triggerShock(e.clientX, e.clientY, 1.0);
     };
 
     window.addEventListener('mousemove', onMove);
@@ -71,26 +90,46 @@ export default function DotGrid({
     window.addEventListener('click', onClick);
 
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const w = canvas.width;
+      const h = canvas.height;
 
-      for (let y = 0; y < canvas.height; y += gap) {
-        for (let x = 0; x < canvas.width; x += gap) {
-          const dx = x - mouse.current.x;
-          const dy = y - mouse.current.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+      ctx.clearRect(0, 0, w, h);
 
-          const influence = Math.max(
-            0,
-            1 - dist / proximity
-          );
+      const now = Date.now();
+      const shockAge = now - shock.current.t;
+      const shockDecay =
+        shock.current.t === 0
+          ? 0
+          : Math.max(0, 1 - shockAge / SHOCK_DECAY_MS);
 
-          const size =
+      for (let y = 0; y < h; y += gap) {
+        for (let x = 0; x < w; x += gap) {
+          // spotlight influence
+          const hx = x - hover.current.x;
+          const hy = y - hover.current.y;
+          const hdist = Math.sqrt(hx * hx + hy * hy);
+          const hoverInfluence = Math.max(0, 1 - hdist / proximity);
+
+          // shock influence (local + decae)
+          const sx = x - shock.current.x;
+          const sy = y - shock.current.y;
+          const sdist = Math.sqrt(sx * sx + sy * sy);
+          const shockInfluence = Math.max(0, 1 - sdist / SHOCK_RADIUS);
+
+          const shockBoost =
+            shockInfluence * shockDecay * (shock.current.force || 0);
+
+          // tamaño: base + hover suave + shock puntual
+          const radius =
             dotSize +
-            influence * 2 * (mouse.current.force || 0.5);
+            hoverInfluence * 1.4 +
+            shockBoost * 2.2;
 
-          ctx.fillStyle = influence > 0.1 ? activeColor : baseColor;
+          // color: activo solo cerca del hover (evita “mancha” gigante)
+          ctx.fillStyle = hoverInfluence > 0.12 ? activeColor : baseColor;
+
           ctx.beginPath();
-          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -106,7 +145,7 @@ export default function DotGrid({
       window.removeEventListener('mouseenter', onEnter);
       window.removeEventListener('click', onClick);
     };
-  }, []);
+  }, [dotSize, gap, baseColor, activeColor, proximity]);
 
   return (
     <div className="dotgrid-wrap">
