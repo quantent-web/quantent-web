@@ -139,7 +139,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
     baseColor="#253535"
     activeColor="#05CD98"
     proximity={200}
-    style={{}}
+  
 />
   </div>
 
