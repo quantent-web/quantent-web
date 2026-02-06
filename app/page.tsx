@@ -133,16 +133,15 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 <div className="header-bg">
   {/* DotGrid fondo */}
   <div className="header-bg__grid">
-<DotGrid
-  dotSize={5}
-  gap={15}
-  baseColor="#253535"
-  activeColor="#05CD98"
-  proximity={140}
-  style={{}}
+ <DotGrid
+    dotSize={5}
+    gap={15}
+    baseColor="#253535"
+    activeColor="#05CD98"
+    proximity={200}
+    style={{}}
 />
-</div>
-
+  </div>
 
   {/* STICKY NAV */}
   <header className="nav header-bg__nav" ref={navRef}>
