@@ -40,8 +40,10 @@ export default function DotGrid({
     const ctx = canvas.getContext('2d');
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+   const parent = canvas.parentElement;
+canvas.width = parent?.clientWidth ?? window.innerWidth;
+canvas.height = parent?.clientHeight ?? window.innerHeight;
+
     };
 
     resize();
