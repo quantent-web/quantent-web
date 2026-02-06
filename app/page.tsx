@@ -140,6 +140,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
   activeColor="#05CD98"
   proximity={140}
 />
+</div>
 
 
   {/* STICKY NAV */}
