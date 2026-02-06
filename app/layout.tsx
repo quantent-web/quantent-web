@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Spline_Sans_Mono, Poppins } from 'next/font/google';
 import './globals.css';
+import AuroraBackground from '@/src/components/backgrounds/AuroraBackground';
 
 const splineSansMono = Spline_Sans_Mono({
   subsets: ['latin'],
@@ -44,7 +45,8 @@ export default function RootLayout({
         />
       </head>
       <body className={`${splineSansMono.variable} ${poppins.variable}`}>
-        {children}
+        <AuroraBackground />
+        <div className="qe-aurora-content">{children}</div>
       </body>
     </html>
   );

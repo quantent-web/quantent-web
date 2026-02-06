@@ -13,8 +13,8 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "gsap": "^3.12.5",
-    "motion": "^12.31.0"
-
+    "motion": "^12.31.0",
+    "ogl": "^0.0.32"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
