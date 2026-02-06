@@ -139,11 +139,8 @@ if (burgerRef.current) ro.observe(burgerRef.current);
   baseColor="#253535"
   activeColor="#05CD98"
   proximity={140}
-  shockRadius={180}
-  shockStrength={12}
-  hoverShockSpeed={1.6}
-  hoverShockCooldown={350}
 />
+
 
   </div>
 
