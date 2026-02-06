@@ -1,0 +1,16 @@
+.qe-aurora-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.qe-aurora-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.qe-aurora-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 10, 12, 0.25);
+}
