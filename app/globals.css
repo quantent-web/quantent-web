@@ -358,7 +358,7 @@ section[id] {
   height: var(--nav-h);
   background: var(--surface); /* fondo secundario */
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 0px;
 }
 
 /* Contenedor SOLO para NAV (más ancho que .container) */
