@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
+import MagicBentoGrid from './components/effects/MagicBentoGrid';
 
 
 type NavItem = { label: string; href: string };
@@ -265,7 +266,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 
           <p className="section-kicker">We help organizations:</p>
 
-          <div className="cards-grid">
+          <MagicBentoGrid variant="auto" sectionId="what-we-do">
             <div className="card">
               <h3 className="card-title">System Analysis</h3>
               <p className="card-text">
@@ -293,7 +294,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 Maintain control as systems, data, and organizations evolve.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <p className="section-note">
             QuantEnt is built for complex, regulated environments where correctness,
@@ -305,7 +306,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
         <section id="different" className="section">
           <h2 className="section-title">What Makes QuantEnt Different</h2>
 
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="different">
             <div className="card">
               <h3 className="card-title">Quantitative by design</h3>
               <p className="card-text">
@@ -336,14 +337,14 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 stack — we make it work better.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
         </section>
 
         {/* PRODUCTS */}
         <section id="products" className="section">
           <h2 className="section-title">Our Products</h2>
 
-          <div className="cards-grid cards-grid--3">
+          <MagicBentoGrid variant="auto" sectionId="products">
             <div className="card">
               <h3 className="card-title">QuantCertify</h3>
               <p className="card-text">Certification with quantitative control.</p>
@@ -373,7 +374,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 </a>
               </div>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us — Start with QuantCertify</p>
@@ -394,7 +395,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </p>
 
           <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="quantcertify-what-it-does">
             <div className="card">
               <h4 className="card-title">Quantifies exposure</h4>
               <p className="card-text">
@@ -431,10 +432,10 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 Focuses attention on material risk, not noise.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <h3 className="subhead">Why It’s Different</h3>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="quantcertify-why-different">
             <div className="card">
               <h4 className="card-title">Quantifies entitlements</h4>
               <p className="card-text">The only certification system that quantifies entitlements.</p>
@@ -457,7 +458,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 Grounded in quantitative risk thinking, not static policy engines.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <h3 className="subhead">How It Fits Your Environment</h3>
           <p className="section-note">
@@ -471,7 +472,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </p>
 
           <h3 className="subhead">Outcomes</h3>
-          <div className="cards-grid cards-grid--3">
+          <MagicBentoGrid variant="auto" sectionId="quantcertify-outcomes">
             <div className="card">
               <h4 className="card-title">Cleaner roles</h4>
               <p className="card-text">Cleaner roles and access structures.</p>
@@ -484,7 +485,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
               <h4 className="card-title">Reduced drift</h4>
               <p className="card-text">Reduced over-entitlement and drift.</p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us About QuantCertify</p>
@@ -504,7 +505,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </p>
 
           <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="quantvault-what-it-does">
             <div className="card">
               <h4 className="card-title">Aggregates entitlements</h4>
               <p className="card-text">Aggregates entitlements across IAM platforms and systems.</p>
@@ -525,10 +526,10 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 Foundation for quantitative entitlement governance at scale.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <h3 className="subhead">Relationship to QuantCertify</h3>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="quantvault-relationship">
             <div className="card">
               <h4 className="card-title">Runs on top</h4>
               <p className="card-text">QuantCertify runs on top of QuantVault.</p>
@@ -537,7 +538,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
               <h4 className="card-title">System context</h4>
               <p className="card-text">QuantVault provides the system-wide context.</p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <h3 className="subhead">Integration Philosophy</h3>
           <p className="section-note">
@@ -555,7 +556,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </p>
 
           <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="quantdata-what-it-does">
             <div className="card">
               <h4 className="card-title">Canonical models</h4>
               <p className="card-text">Establishes canonical data models and nomenclature.</p>
@@ -578,10 +579,10 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 Ensures data is fit for reporting, automation, and AI.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <h3 className="subhead">Why It Matters</h3>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="quantdata-why-it-matters">
             <div className="card">
               <h4 className="card-title">Access + meaning</h4>
               <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
@@ -590,7 +591,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
               <h4 className="card-title">Meaning + access</h4>
               <p className="card-text">Data governance fails if access governance is broken.</p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
           <p className="section-note">
             QuantData and QuantCertify are designed to work together so data meaning and permissions evolve in lockstep.
@@ -601,7 +602,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
         <section id="capabilities" className="section">
           <h2 className="section-title">What We’re Exceptional At</h2>
 
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="capabilities">
             <div className="card">
               <h3 className="card-title">Quantitative Governance</h3>
               <p className="card-text">
@@ -630,7 +631,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
         </section>
 
         {/* SERVICES */}
@@ -642,7 +643,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </p>
 
           <p className="section-kicker">What We Offer</p>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="services-offer">
             <div className="card">
               <h3 className="card-title">Tech review & scorecarding</h3>
               <p className="card-text">
@@ -665,9 +666,9 @@ if (burgerRef.current) ro.observe(burgerRef.current);
               <h3 className="card-title">Architecture & operating model</h3>
               <p className="card-text">Architecture and operating-model design.</p>
             </div>
-          </div>
+          </MagicBentoGrid>
 
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="services-structure">
             <div className="card">
               <h3 className="card-title">Services establish structure</h3>
               <p className="card-text">Products enforce and maintain it.</p>
@@ -678,7 +679,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 We don’t just prepare organizations — we help them stay prepared.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
         </section>
 
         {/* ABOUT */}
@@ -694,7 +695,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </p>
 
           <h3 className="subhead">Leadership</h3>
-          <div className="cards-grid cards-grid--2">
+          <MagicBentoGrid variant="auto" sectionId="about-leadership">
             <div className="card">
               <h4 className="card-title">Trent Walker — Founder & CEO</h4>
               <p className="card-text">
@@ -707,7 +708,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
                 Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
               </p>
             </div>
-          </div>
+          </MagicBentoGrid>
         </section>
 
         {/* CONTACT */}
