@@ -1,6 +1,6 @@
 'use client';
 
-import { Renderer, Program, Mesh, Color, Plane } from 'ogl';
+import { Renderer, Program, Mesh, Color, Geometry } from 'ogl';
 import { useEffect, useRef } from 'react';
 
 import './Aurora.css';
@@ -149,10 +149,12 @@ export default function Aurora(props: AuroraProps) {
     }
     window.addEventListener('resize', resize);
 
-    const geometry = new Plane(gl);
-    if (geometry.attributes.uv) {
-      delete geometry.attributes.uv;
-    }
+    const geometry = new Geometry(gl, {
+      position: {
+        size: 2,
+        data: new Float32Array([-1, -1, 3, -1, -1, 3]),
+      },
+    });
 
     const colorStopsArray = colorStops.map((hex) => {
       const c = new Color(hex);
