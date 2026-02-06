@@ -5,14 +5,17 @@ import { useEffect, useRef } from 'react';
 
 import './Aurora.css';
 
-const VERT = `#version 300 es
-in vec2 position;
+const VERT = `
+attribute vec2 position;
+varying vec2 vUv;
+
 void main() {
+  vUv = position * 0.5 + 0.5;
   gl_Position = vec4(position, 0.0, 1.0);
 }
 `;
 
-const FRAG = `#version 300 es
+const FRAG = `
 precision highp float;
 
 uniform float uTime;
@@ -21,7 +24,7 @@ uniform vec3 uColorStops[3];
 uniform vec2 uResolution;
 uniform float uBlend;
 
-out vec4 fragColor;
+varying vec2 vUv;
 
 vec3 permute(vec3 x) {
   return mod(((x * 34.0) + 1.0) * x, 289.0);
@@ -75,7 +78,7 @@ struct ColorStop {
 #define COLOR_RAMP(colors, factor, finalColor) {              \n  int index = 0;                                            \n  for (int i = 0; i < 2; i++) {                               \n     ColorStop currentColor = colors[i];                    \n     bool isInBetween = currentColor.position <= factor;    \n     index = int(mix(float(index), float(i), float(isInBetween))); \n  }                                                         \n  ColorStop currentColor = colors[index];                   \n  ColorStop nextColor = colors[index + 1];                  \n  float range = nextColor.position - currentColor.position; \n  float lerpFactor = (factor - currentColor.position) / range; \n  finalColor = mix(currentColor.color, nextColor.color, lerpFactor); \n}
 
 void main() {
-  vec2 uv = gl_FragCoord.xy / uResolution;
+  vec2 uv = vUv;
 
   ColorStop colors[3];
   colors[0] = ColorStop(uColorStops[0], 0.0);
@@ -95,7 +98,7 @@ void main() {
 
   vec3 auroraColor = intensity * rampColor;
 
-  fragColor = vec4(auroraColor * auroraAlpha, auroraAlpha);
+  gl_FragColor = vec4(auroraColor * auroraAlpha, auroraAlpha);
 }
 `;
 
@@ -131,10 +134,6 @@ export default function Aurora(props: AuroraProps) {
       antialias: true,
     });
     const gl = renderer.gl;
-    if (typeof WebGL2RenderingContext !== 'undefined' && !(gl instanceof WebGL2RenderingContext)) {
-      renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
-      return;
-    }
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
