@@ -1,247 +1,116 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './DotGrid.css';
-
-function hexToRgb(hex) {
-  const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
-  if (!m) return { r: 0, g: 0, b: 0 };
-  return { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) };
-}
 
 export default function DotGrid({
   dotSize = 5,
   gap = 15,
-  baseColor = '#182323',
+  baseColor = '#253535',
   activeColor = '#05CD98',
-  proximity = 120,
-
-  // shock config (click)
-  shockRadius = 220,
-  shockStrength = 18,
-  shockDuration = 450, // ms
-
-  // hover/enter shock (no click needed)
-  enterShock = true,
-  hoverShock = true,
-  hoverShockSpeed = 1.1, // px/ms (~1100px/s)
-  hoverShockCooldown = 250, // ms
-
-  className = '',
-  style,
+  proximity = 200,
 }) {
-  const wrapRef = useRef(null);
   const canvasRef = useRef(null);
+  const mouse = useRef({ x: -9999, y: -9999 });
+  const lastMouse = useRef({ x: 0, y: 0, t: 0 });
+  const hasEntered = useRef(false);
+  const lastShock = useRef(0);
 
-  const pointerRef = useRef({ x: -99999, y: -99999 });
-  const shockRef = useRef({ x: 0, y: 0, t0: -1 });
-
-  const lastMoveRef = useRef({ x: -99999, y: -99999, t: 0, inside: false });
-  const lastShockAtRef = useRef(0);
-
-  const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
-  const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
+  const SHOCK_COOLDOWN = 250;
+  const SPEED_THRESHOLD = 1.2;
 
   useEffect(() => {
-    const wrap = wrapRef.current;
     const canvas = canvasRef.current;
-    if (!wrap || !canvas) return;
-
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let rafId = 0;
 
     const resize = () => {
-      const { width, height } = wrap.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
-    const draw = () => {
-      const { width, height } = wrap.getBoundingClientRect();
-      ctx.clearRect(0, 0, width, height);
+    resize();
+    window.addEventListener('resize', resize);
 
-      const step = dotSize + gap;
-      const cols = Math.floor((width + gap) / step);
-      const rows = Math.floor((height + gap) / step);
+    const shock = (x, y, force = 1) => {
+      lastShock.current = Date.now();
+      mouse.current = { x, y, force };
+    };
 
-      const gridW = step * cols - gap;
-      const gridH = step * rows - gap;
-
-      const startX = (width - gridW) / 2 + dotSize / 2;
-      const startY = (height - gridH) / 2 + dotSize / 2;
-
-      const px = pointerRef.current.x;
-      const py = pointerRef.current.y;
-      const proxSq = proximity * proximity;
-
-      // shock state
-      const s = shockRef.current;
+    const onMove = (e) => {
       const now = performance.now();
-      const elapsed = s.t0 < 0 ? Infinity : now - s.t0;
-      const shockActive = elapsed >= 0 && elapsed <= shockDuration;
+      const dx = e.clientX - lastMouse.current.x;
+      const dy = e.clientY - lastMouse.current.y;
+      const dt = now - lastMouse.current.t || 16;
+      const speed = Math.sqrt(dx * dx + dy * dy) / dt;
 
-      for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-          const cx = startX + x * step;
-          const cy = startY + y * step;
+      mouse.current = { x: e.clientX, y: e.clientY };
 
-          // proximity color
-          const dx = cx - px;
-          const dy = cy - py;
-          const dsq = dx * dx + dy * dy;
+      if (
+        speed > SPEED_THRESHOLD &&
+        Date.now() - lastShock.current > SHOCK_COOLDOWN
+      ) {
+        shock(e.clientX, e.clientY, 0.6);
+      }
 
-          let fill = baseColor;
+      lastMouse.current = { x: e.clientX, y: e.clientY, t: now };
+    };
 
-          if (dsq <= proxSq) {
-            const dist = Math.sqrt(dsq);
-            const t = 1 - dist / proximity;
-            const r = Math.round(baseRgb.r + (activeRgb.r - baseRgb.r) * t);
-            const g = Math.round(baseRgb.g + (activeRgb.g - baseRgb.g) * t);
-            const b = Math.round(baseRgb.b + (activeRgb.b - baseRgb.b) * t);
-            fill = `rgb(${r},${g},${b})`;
-          }
+    const onEnter = (e) => {
+      if (!hasEntered.current) {
+        hasEntered.current = true;
+        shock(e.clientX, e.clientY, 1);
+      }
+    };
 
-          // click shock offset (displace dots)
-          let ox = 0;
-          let oy = 0;
+    const onClick = (e) => {
+      shock(e.clientX, e.clientY, 1.2);
+    };
 
-          if (shockActive) {
-            const sx = cx - s.x;
-            const sy = cy - s.y;
-            const dist = Math.hypot(sx, sy);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseenter', onEnter);
+    window.addEventListener('click', onClick);
 
-            if (dist < shockRadius) {
-              const k = 1 - dist / shockRadius; // 1 center -> 0 edge
-             const t = elapsed / shockDuration; // 0..1
-// easing con overshoot tipo "punch": sube rápido, pasa un poco, y vuelve
-const punch = Math.sin(t * Math.PI) * (1 - t); // 0..~0.7..0
-const push = shockStrength * k * punch;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-              ox = (sx / (dist || 1)) * push;
-              oy = (sy / (dist || 1)) * push;
-            }
-          }
+      for (let y = 0; y < canvas.height; y += gap) {
+        for (let x = 0; x < canvas.width; x += gap) {
+          const dx = x - mouse.current.x;
+          const dy = y - mouse.current.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
 
-          ctx.fillStyle = fill;
+          const influence = Math.max(
+            0,
+            1 - dist / proximity
+          );
+
+          const size =
+            dotSize +
+            influence * 2 * (mouse.current.force || 0.5);
+
+          ctx.fillStyle = influence > 0.1 ? activeColor : baseColor;
           ctx.beginPath();
-          ctx.arc(cx + ox, cy + oy, dotSize / 2, 0, Math.PI * 2);
+          ctx.arc(x, y, size, 0, Math.PI * 2);
           ctx.fill();
         }
       }
 
-      rafId = requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     };
 
-    const triggerShock = (x, y) => {
-      shockRef.current = { x, y, t0: performance.now() };
-      lastShockAtRef.current = performance.now();
-    };
-
-    const onMove = (e) => {
-      const rect = wrap.getBoundingClientRect();
-
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
-
-      // spotlight position (only while inside)
-      if (inside) {
-        pointerRef.current.x = x;
-        pointerRef.current.y = y;
-      } else {
-        pointerRef.current.x = -99999;
-        pointerRef.current.y = -99999;
-      }
-
-      // enter shock: first time we get inside
-      if (inside && !lastMoveRef.current.inside && enterShock) {
-        triggerShock(x, y);
-      }
-
-      // hover shock: when cursor moves fast (with cooldown)
-      if (inside && lastMoveRef.current.inside && hoverShock) {
-        const now = performance.now();
-        const dt = now - (lastMoveRef.current.t || now);
-        if (dt > 0) {
-          const dx = x - lastMoveRef.current.x;
-          const dy = y - lastMoveRef.current.y;
-          const v = Math.hypot(dx, dy) / dt; // px/ms
-
-          if (
-            v >= hoverShockSpeed &&
-            now - lastShockAtRef.current >= hoverShockCooldown
-          ) {
-            triggerShock(x, y);
-          }
-        }
-      }
-
-      lastMoveRef.current = { x, y, t: performance.now(), inside };
-    };
-
-    const onLeave = () => {
-      pointerRef.current.x = -99999;
-      pointerRef.current.y = -99999;
-      lastMoveRef.current.inside = false;
-    };
-
-    const onClick = (e) => {
-      const rect = wrap.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      // only trigger if click is inside DotGrid bounds
-      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
-
-      triggerShock(x, y);
-    };
-
-    resize();
     draw();
 
-    const ro = new ResizeObserver(() => resize());
-    ro.observe(wrap);
-
-    // wrapper has pointer-events:none, so listen globally
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseleave', onLeave);
-    window.addEventListener('click', onClick);
-
     return () => {
-      ro.disconnect();
+      window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseleave', onLeave);
+      window.removeEventListener('mouseenter', onEnter);
       window.removeEventListener('click', onClick);
-      cancelAnimationFrame(rafId);
     };
-  }, [
-    dotSize,
-    gap,
-    baseColor,
-    activeColor,
-    proximity,
-    baseRgb,
-    activeRgb,
-    shockRadius,
-    shockStrength,
-    shockDuration,
-    enterShock,
-    hoverShock,
-    hoverShockSpeed,
-    hoverShockCooldown,
-  ]);
+  }, []);
 
   return (
-    <div ref={wrapRef} className={`dotgrid-wrap ${className}`} style={style}>
-      <canvas ref={canvasRef} className="dotgrid-canvas" />
+    <div className="dotgrid-wrap">
+      <canvas ref={canvasRef} />
     </div>
   );
 }
