@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   auroraDisabledRoutes,
   auroraEnabledByDefault,
-} from '@/config/backgrounds';
+} from '@/src/config/backgrounds';
 import Aurora from './Aurora';
 import './AuroraBackground.css';
 
