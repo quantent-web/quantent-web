@@ -21,6 +21,12 @@ export default function DotGrid({
   shockStrength = 18,
   shockDuration = 450, // ms
 
+  // hover/enter shock (no click needed)
+  enterShock = true,
+  hoverShock = true,
+  hoverShockSpeed = 1.1, // px/ms (~1100px/s)
+  hoverShockCooldown = 250, // ms
+
   className = '',
   style,
 }) {
@@ -29,6 +35,9 @@ export default function DotGrid({
 
   const pointerRef = useRef({ x: -99999, y: -99999 });
   const shockRef = useRef({ x: 0, y: 0, t0: -1 });
+
+  const lastMoveRef = useRef({ x: -99999, y: -99999, t: 0, inside: false });
+  const lastShockAtRef = useRef(0);
 
   const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
   const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
@@ -131,15 +140,57 @@ const push = shockStrength * k * punch;
       rafId = requestAnimationFrame(draw);
     };
 
+    const triggerShock = (x, y) => {
+      shockRef.current = { x, y, t0: performance.now() };
+      lastShockAtRef.current = performance.now();
+    };
+
     const onMove = (e) => {
       const rect = wrap.getBoundingClientRect();
-      pointerRef.current.x = e.clientX - rect.left;
-      pointerRef.current.y = e.clientY - rect.top;
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
+
+      // spotlight position (only while inside)
+      if (inside) {
+        pointerRef.current.x = x;
+        pointerRef.current.y = y;
+      } else {
+        pointerRef.current.x = -99999;
+        pointerRef.current.y = -99999;
+      }
+
+      // enter shock: first time we get inside
+      if (inside && !lastMoveRef.current.inside && enterShock) {
+        triggerShock(x, y);
+      }
+
+      // hover shock: when cursor moves fast (with cooldown)
+      if (inside && lastMoveRef.current.inside && hoverShock) {
+        const now = performance.now();
+        const dt = now - (lastMoveRef.current.t || now);
+        if (dt > 0) {
+          const dx = x - lastMoveRef.current.x;
+          const dy = y - lastMoveRef.current.y;
+          const v = Math.hypot(dx, dy) / dt; // px/ms
+
+          if (
+            v >= hoverShockSpeed &&
+            now - lastShockAtRef.current >= hoverShockCooldown
+          ) {
+            triggerShock(x, y);
+          }
+        }
+      }
+
+      lastMoveRef.current = { x, y, t: performance.now(), inside };
     };
 
     const onLeave = () => {
       pointerRef.current.x = -99999;
       pointerRef.current.y = -99999;
+      lastMoveRef.current.inside = false;
     };
 
     const onClick = (e) => {
@@ -150,7 +201,7 @@ const push = shockStrength * k * punch;
       // only trigger if click is inside DotGrid bounds
       if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
 
-      shockRef.current = { x, y, t0: performance.now() };
+      triggerShock(x, y);
     };
 
     resize();
@@ -182,6 +233,10 @@ const push = shockStrength * k * punch;
     shockRadius,
     shockStrength,
     shockDuration,
+    enterShock,
+    hoverShock,
+    hoverShockSpeed,
+    hoverShockCooldown,
   ]);
 
   return (
