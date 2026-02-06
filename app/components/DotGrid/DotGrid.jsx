@@ -40,10 +40,8 @@ export default function DotGrid({
     const ctx = canvas.getContext('2d');
 
     const resize = () => {
-   const parent = canvas.parentElement;
-canvas.width = parent?.clientWidth ?? window.innerWidth;
-canvas.height = parent?.clientHeight ?? window.innerHeight;
-
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
 
     resize();
@@ -128,8 +126,7 @@ canvas.height = parent?.clientHeight ?? window.innerHeight;
             shockBoost * 2.2;
 
           // color: activo solo cerca del hover (evita “mancha” gigante)
-         ctx.fillStyle = hoverInfluence > 0.22 ? activeColor : baseColor;
-
+          ctx.fillStyle = hoverInfluence > 0.12 ? activeColor : baseColor;
 
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, Math.PI * 2);
