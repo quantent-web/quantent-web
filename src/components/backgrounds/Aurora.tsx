@@ -70,23 +70,19 @@ float snoise(vec2 v){
   return 130.0 * dot(m, g);
 }
 
-struct ColorStop {
-  vec3 color;
-  float position;
-};
-
-#define COLOR_RAMP(colors, factor, finalColor) {              \n  int index = 0;                                            \n  for (int i = 0; i < 2; i++) {                               \n     ColorStop currentColor = colors[i];                    \n     bool isInBetween = currentColor.position <= factor;    \n     index = int(mix(float(index), float(i), float(isInBetween))); \n  }                                                         \n  ColorStop currentColor = colors[index];                   \n  ColorStop nextColor = colors[index + 1];                  \n  float range = nextColor.position - currentColor.position; \n  float lerpFactor = (factor - currentColor.position) / range; \n  finalColor = mix(currentColor.color, nextColor.color, lerpFactor); \n}
+vec3 getRampColor(float factor) {
+  if (factor <= 0.5) {
+    float t = factor / 0.5;
+    return mix(uColorStops[0], uColorStops[1], t);
+  }
+  float t = (factor - 0.5) / 0.5;
+  return mix(uColorStops[1], uColorStops[2], t);
+}
 
 void main() {
   vec2 uv = vUv;
 
-  ColorStop colors[3];
-  colors[0] = ColorStop(uColorStops[0], 0.0);
-  colors[1] = ColorStop(uColorStops[1], 0.5);
-  colors[2] = ColorStop(uColorStops[2], 1.0);
-
-  vec3 rampColor;
-  COLOR_RAMP(colors, uv.x, rampColor);
+  vec3 rampColor = getRampColor(uv.x);
 
   float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
   height = exp(height);
