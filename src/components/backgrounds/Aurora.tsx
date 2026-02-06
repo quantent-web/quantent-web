@@ -1,6 +1,6 @@
 'use client';
 
-import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
+import { Renderer, Program, Mesh, Color, Plane } from 'ogl';
 import { useEffect, useRef } from 'react';
 
 import './Aurora.css';
@@ -149,7 +149,7 @@ export default function Aurora(props: AuroraProps) {
     }
     window.addEventListener('resize', resize);
 
-    const geometry = new Triangle(gl);
+    const geometry = new Plane(gl);
     if (geometry.attributes.uv) {
       delete geometry.attributes.uv;
     }
