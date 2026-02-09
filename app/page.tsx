@@ -5,6 +5,7 @@ import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
+import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 
 
@@ -697,9 +698,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </div>
         </section>
 
-        <footer className="footer">
-          <p className="muted">© {new Date().getFullYear()} QuantEnt</p>
-        </footer>
+        <Footer />
         </main>
       </div>
 
