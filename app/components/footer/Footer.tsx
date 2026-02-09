@@ -48,7 +48,7 @@ export default function Footer() {
         <div className="footer-top">
           <div className="footer-brand">
             <img src="/logo-quantent.svg" alt="QuantEnt logo" />
-            <span className="footer-brand__name" id="footer-heading">
+            <span className="sr-only" id="footer-heading">
               QuantEnt
             </span>
           </div>

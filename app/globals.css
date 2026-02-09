@@ -668,6 +668,8 @@ html[data-theme="dark"] .nav {
 .site-footer {
   padding-top: var(--space-7);
   padding-bottom: var(--space-7);
+  display: flex;
+  justify-content: center;
 }
 
 .footer-card {
@@ -678,6 +680,7 @@ html[data-theme="dark"] .nav {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
+  width: 90%;
 }
 
 .footer-top {
@@ -709,7 +712,7 @@ html[data-theme="dark"] .nav {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: var(--space-3);
+  gap: var(--space-4);
   text-align: right;
 }
 
@@ -720,21 +723,28 @@ html[data-theme="dark"] .nav {
   color: var(--text-primary);
 }
 
+.footer-form__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
 .footer-form__subtitle {
   font-size: 14px;
   color: var(--text-secondary);
 }
 
 .footer-form__controls {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
 }
 
 .footer-form__controls input {
-  min-width: 260px;
-  padding: 12px 14px;
-  border-radius: calc(var(--radius) - 2px);
+  min-width: 320px;
+  padding: 14px 120px 14px 16px;
+  border-radius: 999px;
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text-primary);
@@ -750,6 +760,15 @@ html[data-theme="dark"] .nav {
   outline-offset: 2px;
   border-color: transparent;
   box-shadow: 0 0 0 4px rgba(5, 205, 152, 0.2);
+}
+
+.footer-form__controls .btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  padding: 10px 20px;
 }
 
 .footer-form__feedback {
@@ -867,9 +886,12 @@ html[data-theme="dark"] .nav {
   .footer-form__controls input {
     width: 100%;
     min-width: 0;
+    padding: 14px 16px;
   }
   .footer-form__controls .btn {
     width: 100%;
+    position: static;
+    transform: none;
   }
   .footer-bottom {
     flex-direction: column;
