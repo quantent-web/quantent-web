@@ -313,12 +313,17 @@ p {
   gap: var(--space-6);
 }
 
+.what-we-do-right {
+  display: grid;
+  gap: var(--space-5);
+}
+
 .what-we-do-right .section-kicker {
   margin-top: 0;
 }
 
 .what-we-do-right .section-note {
-  margin-top: var(--space-6);
+  margin-top: 0;
 }
 
 

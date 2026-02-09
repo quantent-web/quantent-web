@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import MagicBentoGrid from './components/effects/MagicBentoGrid';
@@ -30,13 +30,6 @@ export default function Home() {
     localStorage.setItem('theme', next);
     setIsDark(next === 'dark');
   };
-
-  const singleColumnGridStyle = {
-    '--mb-cols-base': 1,
-    '--mb-cols-md': 1,
-    '--mb-cols-lg': 1,
-    '--mb-cols-xl': 1,
-  } as CSSProperties;
 
   const navItems: NavItem[] = useMemo(
     () => [
@@ -250,11 +243,7 @@ if (burgerRef.current) ro.observe(burgerRef.current);
             <div className="what-we-do-right">
               <p className="section-kicker">We help organizations:</p>
 
-              <MagicBentoGrid
-                variant="auto"
-                sectionId="what-we-do"
-                style={singleColumnGridStyle}
-              >
+              <MagicBentoGrid variant="4" sectionId="what-we-do">
                 <div className="card">
                   <h3 className="card-title">System Analysis</h3>
                   <p className="card-text">
