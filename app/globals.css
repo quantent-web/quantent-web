@@ -686,57 +686,6 @@ html[data-theme="dark"] .nav {
   max-width: 480px;
 }
 
-.contact-stepper {
-  display: grid;
-  gap: 12px;
-}
-
-.contact-step {
-  display: grid;
-  grid-template-columns: 36px 1fr;
-  gap: 12px;
-  align-items: center;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-secondary);
-  border: 1px solid transparent;
-}
-
-.contact-step-index {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-}
-
-.contact-step.is-active {
-  border-color: rgba(124, 255, 103, 0.4);
-  color: var(--text-primary);
-  background: rgba(124, 255, 103, 0.08);
-}
-
-.contact-step.is-complete {
-  color: var(--text-primary);
-}
-
-.contact-step-label {
-  font-size: 14px;
-}
-
-.contact-step-body {
-  background: rgba(5, 6, 6, 0.6);
-  border-radius: 18px;
-  padding: clamp(16px, 2.5vw, 24px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  max-height: 42vh;
-  overflow-y: auto;
-}
-
 .contact-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -828,12 +777,6 @@ html[data-theme="dark"] .nav {
   color: #ffd2c6;
 }
 
-.contact-step-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
 @media (max-width: 720px) {
   .contact-modal-card {
     width: 100%;
@@ -843,10 +786,6 @@ html[data-theme="dark"] .nav {
   .contact-form-grid,
   .review-grid {
     grid-template-columns: 1fr;
-  }
-
-  .contact-step-body {
-    max-height: 50vh;
   }
 }
 /* Seguridad: si la pantalla es pequeña, el nav ancho no debe causar problemas */

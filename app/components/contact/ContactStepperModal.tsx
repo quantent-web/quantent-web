@@ -1,13 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-
-const steps = [
-  { id: 'contact', label: 'Contact details' },
-  { id: 'company', label: 'Company info' },
-  { id: 'needs', label: 'Project needs' },
-  { id: 'review', label: 'Review & send' },
-];
+import Stepper, { Step } from '../Stepper/Stepper';
 
 type ContactFormState = {
   firstName: string;
@@ -29,10 +23,10 @@ type ContactStepperModalProps = {
 };
 
 export default function ContactStepperModal({ open, onClose }: ContactStepperModalProps) {
-  const [stepIndex, setStepIndex] = useState(0);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [touched, setTouched] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
   const [formState, setFormState] = useState<ContactFormState>({
     firstName: '',
     lastName: '',
@@ -67,10 +61,10 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
 
   useEffect(() => {
     if (open) return;
-    setStepIndex(0);
     setStatus('idle');
     setTouched(false);
     setErrorMessage('');
+    setCurrentStep(1);
   }, [open]);
 
   const handleChange = <K extends keyof ContactFormState>(key: K, value: ContactFormState[K]) => {
@@ -78,30 +72,19 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
   };
 
   const isStepValid = useMemo(() => {
-    switch (stepIndex) {
-      case 0:
-        return Boolean(formState.firstName && formState.lastName && formState.email);
+    switch (currentStep) {
       case 1:
-        return Boolean(formState.company && formState.role && formState.companySize);
+        return Boolean(formState.firstName && formState.lastName && formState.email);
       case 2:
-        return Boolean(formState.productInterest && formState.timeline && formState.message);
+        return Boolean(formState.company && formState.role && formState.companySize);
       case 3:
+        return Boolean(formState.productInterest && formState.timeline && formState.message);
+      case 4:
         return formState.consent;
       default:
         return false;
     }
-  }, [formState, stepIndex]);
-
-  const goNext = () => {
-    setTouched(true);
-    if (!isStepValid) return;
-    setStepIndex((prev) => Math.min(prev + 1, steps.length - 1));
-    setTouched(false);
-  };
-
-  const goBack = () => {
-    setStepIndex((prev) => Math.max(prev - 1, 0));
-  };
+  }, [formState, currentStep]);
 
   const handleSubmit = async () => {
     setTouched(true);
@@ -153,22 +136,20 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
             </p>
           </header>
 
-          <div className="contact-stepper">
-            {steps.map((step, index) => (
-              <div
-                key={step.id}
-                className={`contact-step ${index === stepIndex ? 'is-active' : ''} ${
-                  index < stepIndex ? 'is-complete' : ''
-                }`}
-              >
-                <span className="contact-step-index">{index + 1}</span>
-                <span className="contact-step-label">{step.label}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="contact-step-body">
-            {stepIndex === 0 && (
+          <Stepper
+            initialStep={1}
+            onStepChange={(step) => {
+              setCurrentStep(step);
+              setTouched(false);
+            }}
+            onFinalStepCompleted={handleSubmit}
+            backButtonText="Previous"
+            nextButtonText="Next"
+            nextButtonProps={{
+              disabled: status === 'submitting' || !isStepValid,
+            }}
+          >
+            <Step>
               <div className="contact-form-grid">
                 <div className="field">
                   <label htmlFor="firstName">First name</label>
@@ -217,9 +198,9 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
                   />
                 </div>
               </div>
-            )}
+            </Step>
 
-            {stepIndex === 1 && (
+            <Step>
               <div className="contact-form-grid">
                 <div className="field">
                   <label htmlFor="company">Company</label>
@@ -264,9 +245,9 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
                   {touched && !formState.companySize && <span className="field-error">Required</span>}
                 </div>
               </div>
-            )}
+            </Step>
 
-            {stepIndex === 2 && (
+            <Step>
               <div className="contact-form-grid">
                 <div className="field">
                   <label htmlFor="productInterest">Area of interest</label>
@@ -318,9 +299,9 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
                   {touched && !formState.message && <span className="field-error">Required</span>}
                 </div>
               </div>
-            )}
+            </Step>
 
-            {stepIndex === 3 && (
+            <Step>
               <div className="contact-review">
                 <div className="review-grid">
                   <div>
@@ -363,36 +344,17 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
                 </label>
                 {touched && !formState.consent && <span className="field-error">Consent required</span>}
 
-                {status === 'success' && (
-                  <div className="contact-success">
-                    <strong>Thanks — we received your request.</strong>
-                    <p>Our team will reach out shortly.</p>
-                  </div>
-                )}
-                {status === 'error' && <div className="contact-error">{errorMessage}</div>}
               </div>
-            )}
-          </div>
+            </Step>
+          </Stepper>
 
-          <div className="contact-step-actions">
-            <button className="btn btn-secondary" type="button" onClick={goBack} disabled={stepIndex === 0}>
-              Back
-            </button>
-            {stepIndex < steps.length - 1 ? (
-              <button className="btn btn-primary" type="button" onClick={goNext}>
-                Next
-              </button>
-            ) : (
-              <button
-                className="btn btn-primary"
-                type="button"
-                onClick={handleSubmit}
-                disabled={status === 'submitting' || status === 'success'}
-              >
-                {status === 'submitting' ? 'Sending...' : status === 'success' ? 'Sent' : 'Send message'}
-              </button>
-            )}
-          </div>
+          {status === 'success' && (
+            <div className="contact-success">
+              <strong>Thanks — we received your request.</strong>
+              <p>Our team will reach out shortly.</p>
+            </div>
+          )}
+          {status === 'error' && <div className="contact-error">{errorMessage}</div>}
         </div>
       </div>
     </div>
