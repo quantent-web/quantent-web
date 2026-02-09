@@ -21,6 +21,7 @@ export default function Home() {
   const [useBurger, setUseBurger] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [activeHref, setActiveHref] = useState('#home');
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   const setTheme = (next: 'light' | 'dark') => {
     document.documentElement.dataset.theme = next;
@@ -196,6 +197,8 @@ export default function Home() {
       setMenuOpen(false);
     }
   };
+  const openContact = () => setIsContactOpen(true);
+  const closeContact = () => setIsContactOpen(false);
 
   return (
     <>
