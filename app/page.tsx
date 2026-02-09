@@ -21,7 +21,6 @@ export default function Home() {
   const [useBurger, setUseBurger] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
-  const [activeHref, setActiveHref] = useState('#home');
 
   const setTheme = (next: 'light' | 'dark') => {
     document.documentElement.dataset.theme = next;
@@ -45,6 +44,7 @@ export default function Home() {
     ],
     []
   );
+  const [activeHref, setActiveHref] = useState('#home');
 
   // Cierra menú con ESC
   useEffect(() => {
@@ -193,12 +193,6 @@ export default function Home() {
   const closeMenu = () => setMenuOpen(false);
   const openContact = () => setIsContactOpen(true);
   const closeContact = () => setIsContactOpen(false);
-  const handleNavClick = (href: string) => {
-    setActiveHref(href);
-    if (menuOpen) {
-      setMenuOpen(false);
-    }
-  };
 
   return (
     <>
@@ -239,7 +233,12 @@ export default function Home() {
                     key={item.href}
                     href={item.href}
                     className={activeHref === item.href ? 'nav-link-active' : ''}
-                    onClick={() => handleNavClick(item.href)}
+                    onClick={() => {
+                      setActiveHref(item.href);
+                      if (menuOpen) {
+                        setMenuOpen(false);
+                      }
+                    }}
                   >
                     {item.label}
                   </a>
@@ -799,7 +798,12 @@ export default function Home() {
               key={item.href}
               href={item.href}
               className={activeHref === item.href ? 'nav-link-active' : ''}
-              onClick={() => handleNavClick(item.href)}
+              onClick={() => {
+                setActiveHref(item.href);
+                if (menuOpen) {
+                  setMenuOpen(false);
+                }
+              }}
             >
               {item.label}
             </a>
