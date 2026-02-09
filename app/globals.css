@@ -439,9 +439,11 @@ html[data-theme="dark"] .nav {
   background: transparent;
 }
 
-/* Activo (si añades esta clase al link actual) */
-.nav-links a.is-active {
-  color: var(--primary); /* verde */
+/* Activo */
+.nav-links a.nav-link-active {
+  color: #ffffff;
+  font-weight: 600;
+  font-family: "Spline Sans Mono", monospace;
 }
 
 .is-hidden {
@@ -590,9 +592,11 @@ html[data-theme="dark"] .nav {
   color: var(--text-primary);
 }
 
-/* Activo drawer (si añades esta clase al link actual) */
-.drawer-nav a.is-active {
-  color: var(--primary); /* verde */
+/* Activo drawer */
+.drawer-nav a.nav-link-active {
+  color: #ffffff;
+  font-weight: 600;
+  font-family: "Spline Sans Mono", monospace;
 }
 /* Seguridad: si la pantalla es pequeña, el nav ancho no debe causar problemas */
 @media (max-width: 640px) {

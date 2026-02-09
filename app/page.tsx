@@ -6,13 +6,11 @@ import BlurText from './components/BlurText/BlurText';
 import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 
-
 type NavItem = { label: string; href: string };
 
 export default function Home() {
   const navRef = useRef<HTMLElement | null>(null);
 
-  
   const navInnerRef = useRef<HTMLDivElement | null>(null);
   const brandRef = useRef<HTMLAnchorElement | null>(null);
   const burgerRef = useRef<HTMLButtonElement | null>(null);
@@ -22,6 +20,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [activeHref, setActiveHref] = useState('#home');
 
   const setTheme = (next: 'light' | 'dark') => {
     document.documentElement.dataset.theme = next;
@@ -31,6 +30,7 @@ export default function Home() {
 
   const navItems: NavItem[] = useMemo(
     () => [
+      { label: 'Home', href: '#home' },
       { label: 'What we do', href: '#what-we-do' },
       { label: 'Different', href: '#different' },
       { label: 'Products', href: '#products' },
@@ -44,8 +44,6 @@ export default function Home() {
     ],
     []
   );
-
-  
 
   // Cierra menú con ESC
   useEffect(() => {
@@ -66,6 +64,69 @@ export default function Home() {
       document.body.style.overflow = '';
     };
   }, [menuOpen]);
+
+  // Scroll spy usando IntersectionObserver para activar links
+  useEffect(() => {
+    const sectionIds = navItems
+      .map((item) => item.href.replace('#', ''))
+      .filter(Boolean);
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    if (!sections.length) return;
+
+    const ratios = new Map<string, number>();
+    const updateActive = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+
+      if (scrollTop <= 8) {
+        setActiveHref('#home');
+        return;
+      }
+
+      if (scrollTop + windowHeight >= docHeight - 8) {
+        setActiveHref(`#${sectionIds[sectionIds.length - 1]}`);
+        return;
+      }
+
+      let bestId = sectionIds[0];
+      let bestRatio = 0;
+      for (const id of sectionIds) {
+        const ratio = ratios.get(id) ?? 0;
+        if (ratio > bestRatio) {
+          bestRatio = ratio;
+          bestId = id;
+        }
+      }
+
+      if (bestRatio >= 0.4) {
+        setActiveHref(`#${bestId}`);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          ratios.set(entry.target.id, entry.intersectionRatio);
+        });
+        updateActive();
+      },
+      {
+        rootMargin: '0px 0px -20% 0px',
+        threshold: [0, 0.25, 0.4, 0.6, 1],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    updateActive();
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [navItems]);
 
   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
@@ -113,14 +174,13 @@ export default function Home() {
     document.fonts?.ready?.then(() => check());
 
 
-const ro = new ResizeObserver(() => check());
+    const ro = new ResizeObserver(() => check());
 
-if (navRef.current) ro.observe(navRef.current);
-if (navInnerRef.current) ro.observe(navInnerRef.current);
-if (brandRef.current) ro.observe(brandRef.current);
-if (burgerRef.current) ro.observe(burgerRef.current);
+    if (navRef.current) ro.observe(navRef.current);
+    if (navInnerRef.current) ro.observe(navInnerRef.current);
+    if (brandRef.current) ro.observe(brandRef.current);
+    if (burgerRef.current) ro.observe(burgerRef.current);
 
-    
     window.addEventListener('resize', check);
     return () => {
       cancelAnimationFrame(raf);
@@ -130,6 +190,12 @@ if (burgerRef.current) ro.observe(burgerRef.current);
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const handleNavClick = (href: string) => {
+    setActiveHref(href);
+    if (menuOpen) {
+      setMenuOpen(false);
+    }
+  };
 
   return (
     <>
@@ -166,7 +232,12 @@ if (burgerRef.current) ro.observe(burgerRef.current);
             >
               <div className="nav-links-row" ref={linksRef}>
                 {navItems.map((item) => (
-                  <a key={item.href} href={item.href}>
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={activeHref === item.href ? 'nav-link-active' : ''}
+                    onClick={() => handleNavClick(item.href)}
+                  >
                     {item.label}
                   </a>
                 ))}
@@ -721,7 +792,12 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 
         <nav className="drawer-nav" aria-label="Mobile navigation">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={closeMenu}>
+            <a
+              key={item.href}
+              href={item.href}
+              className={activeHref === item.href ? 'nav-link-active' : ''}
+              onClick={() => handleNavClick(item.href)}
+            >
               {item.label}
             </a>
           ))}
