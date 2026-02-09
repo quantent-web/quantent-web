@@ -308,10 +308,31 @@ p {
   color: var(--text-secondary);
 }
 
+.what-we-do-layout {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.what-we-do-right .section-kicker {
+  margin-top: 0;
+}
+
+.what-we-do-right .section-note {
+  margin-top: var(--space-6);
+}
+
+
 /* Responsive */
 @media (max-width: 1024px) {
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .what-we-do-layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
   }
 }
 
