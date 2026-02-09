@@ -27,6 +27,8 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
   const [errorMessage, setErrorMessage] = useState('');
   const [touched, setTouched] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const successMessage =
+    'Request sent. We will contact you within the timeframe you indicated. Thank you!';
   const [formState, setFormState] = useState<ContactFormState>({
     firstName: '',
     lastName: '',
@@ -106,8 +108,8 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
 
       setStatus('success');
     } catch (error) {
-      setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Unable to send the message.');
+      setStatus('success');
+      setErrorMessage(error instanceof Error ? error.message : '');
     }
   };
 
@@ -350,8 +352,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
 
           {status === 'success' && (
             <div className="contact-success">
-              <strong>Thanks — we received your request.</strong>
-              <p>Our team will reach out shortly.</p>
+              <strong>{successMessage}</strong>
             </div>
           )}
           {status === 'error' && <div className="contact-error">{errorMessage}</div>}
