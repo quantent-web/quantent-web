@@ -723,6 +723,11 @@ html[data-theme="dark"] body {
   color: var(--text-primary) !important;
 }
 
+.qe-aurora-content {
+  position: relative;
+  z-index: 1;
+}
+
 
 /* =========================
    Theme toggle (switch)
