@@ -191,14 +191,14 @@ export default function Home() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const openContact = () => setIsContactOpen(true);
+  const closeContact = () => setIsContactOpen(false);
   const handleNavClick = (href: string) => {
     setActiveHref(href);
     if (menuOpen) {
       setMenuOpen(false);
     }
   };
-  const openContact = () => setIsContactOpen(true);
-  const closeContact = () => setIsContactOpen(false);
 
   return (
     <>
