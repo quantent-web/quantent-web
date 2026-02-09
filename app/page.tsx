@@ -5,6 +5,7 @@ import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
+import ContactStepperModal from './components/contact/ContactStepperModal';
 
 
 type NavItem = { label: string; href: string };
@@ -22,6 +23,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   const setTheme = (next: 'light' | 'dark') => {
     document.documentElement.dataset.theme = next;
@@ -130,6 +132,8 @@ if (burgerRef.current) ro.observe(burgerRef.current);
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const openContact = () => setIsContactOpen(true);
+  const closeContact = () => setIsContactOpen(false);
 
   return (
     <>
@@ -215,9 +219,9 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           </p>
 
           <div className="hero-actions">
-            <a className="btn btn-primary" href="#contact">
+            <button className="btn btn-primary" type="button" onClick={openContact}>
               Talk to Us
-            </a>
+            </button>
             <a className="btn btn-secondary" href="#what-we-do">
               What we do
             </a>
@@ -687,9 +691,9 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 
           <div className="cta-strip">
             <p className="cta-text">Start with QuantCertify</p>
-            <a className="btn btn-primary" href="#products">
+            <button className="btn btn-primary" type="button" onClick={openContact}>
               Products
-            </a>
+            </button>
           </div>
         </section>
 
@@ -727,6 +731,8 @@ if (burgerRef.current) ro.observe(burgerRef.current);
           ))}
         </nav>
       </aside>
+
+      <ContactStepperModal open={isContactOpen} onClose={closeContact} />
     </>
   );
 }
