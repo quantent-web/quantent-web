@@ -670,6 +670,11 @@ html[data-theme="dark"] .nav {
   padding-bottom: var(--space-7);
   display: flex;
   justify-content: center;
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .footer-card {
@@ -680,7 +685,7 @@ html[data-theme="dark"] .nav {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  width: 90%;
+  width: 95vw;
 }
 
 .footer-top {
@@ -700,8 +705,8 @@ html[data-theme="dark"] .nav {
 }
 
 .footer-brand img {
-  width: 44px;
-  height: 44px;
+  width: 220px;
+  height: auto;
 }
 
 .footer-brand__name {
@@ -743,7 +748,7 @@ html[data-theme="dark"] .nav {
 
 .footer-form__controls input {
   min-width: 320px;
-  padding: 14px 120px 14px 16px;
+  padding: 14px 140px 14px 16px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: transparent;
@@ -768,7 +773,7 @@ html[data-theme="dark"] .nav {
   top: 50%;
   transform: translateY(-50%);
   border-radius: 999px;
-  padding: 10px 20px;
+  padding: 12px 24px;
 }
 
 .footer-form__feedback {
@@ -866,8 +871,12 @@ html[data-theme="dark"] .nav {
   .cards-grid--3 {
     grid-template-columns: 1fr;
   }
+  .site-footer {
+    width: 100vw;
+  }
   .footer-card {
     padding: var(--space-6);
+    width: 100vw;
   }
   .footer-top {
     flex-direction: column;
@@ -900,6 +909,9 @@ html[data-theme="dark"] .nav {
   .footer-socials {
     width: 100%;
     justify-content: flex-start;
+  }
+  .footer-brand img {
+    width: 150px;
   }
   
 
