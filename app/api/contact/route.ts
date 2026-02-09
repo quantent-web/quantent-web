@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const to = process.env.CONTACT_TO;
+  const to = process.env.CONTACT_TO || 'aaron86mf@gmail.com';
   const from = process.env.CONTACT_FROM || user;
 
   if (!host || !port || !to || !from) {
