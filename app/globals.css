@@ -665,8 +665,165 @@ html[data-theme="dark"] .nav {
   font-size: 14px;
 }
 
-.footer {
+.site-footer {
+  padding-top: var(--space-7);
   padding-bottom: var(--space-7);
+}
+
+.footer-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 1.2);
+  padding: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-space-mono), ui-monospace, monospace;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.footer-brand img {
+  width: 44px;
+  height: 44px;
+}
+
+.footer-brand__name {
+  font-size: 20px;
+}
+
+.footer-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+  text-align: right;
+}
+
+.footer-form__title {
+  font-family: var(--font-space-mono), ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.footer-form__subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.footer-form__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.footer-form__controls input {
+  min-width: 260px;
+  padding: 12px 14px;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.footer-form__controls input::placeholder {
+  color: var(--text-secondary);
+}
+
+.footer-form__controls input:focus-visible {
+  outline: 2px solid rgba(5, 205, 152, 0.9);
+  outline-offset: 2px;
+  border-color: transparent;
+  box-shadow: 0 0 0 4px rgba(5, 205, 152, 0.2);
+}
+
+.footer-form__feedback {
+  font-size: 13px;
+  color: var(--primary);
+}
+
+.footer-divider {
+  height: 1px;
+  width: 100%;
+  background: var(--divider);
+  opacity: 0.6;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.footer-socials__link {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.footer-socials__link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.footer-socials__link:hover,
+.footer-socials__link:focus-visible {
+  color: var(--primary);
+  border-color: rgba(5, 205, 152, 0.4);
+  background: rgba(5, 205, 152, 0.08);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.footer-socials__link:focus-visible {
+  box-shadow: 0 0 0 3px rgba(5, 205, 152, 0.2);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Responsive: ajusta grids y nav */
@@ -677,6 +834,9 @@ html[data-theme="dark"] .nav {
   .nav-links {
     gap: var(--space-2);
   }
+  .footer-top {
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 640px) {
@@ -686,6 +846,38 @@ html[data-theme="dark"] .nav {
   .cards-grid--2,
   .cards-grid--3 {
     grid-template-columns: 1fr;
+  }
+  .footer-card {
+    padding: var(--space-6);
+  }
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-form {
+    width: 100%;
+    align-items: stretch;
+    text-align: left;
+  }
+  .footer-form__controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .footer-form__controls input {
+    width: 100%;
+    min-width: 0;
+  }
+  .footer-form__controls .btn {
+    width: 100%;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-socials {
+    width: 100%;
+    justify-content: flex-start;
   }
   
 
