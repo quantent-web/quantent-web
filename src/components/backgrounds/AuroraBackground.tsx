@@ -19,6 +19,11 @@ type AuroraBackgroundProps = {
   className?: string;
   zIndex?: number;
   overlay?: boolean;
+  /**
+   * Offset from the top of the viewport. Use this to keep the aurora off the hero.
+   * Example: "100vh" starts after a full-screen hero.
+   */
+  topOffset?: string;
 };
 
 /**
@@ -32,6 +37,7 @@ export default function AuroraBackground({
   className = '',
   zIndex = 0,
   overlay = true,
+  topOffset = '100vh',
 }: AuroraBackgroundProps) {
   const pathname = usePathname();
   const isDisabledRoute = useMemo(
@@ -47,7 +53,7 @@ export default function AuroraBackground({
   return (
     <div
       className={`qe-aurora-background ${className}`}
-      style={{ zIndex }}
+      style={{ zIndex, top: topOffset }}
       aria-hidden="true"
     >
       <div className="qe-aurora-layer">
