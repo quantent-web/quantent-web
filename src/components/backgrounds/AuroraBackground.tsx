@@ -58,7 +58,7 @@ export default function AuroraBackground({
     >
       <div className="qe-aurora-layer">
         <Aurora
-          colorStops={['#7cff67', '#B19EEF', '#5227FF']}
+          colorStops={['#05CD98', '#34E0B0', '#0A8B6C']}
           blend={0.5}
           amplitude={1.0}
           speed={1}
