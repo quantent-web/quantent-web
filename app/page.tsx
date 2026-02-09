@@ -231,49 +231,54 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
-          <h2 className="section-title">What We Do</h2>
+          <div className="what-we-do-layout">
+            <div className="what-we-do-left">
+              <h2 className="section-title">What We Do</h2>
 
-          <p className="section-lead">
-            QuantEnt analyzes and certifies who can access what — and what that data
-            means — using quantitative models instead of static rules.
-          </p>
-
-          <p className="section-kicker">We help organizations:</p>
-
-          <MagicBentoGrid variant="auto" sectionId="what-we-do">
-            <div className="card">
-              <h3 className="card-title">System Analysis</h3>
-              <p className="card-text">
-                Analyze users, roles, entitlements, and data as interconnected systems.
+              <p className="section-lead">
+                QuantEnt analyzes and certifies who can access what — and what that data
+                means — using quantitative models instead of static rules.
               </p>
             </div>
 
-            <div className="card">
-              <h3 className="card-title">Quantitative Certification</h3>
-              <p className="card-text">
-                Certify access and meaning with mathematical rigor.
+            <div className="what-we-do-right">
+              <p className="section-kicker">We help organizations:</p>
+
+              <MagicBentoGrid variant="4" sectionId="what-we-do">
+                <div className="card">
+                  <h3 className="card-title">System Analysis</h3>
+                  <p className="card-text">
+                    Analyze users, roles, entitlements, and data as interconnected systems.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h3 className="card-title">Quantitative Certification</h3>
+                  <p className="card-text">
+                    Certify access and meaning with mathematical rigor.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h3 className="card-title">Risk Detection</h3>
+                  <p className="card-text">
+                    Detect drift, over-exposure, and structural risk early.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h3 className="card-title">Continuous Control</h3>
+                  <p className="card-text">
+                    Maintain control as systems, data, and organizations evolve.
+                  </p>
+                </div>
+              </MagicBentoGrid>
+              <p className="section-note">
+                QuantEnt is built for complex, regulated environments where correctness,
+                scale, and evolution matter.
               </p>
             </div>
-
-            <div className="card">
-              <h3 className="card-title">Risk Detection</h3>
-              <p className="card-text">
-                Detect drift, over-exposure, and structural risk early.
-              </p>
-            </div>
-
-            <div className="card">
-              <h3 className="card-title">Continuous Control</h3>
-              <p className="card-text">
-                Maintain control as systems, data, and organizations evolve.
-              </p>
-            </div>
-          </MagicBentoGrid>
-
-          <p className="section-note">
-            QuantEnt is built for complex, regulated environments where correctness,
-            scale, and evolution matter.
-          </p>
+          </div>
         </section>
 
         {/* WHAT MAKES DIFFERENT */}

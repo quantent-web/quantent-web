@@ -67,6 +67,7 @@ type Variant = 'auto' | '2' | '3' | '4' | '6' | '8';
 type MagicBentoGridProps = {
   children: ReactNode;
   className?: string;
+  style?: CSSProperties;
   variant?: Variant;
   disabled?: boolean;
   sectionId?: string;
@@ -549,6 +550,7 @@ const mergeClassNames = (...classes: Array<string | undefined>) =>
 const MagicBentoGrid = ({
   children,
   className,
+  style,
   variant = 'auto',
   disabled,
   sectionId,
@@ -642,6 +644,7 @@ const MagicBentoGrid = ({
             '--mb-cols-md': layout.md,
             '--mb-cols-lg': layout.lg,
             '--mb-cols-xl': layout.xl,
+            ...style,
           } as CSSProperties
         }
       >
