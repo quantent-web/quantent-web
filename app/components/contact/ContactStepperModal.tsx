@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import Aurora from '../Aurora/Aurora';
 
 const steps = [
   { id: 'contact', label: 'Contact details' },
@@ -145,15 +144,6 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
       </button>
 
       <div className="contact-modal-card" role="document">
-        <div className="contact-modal-aurora" aria-hidden="true">
-          <Aurora
-            colorStops={['#7cff67', '#B19EEF', '#5227FF']}
-            blend={0.5}
-            amplitude={1.0}
-            speed={1}
-          />
-        </div>
-
         <div className="contact-modal-content">
           <header className="contact-modal-header">
             <p className="contact-modal-eyebrow">QuantEnt Contact</p>

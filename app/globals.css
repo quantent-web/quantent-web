@@ -659,17 +659,7 @@ html[data-theme="dark"] .nav {
   flex-direction: column;
 }
 
-.contact-modal-aurora {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 .contact-modal-content {
-  position: relative;
-  z-index: 1;
   padding: clamp(20px, 3vw, 32px);
   display: flex;
   flex-direction: column;
