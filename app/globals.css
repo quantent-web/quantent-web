@@ -419,6 +419,14 @@ html[data-theme="dark"] .nav::before {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+html[data-theme="dark"] .nav-inner {
+  background: rgba(14, 20, 20, 0.5);
 }
 
 .nav-brand {
