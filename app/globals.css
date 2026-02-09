@@ -385,8 +385,6 @@ section[id] {
   z-index: 50;
   height: var(--nav-h);
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
@@ -395,16 +393,6 @@ html[data-theme="dark"] .nav {
   background: rgba(14, 20, 20, 0.7);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-}
-
-@supports not ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))) {
-  .nav {
-    background: rgba(255, 255, 255, 0.92);
-  }
-
-  html[data-theme="dark"] .nav {
-    background: rgba(14, 20, 20, 0.9);
-  }
 }
 
 /* Contenedor SOLO para NAV (más ancho que .container) */
@@ -467,9 +455,11 @@ html[data-theme="dark"] .nav {
   background: transparent;
 }
 
-/* Activo (si añades esta clase al link actual) */
-.nav-links a.is-active {
-  color: var(--primary); /* verde */
+/* Activo */
+.nav-links a.nav-link-active {
+  color: #ffffff;
+  font-weight: 600;
+  font-family: "Spline Sans Mono", monospace;
 }
 
 .is-hidden {
@@ -618,9 +608,11 @@ html[data-theme="dark"] .nav {
   color: var(--text-primary);
 }
 
-/* Activo drawer (si añades esta clase al link actual) */
-.drawer-nav a.is-active {
-  color: var(--primary); /* verde */
+/* Activo drawer */
+.drawer-nav a.nav-link-active {
+  color: #ffffff;
+  font-weight: 600;
+  font-family: "Spline Sans Mono", monospace;
 }
 
 /* =========================
