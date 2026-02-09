@@ -20,8 +20,8 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
   const [isDark, setIsDark] = useState(false);
-  const [activeHref, setActiveHref] = useState('#home');
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState('#home');
 
   const setTheme = (next: 'light' | 'dark') => {
     document.documentElement.dataset.theme = next;
