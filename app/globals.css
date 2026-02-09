@@ -877,6 +877,7 @@ html[data-theme="dark"] .nav {
   .footer-card {
     padding: var(--space-6);
     width: 100vw;
+    border-radius: 0;
   }
   .footer-top {
     flex-direction: column;
@@ -912,6 +913,9 @@ html[data-theme="dark"] .nav {
   }
   .footer-brand img {
     width: 150px;
+  }
+  .site-footer {
+    padding-bottom: 0;
   }
   
 
