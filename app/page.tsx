@@ -133,100 +133,70 @@ if (burgerRef.current) ro.observe(burgerRef.current);
 
   return (
     <>
-{/* STICKY NAV + DOT GRID BACKGROUND */}
-<div className="header-bg">
-  {/* DotGrid fondo */}
-  <div className="header-bg__grid">
- <DotGrid
-    dotSize={5}
-    gap={15}
-    baseColor="#253535"
-    activeColor="#05CD98"
-    proximity={200}
-    style={{}}
-/>
-  </div>
-
-  {/* STICKY NAV */}
-  <header className="nav header-bg__nav" ref={navRef}>
-    <div className="nav-inner nav-container" ref={navInnerRef}>
-      <a
-        className="nav-brand"
-        href="#top"
-        aria-label="Go to top"
-        ref={brandRef}
-      >
-        <img src="/logo-quantent.svg" alt="QuantEnt logo" />
-      </a>
-
-      {/* Links desktop */}
-      <nav
-        className={`nav-links ${useBurger ? "is-hidden" : ""}`}
-        aria-label="Primary"
-      >
-        <div className="nav-links-row" ref={linksRef}>
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </div>
-      </nav>
-
-      {/* Toggle tema */}
-      <Switch
-        checked={isDark}
-        onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-        ariaLabel="Toggle theme"
-      />
-
-      {/* Botón hamburguesa */}
-      <button
-        ref={burgerRef}
-        className={`nav-burger ${useBurger ? "" : "is-invisible"}`}
-        type="button"
-        aria-label="Open menu"
-        aria-haspopup="dialog"
-        aria-expanded={menuOpen}
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        <span className="burger-lines" aria-hidden="true" />
-      </button>
-    </div>
-  </header>
-</div>
-
-      {/* Overlay */}
-      <div
-        className={`drawer-overlay ${menuOpen ? 'is-open' : ''}`}
-        onClick={closeMenu}
-      />
-
-      {/* Drawer right */}
-      <aside className={`drawer ${menuOpen ? 'is-open' : ''}`} role="dialog" aria-label="Navigation menu">
-        <div className="drawer-header">
-          <span className="drawer-title">Menu</span>
-          <button
-            className="drawer-close"
-            type="button"
-            aria-label="Close menu"
-            onClick={closeMenu}
-          >
-            <span aria-hidden="true">✕</span>
-          </button>
+      {/* STICKY NAV + DOT GRID BACKGROUND */}
+      <div className="header-bg">
+        {/* DotGrid fondo */}
+        <div className="header-bg__grid">
+          <DotGrid
+            dotSize={5}
+            gap={15}
+            baseColor="#253535"
+            activeColor="#05CD98"
+            proximity={200}
+            style={{}}
+          />
         </div>
 
-        <nav className="drawer-nav" aria-label="Mobile navigation">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={closeMenu}>
-              {item.label}
+        {/* STICKY NAV */}
+        <header className="nav header-bg__nav" ref={navRef}>
+          <div className="nav-inner nav-container" ref={navInnerRef}>
+            <a
+              className="nav-brand"
+              href="#top"
+              aria-label="Go to top"
+              ref={brandRef}
+            >
+              <img src="/logo-quantent.svg" alt="QuantEnt logo" />
             </a>
-          ))}
-        </nav>
-      </aside>
 
-      {/* CONTENT */}
-      <main id="top" className="container">
+            {/* Links desktop */}
+            <nav
+              className={`nav-links ${useBurger ? "is-hidden" : ""}`}
+              aria-label="Primary"
+            >
+              <div className="nav-links-row" ref={linksRef}>
+                {navItems.map((item) => (
+                  <a key={item.href} href={item.href}>
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </nav>
+
+            {/* Toggle tema */}
+            <Switch
+              checked={isDark}
+              onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+              ariaLabel="Toggle theme"
+            />
+
+            {/* Botón hamburguesa */}
+            <button
+              ref={burgerRef}
+              className={`nav-burger ${useBurger ? "" : "is-invisible"}`}
+              type="button"
+              aria-label="Open menu"
+              aria-haspopup="dialog"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
+              <span className="burger-lines" aria-hidden="true" />
+            </button>
+          </div>
+        </header>
+
+        {/* CONTENT */}
+        <main id="top" className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
      <BlurText
@@ -726,7 +696,37 @@ if (burgerRef.current) ro.observe(burgerRef.current);
         <footer className="footer">
           <p className="muted">© {new Date().getFullYear()} QuantEnt</p>
         </footer>
-      </main>
+        </main>
+      </div>
+
+      {/* Overlay */}
+      <div
+        className={`drawer-overlay ${menuOpen ? 'is-open' : ''}`}
+        onClick={closeMenu}
+      />
+
+      {/* Drawer right */}
+      <aside className={`drawer ${menuOpen ? 'is-open' : ''}`} role="dialog" aria-label="Navigation menu">
+        <div className="drawer-header">
+          <span className="drawer-title">Menu</span>
+          <button
+            className="drawer-close"
+            type="button"
+            aria-label="Close menu"
+            onClick={closeMenu}
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+        </div>
+
+        <nav className="drawer-nav" aria-label="Mobile navigation">
+          {navItems.map((item) => (
+            <a key={item.href} href={item.href} onClick={closeMenu}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </aside>
     </>
   );
 }
