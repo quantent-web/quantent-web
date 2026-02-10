@@ -1,4 +1,6 @@
 .dotgrid-wrap {
+  --dotgrid-base: var(--muted-foreground);
+  --dotgrid-active: var(--primary);
   position: absolute;
   inset: 0;
   pointer-events: none;

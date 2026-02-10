@@ -1,19 +1,27 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './DotGrid.css';
 
-function hexToRgb(hex) {
-  const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
-  if (!m) return { r: 0, g: 0, b: 0 };
-  return { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) };
+function colorToRgb(color) {
+  const hex = color.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+  if (hex) {
+    return { r: parseInt(hex[1], 16), g: parseInt(hex[2], 16), b: parseInt(hex[3], 16) };
+  }
+
+  const rgb = color.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+  if (rgb) {
+    return { r: Number(rgb[1]), g: Number(rgb[2]), b: Number(rgb[3]) };
+  }
+
+  return { r: 0, g: 0, b: 0 };
 }
 
 export default function DotGrid({
   dotSize = 5,
   gap = 15,
-  baseColor = '#182323',
-  activeColor = '#05CD98',
+  baseColor = 'var(--dotgrid-base)',
+  activeColor = 'var(--dotgrid-active)',
   proximity = 120,
 
   // shock config (click)
@@ -39,8 +47,6 @@ export default function DotGrid({
   const lastMoveRef = useRef({ x: -99999, y: -99999, t: 0, inside: false });
   const lastShockAtRef = useRef(0);
 
-  const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
-  const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -51,6 +57,21 @@ export default function DotGrid({
     if (!ctx) return;
 
     let rafId = 0;
+
+    const resolveCssColor = (value) => {
+      const varMatch = value.match(/^var\((--[^)]+)\)$/);
+      if (!varMatch) return value;
+
+      const varName = varMatch[1];
+      const fromWrap = getComputedStyle(wrap).getPropertyValue(varName).trim();
+      const fromRoot = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+      return fromWrap || fromRoot || value;
+    };
+
+    const resolvedBaseColor = resolveCssColor(baseColor);
+    const resolvedActiveColor = resolveCssColor(activeColor);
+    const baseRgb = colorToRgb(resolvedBaseColor);
+    const activeRgb = colorToRgb(resolvedActiveColor);
 
     const resize = () => {
       const { width, height } = wrap.getBoundingClientRect();
@@ -98,7 +119,7 @@ export default function DotGrid({
           const dy = cy - py;
           const dsq = dx * dx + dy * dy;
 
-          let fill = baseColor;
+          let fill = resolvedBaseColor;
 
           if (dsq <= proxSq) {
             const dist = Math.sqrt(dsq);
@@ -228,8 +249,6 @@ const push = shockStrength * k * punch;
     baseColor,
     activeColor,
     proximity,
-    baseRgb,
-    activeRgb,
     shockRadius,
     shockStrength,
     shockDuration,
