@@ -70,6 +70,41 @@ a {
 
   /* Radius */
   --radius: 14px;
+
+  /* Compatibility aliases (semantic) */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-border: var(--border);
+  --color-divider: var(--divider);
+
+  /* shadcn/ui compatible aliases */
+  --background: var(--bg);
+  --foreground: var(--text-primary);
+
+  --card: var(--surface);
+  --card-foreground: var(--text-primary);
+
+  --popover: var(--surface);
+  --popover-foreground: var(--text-primary);
+
+  --primary-foreground: var(--primary-contrast);
+
+  --secondary: var(--surface);
+  --secondary-foreground: var(--text-primary);
+
+  --muted: var(--surface);
+  --muted-foreground: var(--text-secondary);
+
+  --accent: var(--surface);
+  --accent-foreground: var(--text-primary);
+
+  --destructive: var(--error);
+  --destructive-foreground: #ffffff;
+
+  --input: var(--border);
+  --ring: var(--primary);
 }
 
 /* =========================
@@ -98,6 +133,43 @@ html[data-theme="dark"] {
   --warning: #ffd700;
   --success: #05cd34;
   --info: #059ecd;
+
+  /* Compatibility aliases (semantic) */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-border: var(--border);
+  --color-divider: var(--divider);
+
+  /* shadcn/ui compatible aliases */
+  --background: var(--bg);
+  --foreground: var(--text-primary);
+
+  --card: var(--surface);
+  --card-foreground: var(--text-primary);
+
+  --popover: var(--surface);
+  --popover-foreground: var(--text-primary);
+
+  --primary-foreground: var(--primary-contrast);
+
+  --secondary: var(--surface);
+  --secondary-foreground: var(--text-primary);
+
+  --muted: var(--surface);
+  --muted-foreground: var(--text-secondary);
+
+  --accent: var(--surface);
+  --accent-foreground: var(--text-primary);
+
+  --destructive: var(--error);
+  --destructive-foreground: #ffffff;
+
+  --input: var(--border);
+  --ring: var(--primary);
+
+  --radius: 14px;
 }
 
 /* =========================
