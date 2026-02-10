@@ -5,7 +5,6 @@ import {
   type ElementType,
   type ReactElement,
   type ReactNode,
-  type RefObject,
   Children,
   isValidElement,
   useCallback,
@@ -19,7 +18,6 @@ import styles from './MagicBentoGrid.module.css';
 import { magicBentoConfig } from '@/src/config/magicBento';
 
 const DEFAULT_PARTICLE_COUNT = 12;
-const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = '5, 205, 152';
 
 const createParticleElement = (x: number, y: number, color = DEFAULT_GLOW_COLOR) => {
@@ -38,28 +36,6 @@ const createParticleElement = (x: number, y: number, color = DEFAULT_GLOW_COLOR)
     top: ${y}px;
   `;
   return el;
-};
-
-const calculateSpotlightValues = (radius: number) => ({
-  proximity: radius * 0.5,
-  fadeDistance: radius * 0.75,
-});
-
-const updateCardGlowProperties = (
-  card: HTMLElement,
-  mouseX: number,
-  mouseY: number,
-  glow: number,
-  radius: number
-) => {
-  const rect = card.getBoundingClientRect();
-  const relativeX = ((mouseX - rect.left) / rect.width) * 100;
-  const relativeY = ((mouseY - rect.top) / rect.height) * 100;
-
-  card.style.setProperty('--glow-x', `${relativeX}%`);
-  card.style.setProperty('--glow-y', `${relativeY}%`);
-  card.style.setProperty('--glow-intensity', glow.toString());
-  card.style.setProperty('--glow-radius', `${radius}px`);
 };
 
 type Variant = 'auto' | '2' | '3' | '4' | '6' | '8';
@@ -218,6 +194,7 @@ const MagicBentoCard = ({
     const handleMouseEnter = () => {
       isHoveredRef.current = true;
       animateParticles();
+      element.style.setProperty('--glow-intensity', '1');
 
       if (enableTilt) {
         gsap.to(element, {
@@ -233,6 +210,7 @@ const MagicBentoCard = ({
     const handleMouseLeave = () => {
       isHoveredRef.current = false;
       clearAllParticles();
+      element.style.setProperty('--glow-intensity', '0');
 
       if (enableTilt) {
         gsap.to(element, {
@@ -261,6 +239,12 @@ const MagicBentoCard = ({
       const y = event.clientY - rect.top;
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
+
+      const relativeX = (x / rect.width) * 100;
+      const relativeY = (y / rect.height) * 100;
+      element.style.setProperty('--glow-x', `${relativeX}%`);
+      element.style.setProperty('--glow-y', `${relativeY}%`);
+      element.style.setProperty('--glow-intensity', '1');
 
       if (enableTilt) {
         const rotateX = ((y - centerY) / centerY) * -10;
@@ -367,145 +351,6 @@ const MagicBentoCard = ({
       {children}
     </Component>
   );
-};
-
-const GlobalSpotlight = ({
-  gridRef,
-  disableAnimations = false,
-  enabled = true,
-  spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS,
-  glowColor = DEFAULT_GLOW_COLOR,
-}: {
-  gridRef: RefObject<HTMLDivElement | null>;
-  disableAnimations?: boolean;
-  enabled?: boolean;
-  spotlightRadius?: number;
-  glowColor?: string;
-}) => {
-  const spotlightRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (disableAnimations || !gridRef?.current || !enabled) return;
-
-    const spotlight = document.createElement('div');
-    spotlight.className = styles.globalSpotlight;
-    spotlight.style.cssText = `
-      position: fixed;
-      width: 800px;
-      height: 800px;
-      border-radius: 50%;
-      pointer-events: none;
-      background: radial-gradient(circle,
-        rgba(${glowColor}, 0.15) 0%,
-        rgba(${glowColor}, 0.08) 15%,
-        rgba(${glowColor}, 0.04) 25%,
-        rgba(${glowColor}, 0.02) 40%,
-        rgba(${glowColor}, 0.01) 65%,
-        transparent 70%
-      );
-      z-index: 200;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      mix-blend-mode: screen;
-    `;
-    document.body.appendChild(spotlight);
-    spotlightRef.current = spotlight;
-
-    const handleMouseMove = (event: MouseEvent) => {
-      if (!spotlightRef.current || !gridRef.current) return;
-
-      const section = gridRef.current.closest('[data-magic-bento-section]');
-      const rect = section?.getBoundingClientRect();
-      const mouseInside =
-        rect &&
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom;
-
-      const cards = gridRef.current.querySelectorAll<HTMLElement>('[data-magic-bento-card="true"]');
-
-      if (!mouseInside) {
-        gsap.to(spotlightRef.current, {
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-        cards.forEach(card => {
-          card.style.setProperty('--glow-intensity', '0');
-        });
-        return;
-      }
-
-      const { proximity, fadeDistance } = calculateSpotlightValues(spotlightRadius);
-      let minDistance = Infinity;
-
-      cards.forEach(cardElement => {
-        const cardRect = cardElement.getBoundingClientRect();
-        const centerX = cardRect.left + cardRect.width / 2;
-        const centerY = cardRect.top + cardRect.height / 2;
-        const distance =
-          Math.hypot(event.clientX - centerX, event.clientY - centerY) -
-          Math.max(cardRect.width, cardRect.height) / 2;
-        const effectiveDistance = Math.max(0, distance);
-
-        minDistance = Math.min(minDistance, effectiveDistance);
-
-        let glowIntensity = 0;
-        if (effectiveDistance <= proximity) {
-          glowIntensity = 1;
-        } else if (effectiveDistance <= fadeDistance) {
-          glowIntensity = (fadeDistance - effectiveDistance) / (fadeDistance - proximity);
-        }
-
-        updateCardGlowProperties(cardElement, event.clientX, event.clientY, glowIntensity, spotlightRadius);
-      });
-
-      gsap.to(spotlightRef.current, {
-        left: event.clientX,
-        top: event.clientY,
-        duration: 0.1,
-        ease: 'power2.out',
-      });
-
-      const targetOpacity =
-        minDistance <= proximity
-          ? 0.8
-          : minDistance <= fadeDistance
-            ? ((fadeDistance - minDistance) / (fadeDistance - proximity)) * 0.8
-            : 0;
-
-      gsap.to(spotlightRef.current, {
-        opacity: targetOpacity,
-        duration: targetOpacity > 0 ? 0.2 : 0.5,
-        ease: 'power2.out',
-      });
-    };
-
-    const handleMouseLeave = () => {
-      gridRef.current?.querySelectorAll<HTMLElement>('[data-magic-bento-card="true"]').forEach(card => {
-        card.style.setProperty('--glow-intensity', '0');
-      });
-      if (spotlightRef.current) {
-        gsap.to(spotlightRef.current, {
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-      }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      spotlightRef.current?.parentNode?.removeChild(spotlightRef.current);
-    };
-  }, [gridRef, disableAnimations, enabled, spotlightRadius, glowColor]);
-
-  return null;
 };
 
 const getVariantFromCount = (count: number): Variant => {
@@ -623,34 +468,23 @@ const MagicBentoGrid = ({
   );
 
   return (
-    <>
-      {allowGlow && !shouldDisableAnimations && (
-        <GlobalSpotlight
-          gridRef={gridRef}
-          disableAnimations={shouldDisableAnimations}
-          enabled={allowGlow}
-          spotlightRadius={DEFAULT_SPOTLIGHT_RADIUS}
-          glowColor={DEFAULT_GLOW_COLOR}
-        />
-      )}
-      <div
-        ref={gridRef}
-        className={mergeClassNames(styles.magicBentoGrid, styles.bentoSection, className)}
-        data-magic-bento-section
-        data-section-id={sectionId}
-        style={
-          {
-            '--mb-cols-base': layout.base,
-            '--mb-cols-md': layout.md,
-            '--mb-cols-lg': layout.lg,
-            '--mb-cols-xl': layout.xl,
-            ...style,
-          } as CSSProperties
-        }
-      >
-        {isDisabled ? childrenArray : enhancedChildren}
-      </div>
-    </>
+    <div
+      ref={gridRef}
+      className={mergeClassNames(styles.magicBentoGrid, styles.bentoSection, className)}
+      data-magic-bento-section
+      data-section-id={sectionId}
+      style={
+        {
+          '--mb-cols-base': layout.base,
+          '--mb-cols-md': layout.md,
+          '--mb-cols-lg': layout.lg,
+          '--mb-cols-xl': layout.xl,
+          ...style,
+        } as CSSProperties
+      }
+    >
+      {isDisabled ? childrenArray : enhancedChildren}
+    </div>
   );
 };
 
