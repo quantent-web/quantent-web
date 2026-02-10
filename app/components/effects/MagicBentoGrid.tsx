@@ -232,8 +232,6 @@ const MagicBentoCard = ({
     };
 
     const handleMouseMove = (event: MouseEvent) => {
-      if (!enableTilt && !enableMagnetism) return;
-
       const rect = element.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
