@@ -61,20 +61,20 @@
   transition: all 350ms;
   border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
-  color: #a3a3a3;
+  color: var(--muted-foreground);
   cursor: pointer;
   background: transparent;
   border: 1px solid transparent;
 }
 
 .back-button:hover {
-  color: #e4e4e7;
+  color: var(--foreground);
 }
 
 .back-button.inactive {
   pointer-events: none;
   opacity: 0.5;
-  color: #a3a3a3;
+  color: var(--muted-foreground);
 }
 
 .next-button {
@@ -83,8 +83,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background-color: #05cd98;
-  color: #fff;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
   font-weight: 500;
   letter-spacing: -0.025em;
   padding: 0.5rem 1.1rem;
@@ -117,7 +117,7 @@
   height: 0.75rem;
   width: 0.75rem;
   border-radius: 9999px;
-  background-color: #fff;
+  background-color: var(--primary-foreground);
 }
 
 .step-number {
@@ -132,7 +132,7 @@
   flex: 1;
   overflow: hidden;
   border-radius: 0.25rem;
-  background-color: #1e3d36;
+  background-color: var(--border);
 }
 
 .step-connector-inner {
@@ -145,7 +145,7 @@
 .check-icon {
   height: 1rem;
   width: 1rem;
-  color: #fff;
+  color: var(--primary-foreground);
 }
 
 @media (max-width: 720px) {
