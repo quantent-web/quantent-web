@@ -205,8 +205,6 @@ export default function Home() {
           <DotGrid
             dotSize={5}
             gap={15}
-            baseColor="#253535"
-            activeColor="#05CD98"
             proximity={200}
             style={{}}
           />
