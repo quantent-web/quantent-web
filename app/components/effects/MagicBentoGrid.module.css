@@ -40,6 +40,26 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
+.magicBentoCard::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--glow-intensity, 0);
+  transition: opacity 150ms ease;
+  background: radial-gradient(
+    600px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(var(--primary-rgb), 0.18),
+    transparent 60%
+  );
+}
+
+.magicBentoCard > * {
+  position: relative;
+  z-index: 1;
+}
+
 .magicBentoCardBorderGlow::after {
   content: '';
   position: absolute;

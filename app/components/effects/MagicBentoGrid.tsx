@@ -238,10 +238,8 @@ const MagicBentoCard = ({
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const relativeX = (x / rect.width) * 100;
-      const relativeY = (y / rect.height) * 100;
-      element.style.setProperty('--glow-x', `${relativeX}%`);
-      element.style.setProperty('--glow-y', `${relativeY}%`);
+      element.style.setProperty('--glow-x', `${x}px`);
+      element.style.setProperty('--glow-y', `${y}px`);
       element.style.setProperty('--glow-intensity', '1');
 
       if (enableTilt) {
