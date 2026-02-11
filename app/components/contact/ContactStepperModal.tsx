@@ -25,7 +25,7 @@ type ContactStepperModalProps = {
 
 export default function ContactStepperModal({ open, onClose }: ContactStepperModalProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [touched, setTouched] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const successMessage =
@@ -67,7 +67,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     if (open) return;
     setStatus('idle');
     setTouched(false);
-    setErrorMessage('');
+    setSubmitError(null);
     setCurrentStep(1);
   }, [open]);
 
@@ -94,7 +94,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     setTouched(true);
     if (!isStepValid) return;
     setStatus('submitting');
-    setErrorMessage('');
+    setSubmitError(null);
 
     try {
       const response = await fetch('/api/contact', {
@@ -104,14 +104,15 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
       });
 
       if (!response.ok) {
-        const payload = await response.json().catch(() => ({}));
-        throw new Error(payload?.error || 'Something went wrong.');
+        setStatus('error');
+        setSubmitError('Something went wrong. Please try again.');
+        return;
       }
 
       setStatus('success');
     } catch (error) {
-      setStatus('success');
-      setErrorMessage(error instanceof Error ? error.message : '');
+      setStatus('error');
+      setSubmitError('Something went wrong. Please try again.');
     }
   };
 
@@ -369,7 +370,11 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
               <strong>{successMessage}</strong>
             </div>
           )}
-          {status === 'error' && <div className="contact-error">{errorMessage}</div>}
+          {submitError && (
+            <small className="muted" role="alert">
+              {submitError}
+            </small>
+          )}
         </div>
       </div>
     </div>
