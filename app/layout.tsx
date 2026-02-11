@@ -59,7 +59,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${splineSansMono.variable} ${poppins.variable}`}>
-        {children}
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
+        <main id="main-content">{children}</main>
       </body>
     </html>
   );
