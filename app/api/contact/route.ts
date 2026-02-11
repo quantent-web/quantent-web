@@ -28,6 +28,20 @@ const escapeHtml = (value: string) =>
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
 
+const trimIfString = (value: unknown) =>
+  typeof value === 'string' ? value.trim() : value;
+
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+const MAX_LENGTHS = {
+  firstName: 80,
+  lastName: 80,
+  email: 120,
+  company: 120,
+  role: 120,
+  message: 2000,
+} as const;
+
 export async function POST(request: Request) {
   let payload: Partial<ContactPayload>;
 
@@ -37,18 +51,44 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
   }
 
+  const firstName = trimIfString(payload?.firstName);
+  const lastName = trimIfString(payload?.lastName);
+  const email = trimIfString(payload?.email);
+  const phone = trimIfString(payload?.phone);
+  const company = trimIfString(payload?.company);
+  const role = trimIfString(payload?.role);
+  const companySize = trimIfString(payload?.companySize);
+  const productInterest = trimIfString(payload?.productInterest);
+  const timeline = trimIfString(payload?.timeline);
+  const message = trimIfString(payload?.message);
+
   if (
-    !isNonEmptyString(payload?.firstName) ||
-    !isNonEmptyString(payload?.lastName) ||
-    !isNonEmptyString(payload?.email) ||
-    !isNonEmptyString(payload?.company) ||
-    !isNonEmptyString(payload?.role) ||
-    !isNonEmptyString(payload?.companySize) ||
-    !isNonEmptyString(payload?.productInterest) ||
-    !isNonEmptyString(payload?.timeline) ||
-    !isNonEmptyString(payload?.message) ||
+    !isNonEmptyString(firstName) ||
+    !isNonEmptyString(lastName) ||
+    !isNonEmptyString(email) ||
+    !isNonEmptyString(company) ||
+    !isNonEmptyString(role) ||
+    !isNonEmptyString(companySize) ||
+    !isNonEmptyString(productInterest) ||
+    !isNonEmptyString(timeline) ||
+    !isNonEmptyString(message) ||
     payload?.consent !== true
   ) {
+    return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+  }
+
+  if (
+    firstName.length > MAX_LENGTHS.firstName ||
+    lastName.length > MAX_LENGTHS.lastName ||
+    email.length > MAX_LENGTHS.email ||
+    company.length > MAX_LENGTHS.company ||
+    role.length > MAX_LENGTHS.role ||
+    message.length > MAX_LENGTHS.message
+  ) {
+    return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+  }
+
+  if (!isValidEmail(email)) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
   }
 
@@ -81,22 +121,13 @@ export async function POST(request: Request) {
     auth: { user, pass },
   });
 
-  const firstName = payload.firstName.trim();
-  const lastName = payload.lastName.trim();
-  const email = payload.email.trim();
-  const phone = isNonEmptyString(payload.phone) ? payload.phone.trim() : 'N/A';
-  const company = payload.company.trim();
-  const role = payload.role.trim();
-  const companySize = payload.companySize.trim();
-  const productInterest = payload.productInterest.trim();
-  const timeline = payload.timeline.trim();
-  const message = payload.message;
+  const formattedPhone = isNonEmptyString(phone) ? phone : 'N/A';
 
   const subject = `New contact request from ${firstName} ${lastName}`;
 
   const text = `Name: ${firstName} ${lastName}
 Email: ${email}
-Phone: ${phone}
+Phone: ${formattedPhone}
 Company: ${company}
 Role: ${role}
 Company size: ${companySize}
@@ -112,7 +143,7 @@ ${message}`;
     <h2>New contact request</h2>
     <p><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-    <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+    <p><strong>Phone:</strong> ${escapeHtml(formattedPhone)}</p>
     <p><strong>Company:</strong> ${escapeHtml(company)}</p>
     <p><strong>Role:</strong> ${escapeHtml(role)}</p>
     <p><strong>Company size:</strong> ${escapeHtml(companySize)}</p>
