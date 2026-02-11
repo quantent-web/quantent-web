@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+export const runtime = 'nodejs';
+
 type ContactPayload = {
   firstName: string;
   lastName: string;
@@ -15,8 +17,22 @@ type ContactPayload = {
   consent: boolean;
 };
 
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 export async function POST(request: Request) {
-  const payload = (await request.json()) as ContactPayload;
+  let payload: ContactPayload;
+
+  try {
+    payload = (await request.json()) as ContactPayload;
+  } catch {
+    return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+  }
 
   if (
     !payload?.firstName ||
@@ -37,10 +53,10 @@ export async function POST(request: Request) {
   const port = process.env.SMTP_PORT;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const to = process.env.CONTACT_TO || 'aaron86mf@gmail.com';
+  const to = process.env.CONTACT_TO;
   const from = process.env.CONTACT_FROM || user;
 
-  if (!host || !port || !to || !from) {
+  if (!host || !port || !user || !pass || !to || !from) {
     return NextResponse.json(
       { error: 'Email service is not configured.' },
       { status: 500 }
@@ -51,41 +67,54 @@ export async function POST(request: Request) {
     host,
     port: Number(port),
     secure: Number(port) === 465,
-    auth: user && pass ? { user, pass } : undefined,
+    auth: { user, pass },
   });
 
-  const subject = `New contact request from ${payload.firstName} ${payload.lastName}`;
+  const firstName = String(payload.firstName);
+  const lastName = String(payload.lastName);
+  const email = String(payload.email);
+  const phone = payload.phone ? String(payload.phone) : 'N/A';
+  const company = String(payload.company);
+  const role = String(payload.role);
+  const companySize = String(payload.companySize);
+  const productInterest = String(payload.productInterest);
+  const timeline = String(payload.timeline);
+  const message = String(payload.message);
 
-  const text = `Name: ${payload.firstName} ${payload.lastName}
-Email: ${payload.email}
-Phone: ${payload.phone || 'N/A'}
-Company: ${payload.company}
-Role: ${payload.role}
-Company size: ${payload.companySize}
-Interest: ${payload.productInterest}
-Timeline: ${payload.timeline}
+  const subject = `New contact request from ${firstName} ${lastName}`;
+
+  const text = `Name: ${firstName} ${lastName}
+Email: ${email}
+Phone: ${phone}
+Company: ${company}
+Role: ${role}
+Company size: ${companySize}
+Interest: ${productInterest}
+Timeline: ${timeline}
 
 Message:
-${payload.message}`;
+${message}`;
+
+  const escapedMessage = escapeHtml(message).replace(/\n/g, '<br/>');
 
   const html = `
     <h2>New contact request</h2>
-    <p><strong>Name:</strong> ${payload.firstName} ${payload.lastName}</p>
-    <p><strong>Email:</strong> ${payload.email}</p>
-    <p><strong>Phone:</strong> ${payload.phone || 'N/A'}</p>
-    <p><strong>Company:</strong> ${payload.company}</p>
-    <p><strong>Role:</strong> ${payload.role}</p>
-    <p><strong>Company size:</strong> ${payload.companySize}</p>
-    <p><strong>Interest:</strong> ${payload.productInterest}</p>
-    <p><strong>Timeline:</strong> ${payload.timeline}</p>
-    <p><strong>Message:</strong><br/>${payload.message.replace(/\n/g, '<br/>')}</p>
+    <p><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+    <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+    <p><strong>Company:</strong> ${escapeHtml(company)}</p>
+    <p><strong>Role:</strong> ${escapeHtml(role)}</p>
+    <p><strong>Company size:</strong> ${escapeHtml(companySize)}</p>
+    <p><strong>Interest:</strong> ${escapeHtml(productInterest)}</p>
+    <p><strong>Timeline:</strong> ${escapeHtml(timeline)}</p>
+    <p><strong>Message:</strong><br/>${escapedMessage}</p>
   `;
 
   try {
     await transporter.sendMail({
       from,
       to,
-      replyTo: payload.email,
+      replyTo: email,
       subject,
       text,
       html,
