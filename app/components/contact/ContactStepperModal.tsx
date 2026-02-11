@@ -25,8 +25,9 @@ type ContactStepperModalProps = {
 
 export default function ContactStepperModal({ open, onClose }: ContactStepperModalProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const submitErrorText = 'Something went wrong. Please try again.';
   const [touched, setTouched] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const successMessage =
@@ -68,7 +69,8 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     if (open) return;
     setStatus('idle');
     setTouched(false);
-    setErrorMessage('');
+    setSubmitError(null);
+    setIsSubmitting(false);
     setCurrentStep(1);
   }, [open]);
 
@@ -96,9 +98,9 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
 
     setTouched(true);
     if (!isStepValid) return;
+    setSubmitError(null);
     setIsSubmitting(true);
     setStatus('submitting');
-    setErrorMessage('');
 
     try {
       const response = await fetch('/api/contact', {
@@ -108,14 +110,16 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
       });
 
       if (!response.ok) {
-        const payload = await response.json().catch(() => ({}));
-        throw new Error(payload?.error || 'Something went wrong.');
+        setStatus('error');
+        setSubmitError(submitErrorText);
+        return;
       }
 
       setStatus('success');
     } catch (error) {
-      setStatus('success');
-      setErrorMessage(error instanceof Error ? error.message : '');
+      void error;
+      setStatus('error');
+      setSubmitError(submitErrorText);
     } finally {
       setIsSubmitting(false);
     }
@@ -375,7 +379,11 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
               <strong>{successMessage}</strong>
             </div>
           )}
-          {status === 'error' && <div className="contact-error">{errorMessage}</div>}
+          {submitError && (
+            <small className="muted" role="alert">
+              {submitError}
+            </small>
+          )}
         </div>
       </div>
     </div>
