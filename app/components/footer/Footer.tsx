@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import Image from 'next/image';
 
 const SOCIAL_LINKS = [
   {
@@ -47,7 +48,7 @@ export default function Footer() {
       <div className="footer-card">
         <div className="footer-top">
           <div className="footer-brand">
-            <img src="/logo-quantent.svg" alt="QuantEnt logo" />
+            <Image src="/logo-quantent.svg" alt="QuantEnt logo" width={160} height={36} />
             <span className="sr-only" id="footer-heading">
               QuantEnt
             </span>
