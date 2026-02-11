@@ -32,7 +32,7 @@ select:focus-visible,
 textarea:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:not([tabindex="-1"]):focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 2px solid var(--border);
   outline-offset: 2px;
   border-radius: var(--radius);
 }
@@ -1306,7 +1306,7 @@ html[data-theme="dark"] body {
 }
 
 .theme-switch:focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 2px solid var(--border);
   outline-offset: 2px;
 }
 
