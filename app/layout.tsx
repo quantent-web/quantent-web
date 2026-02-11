@@ -15,11 +15,26 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'QuantEnt',
+  metadataBase: new URL('https://example.com'),
+  title: {
+    default: 'QuantEnt',
+    template: '%s | QuantEnt',
+  },
   description:
     'Quantitative models and mathematics for entitlement and data governance.',
+  openGraph: {
+    title: 'QuantEnt',
+    description:
+      'Quantitative models and mathematics for entitlement and data governance.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'QuantEnt',
+    description:
+      'Quantitative models and mathematics for entitlement and data governance.',
+  },
 };
-
 
 export default function RootLayout({
   children,
