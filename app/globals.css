@@ -1257,25 +1257,24 @@ html[data-theme="dark"] body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--border);
+  background: var(--card);
   border-radius: 999px;
   padding: 4px;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 }
 
 .theme-switch:focus-visible {
-  outline: 2px solid rgba(5, 205, 152, 0.9);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(5, 205, 152, 0.2);
 }
 
 .theme-switch__track {
   width: 44px;
   height: 24px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.08);
+  background: var(--border);
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1287,33 +1286,33 @@ html[data-theme="dark"] body {
   width: 18px;
   height: 18px;
   border-radius: 999px;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+  background: var(--card);
   transform: translateX(3px);
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
+.theme-switch:hover .theme-switch__track {
+  border-color: var(--ring);
+}
+
+.theme-switch:active {
+  opacity: 0.9;
+}
+
 .theme-switch[aria-checked="true"] .theme-switch__track {
-  background: rgba(5, 205, 152, 0.25);
-  border-color: rgba(5, 205, 152, 0.4);
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
 .theme-switch[aria-checked="true"] .theme-switch__thumb {
   transform: translateX(23px);
-  background: #ffffff;
+  background: var(--primary-foreground);
 }
 
-html[data-theme="dark"] .theme-switch {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(14, 20, 20, 0.45);
-}
-
-html[data-theme="dark"] .theme-switch__track {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-html[data-theme="dark"] .theme-switch__thumb {
-  background: #f8fffb;
+.theme-switch:disabled,
+.theme-switch[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
