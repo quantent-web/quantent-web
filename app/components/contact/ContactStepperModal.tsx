@@ -24,7 +24,7 @@ type ContactStepperModalProps = {
 };
 
 export default function ContactStepperModal({ open, onClose }: ContactStepperModalProps) {
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submitErrorText = 'Something went wrong. Please try again.';
@@ -96,7 +96,6 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
   const handleSubmit = async () => {
     setTouched(true);
     if (!isStepValid) return;
-    setStatus('submitting');
     setSubmitError(null);
     setIsSubmitting(true);
 
