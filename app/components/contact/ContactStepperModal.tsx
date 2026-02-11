@@ -26,6 +26,7 @@ type ContactStepperModalProps = {
 export default function ContactStepperModal({ open, onClose }: ContactStepperModalProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const submitErrorText = 'Something went wrong. Please try again.';
   const [touched, setTouched] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -69,6 +70,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     setStatus('idle');
     setTouched(false);
     setSubmitError(null);
+    setIsSubmitting(false);
     setCurrentStep(1);
   }, [open]);
 
@@ -96,6 +98,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     if (!isStepValid) return;
     setStatus('submitting');
     setSubmitError(null);
+    setIsSubmitting(true);
 
     try {
       const response = await fetch('/api/contact', {
@@ -114,6 +117,8 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     } catch {
       setStatus('error');
       setSubmitError(submitErrorText);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -164,7 +169,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
             backButtonText="Previous"
             nextButtonText="Next"
             nextButtonProps={{
-              disabled: status === 'submitting' || !isStepValid,
+              disabled: isSubmitting || !isStepValid,
             }}
           >
             <Step>
