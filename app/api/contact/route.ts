@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
 type ContactPayload = {
   firstName: string;
@@ -25,26 +25,29 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
+const isNonEmptyString = (value: unknown): value is string =>
+  typeof value === 'string' && value.trim().length > 0;
+
 export async function POST(request: Request) {
-  let payload: ContactPayload;
+  let payload: Partial<ContactPayload>;
 
   try {
-    payload = (await request.json()) as ContactPayload;
+    payload = (await request.json()) as Partial<ContactPayload>;
   } catch {
     return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
   }
 
   if (
-    !payload?.firstName ||
-    !payload?.lastName ||
-    !payload?.email ||
-    !payload?.company ||
-    !payload?.role ||
-    !payload?.companySize ||
-    !payload?.productInterest ||
-    !payload?.timeline ||
-    !payload?.message ||
-    !payload?.consent
+    !isNonEmptyString(payload?.firstName) ||
+    !isNonEmptyString(payload?.lastName) ||
+    !isNonEmptyString(payload?.email) ||
+    !isNonEmptyString(payload?.company) ||
+    !isNonEmptyString(payload?.role) ||
+    !isNonEmptyString(payload?.companySize) ||
+    !isNonEmptyString(payload?.productInterest) ||
+    !isNonEmptyString(payload?.timeline) ||
+    !isNonEmptyString(payload?.message) ||
+    payload?.consent !== true
   ) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
   }
@@ -63,23 +66,31 @@ export async function POST(request: Request) {
     );
   }
 
+  const smtpPort = Number(port);
+  if (!Number.isFinite(smtpPort) || smtpPort <= 0) {
+    return NextResponse.json(
+      { error: 'Email service is not configured.' },
+      { status: 500 }
+    );
+  }
+
   const transporter = nodemailer.createTransport({
     host,
-    port: Number(port),
-    secure: Number(port) === 465,
+    port: smtpPort,
+    secure: smtpPort === 465,
     auth: { user, pass },
   });
 
-  const firstName = String(payload.firstName);
-  const lastName = String(payload.lastName);
-  const email = String(payload.email);
-  const phone = payload.phone ? String(payload.phone) : 'N/A';
-  const company = String(payload.company);
-  const role = String(payload.role);
-  const companySize = String(payload.companySize);
-  const productInterest = String(payload.productInterest);
-  const timeline = String(payload.timeline);
-  const message = String(payload.message);
+  const firstName = payload.firstName.trim();
+  const lastName = payload.lastName.trim();
+  const email = payload.email.trim();
+  const phone = isNonEmptyString(payload.phone) ? payload.phone.trim() : 'N/A';
+  const company = payload.company.trim();
+  const role = payload.role.trim();
+  const companySize = payload.companySize.trim();
+  const productInterest = payload.productInterest.trim();
+  const timeline = payload.timeline.trim();
+  const message = payload.message;
 
   const subject = `New contact request from ${firstName} ${lastName}`;
 
