@@ -1355,3 +1355,10 @@ html[data-theme="dark"] .theme-switch__thumb {
   margin: 0;
 
 }
+
+.blurtext-root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}

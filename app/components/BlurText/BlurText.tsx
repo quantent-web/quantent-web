@@ -107,14 +107,7 @@ const BlurText = ({
   return (
     <Component
       ref={ref as any}
-      className={className}
-     style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          textAlign: 'center',
-      }}
-
+      className={`blurtext-root ${className}`.trim()}
     >
       {elements.map((segment, index) => {
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
