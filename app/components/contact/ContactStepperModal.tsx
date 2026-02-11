@@ -94,6 +94,8 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
   }, [formState, currentStep]);
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+
     setTouched(true);
     if (!isStepValid) return;
     setSubmitError(null);
