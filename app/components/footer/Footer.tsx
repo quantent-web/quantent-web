@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const SOCIAL_LINKS = [
   {
@@ -91,6 +92,13 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p className="footer-copy">© {year} QuantEnt. All rights reserved.</p>
+          <nav className="footer-copy" aria-label="Legal links">
+            <Link href="/privacy">Privacy</Link>
+            {' · '}
+            <Link href="/terms">Terms</Link>
+            {' · '}
+            <Link href="/cookies">Cookies</Link>
+          </nav>
           <div className="footer-socials" aria-label="QuantEnt social links">
             {SOCIAL_LINKS.map((link) => (
               <a
