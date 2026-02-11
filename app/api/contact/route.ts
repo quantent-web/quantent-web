@@ -3,6 +3,12 @@ import nodemailer from 'nodemailer';
 
 export const runtime = "nodejs";
 
+const noCacheHeaders = {
+  'Cache-Control': 'no-store',
+  Pragma: 'no-cache',
+  Expires: '0',
+} as const;
+
 type ContactPayload = {
   firstName: string;
   lastName: string;
@@ -43,12 +49,21 @@ const MAX_LENGTHS = {
 } as const;
 
 export async function POST(request: Request) {
+  const jsonResponse = (
+    body: { ok: true } | { error: string },
+    init?: { status?: number }
+  ) =>
+    NextResponse.json(body, {
+      ...init,
+      headers: noCacheHeaders,
+    });
+
   let payload: Partial<ContactPayload>;
 
   try {
     payload = (await request.json()) as Partial<ContactPayload>;
   } catch {
-    return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+    return jsonResponse({ error: 'Invalid request body.' }, { status: 400 });
   }
 
   const firstName = trimIfString(payload?.firstName);
@@ -74,7 +89,7 @@ export async function POST(request: Request) {
     !isNonEmptyString(message) ||
     payload?.consent !== true
   ) {
-    return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
   }
 
   if (
@@ -85,11 +100,11 @@ export async function POST(request: Request) {
     role.length > MAX_LENGTHS.role ||
     message.length > MAX_LENGTHS.message
   ) {
-    return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
   }
 
   if (!isValidEmail(email)) {
-    return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
   }
 
   const host = process.env.SMTP_HOST;
@@ -100,7 +115,7 @@ export async function POST(request: Request) {
   const from = process.env.CONTACT_FROM || user;
 
   if (!host || !port || !user || !pass || !to || !from) {
-    return NextResponse.json(
+    return jsonResponse(
       { error: 'Email service is not configured.' },
       { status: 500 }
     );
@@ -108,7 +123,7 @@ export async function POST(request: Request) {
 
   const smtpPort = Number(port);
   if (!Number.isFinite(smtpPort) || smtpPort <= 0) {
-    return NextResponse.json(
+    return jsonResponse(
       { error: 'Email service is not configured.' },
       { status: 500 }
     );
@@ -162,9 +177,9 @@ ${message}`;
       html,
     });
 
-    return NextResponse.json({ ok: true });
+    return jsonResponse({ ok: true });
   } catch (error) {
-    return NextResponse.json(
+    return jsonResponse(
       { error: error instanceof Error ? error.message : 'Failed to send email.' },
       { status: 500 }
     );
