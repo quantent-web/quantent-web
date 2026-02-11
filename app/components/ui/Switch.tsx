@@ -17,6 +17,7 @@ export default function Switch({
       role="switch"
       aria-checked={checked}
       aria-label={ariaLabel}
+      data-state={checked ? 'checked' : 'unchecked'}
       className={`theme-switch ${className}`.trim()}
       onClick={() => onCheckedChange(!checked)}
     >

@@ -15,6 +15,7 @@ type ContactFormState = {
   timeline: string;
   message: string;
   consent: boolean;
+  website?: string;
 };
 
 type ContactStepperModalProps = {
@@ -41,6 +42,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     timeline: '',
     message: '',
     consent: false,
+    website: '',
   });
 
   useEffect(() => {
@@ -137,6 +139,18 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
               A short wizard to route your request to the right team.
             </p>
           </header>
+
+
+          <input
+            className="hp-field"
+            type="text"
+            name="website"
+            value={formState.website || ''}
+            onChange={(event) => handleChange('website', event.target.value)}
+            autoComplete="off"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
 
           <Stepper
             initialStep={1}
