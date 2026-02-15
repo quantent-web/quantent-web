@@ -170,6 +170,60 @@ export default function Home() {
     };
   }, [navItems]);
 
+  useEffect(() => {
+    if (!snapEnabled) return;
+
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!finePointer) return;
+
+    const threshold = 150;
+    const cooldownMs = 760;
+    let wheelAccumulator = 0;
+    let cooldownUntil = 0;
+
+    const onWheel = (event: WheelEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('.hpinned__sticky')) return;
+
+      const now = performance.now();
+      if (now < cooldownUntil) {
+        event.preventDefault();
+        return;
+      }
+
+      wheelAccumulator += event.deltaY;
+      if (Math.abs(wheelAccumulator) < threshold) return;
+
+      const direction = wheelAccumulator > 0 ? 1 : -1;
+      wheelAccumulator = 0;
+
+      const steps = Array.from(document.querySelectorAll<HTMLElement>('.snap-step'));
+      if (!steps.length) return;
+
+      const viewportAnchor = window.scrollY + window.innerHeight * 0.45;
+      let activeIndex = 0;
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      steps.forEach((step, index) => {
+        const distance = Math.abs(step.offsetTop - viewportAnchor);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          activeIndex = index;
+        }
+      });
+
+      const nextIndex = Math.max(0, Math.min(steps.length - 1, activeIndex + direction));
+      if (nextIndex === activeIndex) return;
+
+      event.preventDefault();
+      cooldownUntil = now + cooldownMs;
+      steps[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    return () => window.removeEventListener('wheel', onWheel);
+  }, [snapEnabled]);
+
   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
     const check = () => {
@@ -379,8 +433,9 @@ export default function Home() {
 
 
       {/* SNAP STEPS */}
-        {/* WHAT WE DO */}
-        <section id="what-we-do" className="container snap-step">
+      {/* WHAT WE DO */}
+      <section id="what-we-do" className="snap-step">
+        <div className="step-inner container">
           <HorizontalPinned
             enabled={pinnedEnabled}
             panels={[
@@ -446,13 +501,15 @@ export default function Home() {
               },
             ]}
           />
-        </section>
+        </div>
+      </section>
 
       
 
 
-        {/* WHAT MAKES DIFFERENT */}
-        <section id="different" className="container snap-step">
+      {/* WHAT MAKES DIFFERENT */}
+      <section id="different" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">What Makes QuantEnt Different</h2>
 
           <MagicBentoGrid variant="auto" sectionId="different">
@@ -487,10 +544,12 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+        </div>
+      </section>
 
-        {/* PRODUCTS */}
-        <section id="products" className="container snap-step">
+      {/* PRODUCTS */}
+      <section id="products" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">Our Products</h2>
 
           <MagicBentoGrid variant="auto" sectionId="products">
@@ -531,10 +590,12 @@ export default function Home() {
               Start
             </a>
             </div>
-        </section>
+        </div>
+      </section>
 
-        {/* QUANTCERTIFY */}
-        <section id="quantcertify" className="container snap-step">
+      {/* QUANTCERTIFY */}
+      <section id="quantcertify" className="snap-step">
+        <div className="step-inner container">
           <HorizontalPinned
             enabled={pinnedEnabled}
             panels={[
@@ -599,10 +660,12 @@ export default function Home() {
               },
             ]}
           />
-        </section>
+        </div>
+      </section>
 
-        {/* QUANTVAULT */}
-        <section id="quantvault" className="container snap-step">
+      {/* QUANTVAULT */}
+      <section id="quantvault" className="snap-step">
+        <div className="step-inner container">
           <HorizontalPinned
             enabled={pinnedEnabled}
             panels={[
@@ -649,10 +712,12 @@ export default function Home() {
               },
             ]}
           />
-        </section>
+        </div>
+      </section>
 
-        {/* QUANTDATA */}
-        <section id="quantdata" className="container snap-step">
+      {/* QUANTDATA */}
+      <section id="quantdata" className="snap-step">
+        <div className="step-inner container">
           <HorizontalPinned
             enabled={pinnedEnabled}
             panels={[
@@ -690,10 +755,12 @@ export default function Home() {
               },
             ]}
           />
-        </section>
+        </div>
+      </section>
 
-        {/* CAPABILITIES */}
-        <section id="capabilities" className="container snap-step">
+      {/* CAPABILITIES */}
+      <section id="capabilities" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">What We’re Exceptional At</h2>
 
           <MagicBentoGrid variant="auto" sectionId="capabilities">
@@ -726,10 +793,12 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+        </div>
+      </section>
 
-        {/* SERVICES */}
-        <section id="services" className="container snap-step">
+      {/* SERVICES */}
+      <section id="services" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">Accelerating Governance and AI Readiness</h2>
 
           <p className="section-lead">
@@ -774,7 +843,8 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+        </div>
+      </section>
 
 
       <section id="about" className="container">

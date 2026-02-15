@@ -322,9 +322,16 @@ html.snap-enabled {
 }
 
 .snap-step {
-  min-height: calc(100dvh - var(--nav-h));
+  min-height: var(--step-min-h);
+  width: 100%;
+  padding-inline: var(--page-gutter);
+  padding-block: var(--page-gutter-y);
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+.step-inner {
+  width: 100%;
 }
 
 .hpinned {
@@ -338,8 +345,14 @@ html.snap-enabled {
 .hpinned__sticky {
   position: sticky;
   top: var(--nav-h);
-  height: calc(100dvh - var(--nav-h));
+  height: var(--step-min-h);
   overflow: hidden;
+}
+
+.hpinned__frame {
+  height: 100%;
+  padding-inline: var(--page-gutter);
+  padding-block: var(--page-gutter-y);
 }
 
 .hpinned__rail {
@@ -351,7 +364,12 @@ html.snap-enabled {
 
 .hpinned__panel {
   flex: 0 0 100%;
+  height: 100%;
   min-width: 100%;
+}
+
+.hpinned__panelInner {
+  height: 100%;
 }
 
 .hpinned--fallback .hpinned__panel--stacked {
@@ -385,7 +403,13 @@ html.snap-enabled {
 
   .hpinned__panel {
     min-width: 100%;
+    height: auto;
     margin-bottom: var(--space-8);
+  }
+
+  .hpinned__frame {
+    padding-inline: 0;
+    padding-block: 0;
   }
 }
 
@@ -577,6 +601,9 @@ html.snap-enabled {
 
   /* Drawer */
   --drawer-w: 360px;
+  --page-gutter: clamp(16px, 3vw, 48px);
+  --page-gutter-y: clamp(16px, 3vw, 56px);
+  --step-min-h: calc(100dvh - var(--nav-h));
 }
 
 html {
