@@ -5,7 +5,7 @@ import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import MagicBentoGrid from './components/effects/MagicBentoGrid';
-import Switch from './components/ui/Switch';
+import AnimatedThemeToggler from './components/ui/AnimatedThemeToggler';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 
@@ -254,7 +254,7 @@ export default function Home() {
             </nav>
 
             {/* Toggle tema */}
-            <Switch
+            <AnimatedThemeToggler
               checked={isDark}
               onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
               ariaLabel="Toggle theme"
