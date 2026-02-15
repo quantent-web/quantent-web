@@ -380,6 +380,15 @@ export default function Home() {
             </div>
 
             <div className="what-we-do-layout what-we-do-layout--inverted">
+            <div className="what-we-do-left what-we-do-left--description">
+              <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
+
+              <p className="section-lead">
+                QuantEnt structures and governs enterprise data so every dataset is clean,
+                categorized, and controlled with transparent policies.
+              </p>
+            </div>
+
             <div className="what-we-do-right">
               <p className="section-kicker">Entitlement And User Analysis:</p>
 
@@ -395,15 +404,6 @@ export default function Home() {
               <p className="section-note">
                 QuantEnt provides end-to-end governance for high-volume, high-impact
                 enterprise data ecosystems.
-              </p>
-            </div>
-
-            <div className="what-we-do-left what-we-do-left--description">
-              <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
-
-              <p className="section-lead">
-                QuantEnt structures and governs enterprise data so every dataset is clean,
-                categorized, and controlled with transparent policies.
               </p>
             </div>
             </div>
