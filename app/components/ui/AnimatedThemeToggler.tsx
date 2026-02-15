@@ -1,20 +1,35 @@
-import type { KeyboardEvent } from 'react';
+'use client';
+
+import { useEffect, useState, type KeyboardEvent } from 'react';
 import styles from './AnimatedThemeToggler.module.css';
 
 export type AnimatedThemeTogglerProps = {
-  checked: boolean;
-  onCheckedChange: (checked: boolean) => void;
   ariaLabel?: string;
   className?: string;
 };
 
+const getIsDarkTheme = () => document.documentElement.dataset.theme === 'dark';
+
 export default function AnimatedThemeToggler({
-  checked,
-  onCheckedChange,
   ariaLabel = 'Toggle theme',
   className = '',
 }: AnimatedThemeTogglerProps) {
-  const toggle = () => onCheckedChange(!checked);
+  const [checked, setChecked] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setChecked(getIsDarkTheme());
+    setMounted(true);
+  }, []);
+
+  const applyTheme = (nextChecked: boolean) => {
+    const nextTheme = nextChecked ? 'dark' : 'light';
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem('theme', nextTheme);
+    setChecked(nextChecked);
+  };
+
+  const toggle = () => applyTheme(!checked);
 
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -32,6 +47,7 @@ export default function AnimatedThemeToggler({
       className={`${styles.toggler} ${checked ? styles.checked : ''} ${className}`.trim()}
       onClick={toggle}
       onKeyDown={onKeyDown}
+      data-mounted={mounted ? 'true' : 'false'}
     >
       <span className={styles.track} aria-hidden="true">
         <span className={styles.thumb}>
