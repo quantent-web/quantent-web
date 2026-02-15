@@ -1,84 +1,52 @@
 .toggler {
-  --h: 2rem;
-  --w: 3.9rem;
-  --pad: 0.16rem;
-  --thumb: calc(var(--h) - (var(--pad) * 2));
+  --size: 2.25rem;
   --duration: 0.4s;
 
   position: relative;
+  inline-size: var(--size);
+  block-size: var(--size);
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--background) 92%, var(--foreground));
+  color: var(--foreground);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--w);
-  height: var(--h);
   padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
   cursor: pointer;
-}
-
-.track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--background) 90%, var(--muted-foreground)),
-    color-mix(in srgb, var(--background) 78%, var(--foreground))
-  );
-  transition: background var(--duration) ease, border-color var(--duration) ease;
-  overflow: hidden;
-}
-
-.track::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 22% 50%, color-mix(in srgb, var(--primary) 30%, transparent), transparent 52%);
-  opacity: 0.35;
-  transition: opacity var(--duration) ease, transform var(--duration) ease;
-}
-
-.thumb {
-  position: absolute;
-  top: var(--pad);
-  left: var(--pad);
-  width: var(--thumb);
-  height: var(--thumb);
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
-  background: color-mix(in srgb, var(--background) 90%, var(--foreground));
-  box-shadow: 0 6px 20px color-mix(in srgb, var(--foreground) 14%, transparent);
-  display: grid;
-  place-items: center;
-  transform: translateX(0);
   transition:
-    transform var(--duration) cubic-bezier(0.65, 0, 0.35, 1),
+    border-color var(--duration) ease,
     background var(--duration) ease,
-    border-color var(--duration) ease;
+    transform 160ms ease,
+    box-shadow var(--duration) ease;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--foreground) 12%, transparent);
+}
+
+.iconWrap {
+  position: relative;
+  inline-size: 1.05rem;
+  block-size: 1.05rem;
 }
 
 .sunIcon,
 .moonIcon {
   position: absolute;
-  width: 1rem;
-  height: 1rem;
-  color: var(--foreground);
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
   transition: transform var(--duration) ease, opacity var(--duration) ease, color var(--duration) ease;
 }
 
 .sunIcon {
   opacity: 1;
   transform: scale(1) rotate(0deg);
-  color: color-mix(in srgb, var(--primary) 70%, var(--foreground));
+  color: color-mix(in srgb, var(--primary) 72%, var(--foreground));
 }
 
 .moonIcon {
   opacity: 0;
   transform: scale(0.5) rotate(-90deg);
+  color: var(--foreground);
 }
 
 .sunIcon circle,
@@ -94,23 +62,9 @@
   fill: currentColor;
 }
 
-.toggler.checked .track {
+.toggler.checked {
+  background: color-mix(in srgb, var(--foreground) 12%, var(--background));
   border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--foreground) 24%, var(--background)),
-    color-mix(in srgb, var(--foreground) 12%, var(--background))
-  );
-}
-
-.toggler.checked .track::before {
-  opacity: 0.7;
-  transform: translateX(24%);
-}
-
-.toggler.checked .thumb {
-  transform: translateX(calc(var(--w) - var(--thumb) - (var(--pad) * 2)));
-  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
 }
 
 .toggler.checked .sunIcon {
@@ -128,19 +82,14 @@
   outline-offset: 3px;
 }
 
-.toggler:active .thumb {
-  transform: translateX(0) scale(0.96);
-}
-
-.toggler.checked:active .thumb {
-  transform: translateX(calc(var(--w) - var(--thumb) - (var(--pad) * 2))) scale(0.96);
+.toggler:active {
+  transform: scale(0.96);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .toggler *,
-  .toggler::before,
-  .track,
-  .thumb {
+  .toggler,
+  .sunIcon,
+  .moonIcon {
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;
   }
