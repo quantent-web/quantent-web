@@ -329,6 +329,48 @@ main[data-snap-scroll='true'] > .section {
   scroll-snap-stop: always;
 }
 
+.pinned {
+  position: relative;
+}
+
+.pinned__track {
+  height: calc(var(--steps, 1) * 100svh);
+}
+
+.pinned__sticky {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100svh - var(--nav-h));
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+}
+
+.pinned__step-content {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse), (max-width: 768px) {
+  main[data-snap-scroll='true'] {
+    scroll-snap-type: none;
+  }
+
+  main[data-snap-scroll='true'] > .section {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+
+  .pinned__track {
+    height: auto;
+  }
+
+  .pinned__sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+}
+
 
 
 
