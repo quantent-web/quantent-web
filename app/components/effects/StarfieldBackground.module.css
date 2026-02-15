@@ -1,0 +1,42 @@
+.root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: #0a0a0f;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.nebula {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(56, 100, 180, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(100, 60, 150, 0.08) 0%, transparent 50%);
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 40%,
+    rgba(5, 5, 10, 0.88) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+}

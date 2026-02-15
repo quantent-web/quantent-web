@@ -358,6 +358,19 @@ main[data-snap-scroll='true'] > .section {
   position: relative;
   z-index: 2;
 }
+
+.content-background-scope {
+  position: relative;
+}
+
+.content-background-layer {
+  z-index: 0;
+}
+
+.content-background-content {
+  position: relative;
+  z-index: 1;
+}
 /* =========================
    Components (mínimos)
    (solo para la landing)
