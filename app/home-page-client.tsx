@@ -217,35 +217,24 @@ export default function Home() {
     },
   ];
 
-  const renderWhatWeDoGrid = (sectionId: string) => (
-    <>
-      <p className="section-kicker">We help organizations:</p>
-
-      <MagicBentoGrid variant="4" sectionId={sectionId}>
-        {whatWeDoCards.map((card) => (
-          <div className="card" key={`${sectionId}-${card.title}`}>
-            <h3 className="card-title">{card.title}</h3>
-            <p className="card-text">{card.text}</p>
-          </div>
-        ))}
-      </MagicBentoGrid>
-      <p className="section-note">
-        QuantEnt is built for complex, regulated environments where correctness,
-        scale, and evolution matter.
-      </p>
-    </>
-  );
-
-  const renderWhatWeDoDescription = () => (
-    <>
-      <h2 className="section-title">What We Do</h2>
-
-      <p className="section-lead">
-        QuantEnt analyzes and certifies who can access what — and what that data
-        means — using quantitative models instead of static rules.
-      </p>
-    </>
-  );
+  const dataCleaningCards = [
+    {
+      title: 'Data Quality Controls',
+      text: 'Detect and fix inconsistencies, duplicates, and malformed records across systems.',
+    },
+    {
+      title: 'Categorization Models',
+      text: 'Classify critical assets and datasets with clear, auditable categories.',
+    },
+    {
+      title: 'Policy Alignment',
+      text: 'Map data classes to governance policies, ownership, and accountability.',
+    },
+    {
+      title: 'Lifecycle Governance',
+      text: 'Maintain control as data is created, transformed, shared, and retired.',
+    },
+  ];
 
   return (
     <>
@@ -363,21 +352,59 @@ export default function Home() {
           <div className="what-we-do-blocks">
             <div className="what-we-do-layout">
             <div className="what-we-do-left">
-              {renderWhatWeDoDescription()}
+              <h2 className="section-title">What We Do</h2>
+
+              <p className="section-lead">
+                QuantEnt analyzes and certifies who can access what — and what that data
+                means — using quantitative models instead of static rules.
+              </p>
             </div>
 
             <div className="what-we-do-right">
-              {renderWhatWeDoGrid('what-we-do')}
+              <p className="section-kicker">We help organizations:</p>
+
+              <MagicBentoGrid variant="4" sectionId="what-we-do">
+                {whatWeDoCards.map((card) => (
+                  <div className="card" key={`what-we-do-${card.title}`}>
+                    <h3 className="card-title">{card.title}</h3>
+                    <p className="card-text">{card.text}</p>
+                  </div>
+                ))}
+              </MagicBentoGrid>
+
+              <p className="section-note">
+                QuantEnt is built for complex, regulated environments where correctness,
+                scale, and evolution matter.
+              </p>
             </div>
             </div>
 
             <div className="what-we-do-layout what-we-do-layout--inverted">
             <div className="what-we-do-right">
-              {renderWhatWeDoGrid('what-we-do-inverted')}
+              <p className="section-kicker">We help organizations:</p>
+
+              <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
+                {dataCleaningCards.map((card) => (
+                  <div className="card" key={`what-we-do-inverted-${card.title}`}>
+                    <h3 className="card-title">{card.title}</h3>
+                    <p className="card-text">{card.text}</p>
+                  </div>
+                ))}
+              </MagicBentoGrid>
+
+              <p className="section-note">
+                QuantEnt provides end-to-end governance for high-volume, high-impact
+                enterprise data ecosystems.
+              </p>
             </div>
 
             <div className="what-we-do-left what-we-do-left--description">
-              {renderWhatWeDoDescription()}
+              <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
+
+              <p className="section-lead">
+                QuantEnt structures and governs enterprise data so every dataset is clean,
+                categorized, and controlled with transparent policies.
+              </p>
             </div>
             </div>
           </div>
