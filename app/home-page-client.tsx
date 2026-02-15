@@ -219,20 +219,20 @@ export default function Home() {
 
   const dataCleaningCards = [
     {
-      title: 'Data Quality Controls',
-      text: 'Detect and fix inconsistencies, duplicates, and malformed records across systems.',
+      title: 'MetaData Tagging',
+      text: 'Analyzing and Tagging API's, data, applications, and resources for use by users and AI.',
     },
     {
-      title: 'Categorization Models',
-      text: 'Classify critical assets and datasets with clear, auditable categories.',
+      title: 'Data Model Rigorization',
+      text: 'With software and consulting, our SME's will help create, refine, or just critique the data models of the firm.',
     },
     {
-      title: 'Policy Alignment',
-      text: 'Map data classes to governance policies, ownership, and accountability.',
+      title: 'Ongoing Cleanliness',
+      text: 'Institutional Data Cleanliness starts at the data model process',
     },
     {
-      title: 'Lifecycle Governance',
-      text: 'Maintain control as data is created, transformed, shared, and retired.',
+      title: 'Agentic AI Compatibility',
+      text: 'Our future product is designed to make Agentic AI work with the highest possible confidence level, with the safest data protection possible.',
     },
   ];
 
@@ -381,7 +381,7 @@ export default function Home() {
 
             <div className="what-we-do-layout what-we-do-layout--inverted">
             <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
+              <p className="section-kicker">Entitlement And User Analysis:</p>
 
               <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
                 {dataCleaningCards.map((card) => (
