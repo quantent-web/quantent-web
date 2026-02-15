@@ -8,11 +8,12 @@ import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
+import HorizontalPinned from './components/scroll/HorizontalPinned';
+import { shouldEnablePinned, shouldEnableSnap } from '@/src/config/scrollExperience';
 
 type NavItem = { label: string; href: string };
 
 export default function Home() {
-  const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
   const navInnerRef = useRef<HTMLDivElement | null>(null);
@@ -25,6 +26,8 @@ export default function Home() {
   const [useBurger, setUseBurger] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [snapEnabled, setSnapEnabled] = useState(false);
+  const [pinnedEnabled, setPinnedEnabled] = useState(false);
 
   const setTheme = (next: 'light' | 'dark') => {
     document.documentElement.dataset.theme = next;
@@ -61,6 +64,39 @@ export default function Home() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
+
+  useEffect(() => {
+    const syncScrollPreferences = () => {
+      setSnapEnabled(shouldEnableSnap());
+      setPinnedEnabled(shouldEnablePinned());
+    };
+
+    syncScrollPreferences();
+
+    const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const coarseMedia = window.matchMedia('(pointer: coarse)');
+    const widthMedia = window.matchMedia('(max-width: 768px)');
+    const onChange = () => syncScrollPreferences();
+
+    reducedMotionMedia.addEventListener('change', onChange);
+    coarseMedia.addEventListener('change', onChange);
+    widthMedia.addEventListener('change', onChange);
+    window.addEventListener('resize', onChange);
+
+    return () => {
+      reducedMotionMedia.removeEventListener('change', onChange);
+      coarseMedia.removeEventListener('change', onChange);
+      widthMedia.removeEventListener('change', onChange);
+      window.removeEventListener('resize', onChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('snap-enabled', snapEnabled);
+    return () => {
+      document.documentElement.classList.remove('snap-enabled');
+    };
+  }, [snapEnabled]);
 
   // Bloquea scroll del body cuando el drawer está abierto
   useEffect(() => {
@@ -107,7 +143,7 @@ export default function Home() {
         }
       }
 
-      if (bestRatio >= 0.4) {
+      if (bestRatio >= 0.35) {
         setActiveHref(`#${bestId}`);
       }
     };
@@ -120,6 +156,7 @@ export default function Home() {
         updateActive();
       },
       {
+        root: null,
         rootMargin: '0px 0px -20% 0px',
         threshold: [0, 0.25, 0.4, 0.6, 1],
       }
@@ -132,6 +169,60 @@ export default function Home() {
       observer.disconnect();
     };
   }, [navItems]);
+
+  useEffect(() => {
+    if (!snapEnabled) return;
+
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!finePointer) return;
+
+    const threshold = 150;
+    const cooldownMs = 760;
+    let wheelAccumulator = 0;
+    let cooldownUntil = 0;
+
+    const onWheel = (event: WheelEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('.hpinned__sticky')) return;
+
+      const now = performance.now();
+      if (now < cooldownUntil) {
+        event.preventDefault();
+        return;
+      }
+
+      wheelAccumulator += event.deltaY;
+      if (Math.abs(wheelAccumulator) < threshold) return;
+
+      const direction = wheelAccumulator > 0 ? 1 : -1;
+      wheelAccumulator = 0;
+
+      const steps = Array.from(document.querySelectorAll<HTMLElement>('.snap-step'));
+      if (!steps.length) return;
+
+      const viewportAnchor = window.scrollY + window.innerHeight * 0.45;
+      let activeIndex = 0;
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      steps.forEach((step, index) => {
+        const distance = Math.abs(step.offsetTop - viewportAnchor);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          activeIndex = index;
+        }
+      });
+
+      const nextIndex = Math.max(0, Math.min(steps.length - 1, activeIndex + direction));
+      if (nextIndex === activeIndex) return;
+
+      event.preventDefault();
+      cooldownUntil = now + cooldownMs;
+      steps[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+    return () => window.removeEventListener('wheel', onWheel);
+  }, [snapEnabled]);
 
   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
@@ -238,24 +329,12 @@ export default function Home() {
 
   return (
     <>
-      {/* STICKY NAV + DOT GRID BACKGROUND */}
-      <div className="header-bg">
-        {/* DotGrid fondo */}
-        <div className="header-bg__grid">
-          <DotGrid
-            dotSize={5}
-            gap={15}
-            proximity={200}
-            style={{}}
-          />
-        </div>
-
-        {/* STICKY NAV */}
-        <header className="nav header-bg__nav" ref={navRef}>
+      {/* STICKY NAV */}
+      <header className="nav" ref={navRef}>
           <div className="nav-inner nav-container" ref={navInnerRef}>
             <a
               className="nav-brand"
-              href="#top"
+              href="#home"
               aria-label="Go to top"
               ref={brandRef}
             >
@@ -314,15 +393,19 @@ export default function Home() {
           </div>
         </header>
 
-        {/* CONTENT */}
-        <main
-          id="top"
-          className="container"
-          data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
-        >
-        {/* HOME / HERO */}
-        <section id="home" className="section">
-     <BlurText
+      {/* HOME / HERO */}
+      <section id="home" className="header-bg">
+        <div className="header-bg__grid" aria-hidden="true">
+          <DotGrid
+            dotSize={5}
+            gap={15}
+            proximity={200}
+            style={{}}
+          />
+        </div>
+
+        <div className="container header-bg__content">
+          <BlurText
   as="h1"
   className="hero-title"
   text="Creating Institutional Control over Entitlements and Data"
@@ -345,76 +428,88 @@ export default function Home() {
               What we do
             </a>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* WHAT WE DO */}
-        <section id="what-we-do" className="section">
-          <div className="what-we-do-blocks">
-            <div className="what-we-do-layout">
-            <div className="what-we-do-left">
-              <h2 className="section-title">What We Do</h2>
 
-              <p className="section-lead">
-                QuantEnt analyzes and certifies who can access what — and what that data
-                means — using quantitative models instead of static rules.
-              </p>
-            </div>
-
-            <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do">
-                {whatWeDoCards.map((card) => (
-                  <div className="card" key={`what-we-do-${card.title}`}>
-                    <h3 className="card-title">{card.title}</h3>
-                    <p className="card-text">{card.text}</p>
+      {/* SNAP STEPS */}
+      {/* WHAT WE DO */}
+      <section id="what-we-do" className="snap-step">
+        <div className="step-inner container">
+          <HorizontalPinned
+            enabled={pinnedEnabled}
+            panels={[
+              {
+                key: 'wtd-1',
+                title: 'What We Do',
+                content: (
+                  <div className="what-we-do-layout">
+                    <div className="what-we-do-left">
+                      <h2 className="section-title">What We Do</h2>
+                      <p className="section-lead">
+                        QuantEnt analyzes and certifies who can access what — and what that data
+                        means — using quantitative models instead of static rules.
+                      </p>
+                    </div>
+                    <div className="what-we-do-right">
+                      <p className="section-kicker">We help organizations:</p>
+                      <MagicBentoGrid variant="4" sectionId="what-we-do">
+                        {whatWeDoCards.map((card) => (
+                          <div className="card" key={`what-we-do-${card.title}`}>
+                            <h3 className="card-title">{card.title}</h3>
+                            <p className="card-text">{card.text}</p>
+                          </div>
+                        ))}
+                      </MagicBentoGrid>
+                      <p className="section-note">
+                        QuantEnt is built for complex, regulated environments where correctness,
+                        scale, and evolution matter.
+                      </p>
+                    </div>
                   </div>
-                ))}
-              </MagicBentoGrid>
-
-              <p className="section-note">
-                QuantEnt is built for complex, regulated environments where correctness,
-                scale, and evolution matter.
-              </p>
-            </div>
-            </div>
-
-            <div className="what-we-do-layout what-we-do-layout--inverted">
-            <div className="what-we-do-left what-we-do-left--description">
-              <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
-
-              <p className="section-lead">
-                QuantEnt structures and governs enterprise data so every dataset is clean,
-                categorized, and controlled with transparent policies.
-              </p>
-            </div>
-
-            <div className="what-we-do-right">
-              <p className="section-kicker">Entitlement And User Analysis:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
-                {dataCleaningCards.map((card) => (
-                  <div className="card" key={`what-we-do-inverted-${card.title}`}>
-                    <h3 className="card-title">{card.title}</h3>
-                    <p className="card-text">{card.text}</p>
+                ),
+              },
+              {
+                key: 'wtd-2',
+                title: 'Data Cleaning, Categorizing, and Governance',
+                content: (
+                  <div className="what-we-do-layout what-we-do-layout--inverted">
+                    <div className="what-we-do-left what-we-do-left--description">
+                      <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
+                      <p className="section-lead">
+                        QuantEnt structures and governs enterprise data so every dataset is clean,
+                        categorized, and controlled with transparent policies.
+                      </p>
+                    </div>
+                    <div className="what-we-do-right">
+                      <p className="section-kicker">Entitlement And User Analysis:</p>
+                      <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
+                        {dataCleaningCards.map((card) => (
+                          <div className="card" key={`what-we-do-inverted-${card.title}`}>
+                            <h3 className="card-title">{card.title}</h3>
+                            <p className="card-text">{card.text}</p>
+                          </div>
+                        ))}
+                      </MagicBentoGrid>
+                      <p className="section-note">
+                        QuantEnt provides end-to-end governance for high-volume, high-impact
+                        enterprise data ecosystems.
+                      </p>
+                    </div>
                   </div>
-                ))}
-              </MagicBentoGrid>
-
-              <p className="section-note">
-                QuantEnt provides end-to-end governance for high-volume, high-impact
-                enterprise data ecosystems.
-              </p>
-            </div>
-            </div>
-          </div>
-        </section>
+                ),
+              },
+            ]}
+          />
+        </div>
+      </section>
 
       
 
 
-        {/* WHAT MAKES DIFFERENT */}
-        <section id="different" className="section">
+      {/* WHAT MAKES DIFFERENT */}
+      <section id="different" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">What Makes QuantEnt Different</h2>
 
           <MagicBentoGrid variant="auto" sectionId="different">
@@ -449,10 +544,12 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+        </div>
+      </section>
 
-        {/* PRODUCTS */}
-        <section id="products" className="section">
+      {/* PRODUCTS */}
+      <section id="products" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">Our Products</h2>
 
           <MagicBentoGrid variant="auto" sectionId="products">
@@ -493,224 +590,177 @@ export default function Home() {
               Start
             </a>
             </div>
-        </section>
+        </div>
+      </section>
 
-        {/* QUANTCERTIFY */}
-        <section id="quantcertify" className="section">
-          <h2 className="section-title">QuantCertify</h2>
-          <p className="section-lead">Certification with Quantitative Control</p>
+      {/* QUANTCERTIFY */}
+      <section id="quantcertify" className="snap-step">
+        <div className="step-inner container">
+          <HorizontalPinned
+            enabled={pinnedEnabled}
+            panels={[
+              {
+                key: 'qc-1',
+                title: 'QuantCertify overview and What It Does',
+                content: (
+                  <>
+                    <h2 className="section-title">QuantCertify</h2>
+                    <p className="section-lead">Certification with Quantitative Control</p>
+                    <p className="section-note">
+                      QuantCertify transforms certification from a periodic compliance exercise
+                      into a quantitative control mechanism.
+                    </p>
+                    <h3 className="subhead">What It Does</h3>
+                    <MagicBentoGrid variant="auto" sectionId="quantcertify-what-it-does">
+                      <div className="card"><h4 className="card-title">Quantifies exposure</h4><p className="card-text">Quantifies entitlement exposure, drift, and role integrity using mathematics — not rules.</p></div>
+                      <div className="card"><h4 className="card-title">System-level analysis</h4><p className="card-text">Analyzes users and entitlements as a system, not isolated records.</p></div>
+                      <div className="card"><h4 className="card-title">AI opinions & alerts</h4><p className="card-text">Enables AI to opine and alert on access patterns, anomalies, and emerging risk.</p></div>
+                      <div className="card"><h4 className="card-title">Forces clarity</h4><p className="card-text">Forces clarity and ownership during certification.</p></div>
+                      <div className="card"><h4 className="card-title">Prevents rubber-stamping</h4><p className="card-text">Prevents rubber-stamp reviews by surfacing what actually matters.</p></div>
+                      <div className="card"><h4 className="card-title">Focus on material risk</h4><p className="card-text">Focuses attention on material risk, not noise.</p></div>
+                    </MagicBentoGrid>
+                  </>
+                ),
+              },
+              {
+                key: 'qc-2',
+                title: 'Why It’s Different',
+                content: (
+                  <>
+                    <h3 className="subhead">Why It’s Different</h3>
+                    <MagicBentoGrid variant="auto" sectionId="quantcertify-why-different">
+                      <div className="card"><h4 className="card-title">Quantifies entitlements</h4><p className="card-text">The only certification system that quantifies entitlements.</p></div>
+                      <div className="card"><h4 className="card-title">AI-first architecture</h4><p className="card-text">Built from the ground up with AI in mind, not bolted on later.</p></div>
+                      <div className="card"><h4 className="card-title">Improves over time</h4><p className="card-text">Designed to improve governance quality over time, not degrade.</p></div>
+                      <div className="card"><h4 className="card-title">Risk thinking</h4><p className="card-text">Grounded in quantitative risk thinking, not static policy engines.</p></div>
+                    </MagicBentoGrid>
+                  </>
+                ),
+              },
+              {
+                key: 'qc-3',
+                title: 'How It Fits Your Environment',
+                content: (
+                  <>
+                    <h3 className="subhead">How It Fits Your Environment</h3>
+                    <p className="section-note">QuantCertify integrates with and enhances your existing IAM solutions. It works alongside SailPoint, Okta, Active Directory, and other IAM platforms, adding quantitative insight to existing certification workflows — without disrupting current systems.</p>
+                    <p className="section-note strong">QuantCertify does not replace your IAM stack. It makes it measurably better.</p>
+                    <h3 className="subhead">Outcomes</h3>
+                    <MagicBentoGrid variant="auto" sectionId="quantcertify-outcomes">
+                      <div className="card"><h4 className="card-title">Cleaner roles</h4><p className="card-text">Cleaner roles and access structures.</p></div>
+                      <div className="card"><h4 className="card-title">Faster certifications</h4><p className="card-text">Faster, defensible certifications.</p></div>
+                      <div className="card"><h4 className="card-title">Reduced drift</h4><p className="card-text">Reduced over-entitlement and drift.</p></div>
+                    </MagicBentoGrid>
+                    <div className="cta-strip">
+                      <p className="cta-text">Talk to Us About QuantCertify</p>
+                      <a className="btn btn-primary" href="#contact">Contact</a>
+                    </div>
+                  </>
+                ),
+              },
+            ]}
+          />
+        </div>
+      </section>
 
-          <p className="section-note">
-            QuantCertify transforms certification from a periodic compliance exercise
-            into a quantitative control mechanism.
-          </p>
+      {/* QUANTVAULT */}
+      <section id="quantvault" className="snap-step">
+        <div className="step-inner container">
+          <HorizontalPinned
+            enabled={pinnedEnabled}
+            panels={[
+              {
+                key: 'qv-1',
+                title: 'QuantVault overview and What It Does',
+                content: (
+                  <>
+                    <h2 className="section-title">QuantVault</h2>
+                    <p className="section-lead">Enterprise Entitlement Intelligence</p>
+                    <p className="section-note">QuantVault provides a system-level view of entitlements across your organization.</p>
+                    <h3 className="subhead">What It Does</h3>
+                    <MagicBentoGrid variant="auto" sectionId="quantvault-what-it-does">
+                      <div className="card"><h4 className="card-title">Aggregates entitlements</h4><p className="card-text">Aggregates entitlements across IAM platforms and systems.</p></div>
+                      <div className="card"><h4 className="card-title">Unified view</h4><p className="card-text">Creates a unified view of users, resources, roles, and access.</p></div>
+                      <div className="card"><h4 className="card-title">Cross-system analysis</h4><p className="card-text">Enables cross-system analysis of entitlement structure and risk.</p></div>
+                      <div className="card"><h4 className="card-title">Governance foundation</h4><p className="card-text">Foundation for quantitative entitlement governance at scale.</p></div>
+                    </MagicBentoGrid>
+                  </>
+                ),
+              },
+              {
+                key: 'qv-2',
+                title: 'Relationship to QuantCertify',
+                content: (
+                  <>
+                    <h3 className="subhead">Relationship to QuantCertify</h3>
+                    <MagicBentoGrid variant="auto" sectionId="quantvault-relationship">
+                      <div className="card"><h4 className="card-title">Runs on top</h4><p className="card-text">QuantCertify runs on top of QuantVault.</p></div>
+                      <div className="card"><h4 className="card-title">System context</h4><p className="card-text">QuantVault provides the system-wide context.</p></div>
+                    </MagicBentoGrid>
+                  </>
+                ),
+              },
+              {
+                key: 'qv-3',
+                title: 'Integration Philosophy',
+                content: (
+                  <>
+                    <h3 className="subhead">Integration Philosophy</h3>
+                    <p className="section-note">QuantVault plugs into and enhances your existing IAM solutions. It does not replace them.</p>
+                  </>
+                ),
+              },
+            ]}
+          />
+        </div>
+      </section>
 
-          <h3 className="subhead">What It Does</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantcertify-what-it-does">
-            <div className="card">
-              <h4 className="card-title">Quantifies exposure</h4>
-              <p className="card-text">
-                Quantifies entitlement exposure, drift, and role integrity using
-                mathematics — not rules.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">System-level analysis</h4>
-              <p className="card-text">
-                Analyzes users and entitlements as a system, not isolated records.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">AI opinions & alerts</h4>
-              <p className="card-text">
-                Enables AI to opine and alert on access patterns, anomalies, and
-                emerging risk.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Forces clarity</h4>
-              <p className="card-text">Forces clarity and ownership during certification.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Prevents rubber-stamping</h4>
-              <p className="card-text">
-                Prevents rubber-stamp reviews by surfacing what actually matters.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Focus on material risk</h4>
-              <p className="card-text">
-                Focuses attention on material risk, not noise.
-              </p>
-            </div>
-          </MagicBentoGrid>
+      {/* QUANTDATA */}
+      <section id="quantdata" className="snap-step">
+        <div className="step-inner container">
+          <HorizontalPinned
+            enabled={pinnedEnabled}
+            panels={[
+              {
+                key: 'qd-1',
+                title: 'QuantData overview and What It Does',
+                content: (
+                  <>
+                    <h2 className="section-title">QuantData</h2>
+                    <p className="section-lead">Semantic Governance for Enterprise Data</p>
+                    <p className="section-note">QuantData governs what enterprise data means and how it evolves safely over time.</p>
+                    <h3 className="subhead">What It Does</h3>
+                    <MagicBentoGrid variant="auto" sectionId="quantdata-what-it-does">
+                      <div className="card"><h4 className="card-title">Canonical models</h4><p className="card-text">Establishes canonical data models and nomenclature.</p></div>
+                      <div className="card"><h4 className="card-title">Controlled evolution</h4><p className="card-text">Governs evolution without breaking reporting or workflows.</p></div>
+                      <div className="card"><h4 className="card-title">Detects semantic drift</h4><p className="card-text">Detects semantic drift, ambiguity, and incompatibility.</p></div>
+                      <div className="card"><h4 className="card-title">AI readiness</h4><p className="card-text">Ensures data is fit for reporting, automation, and AI.</p></div>
+                    </MagicBentoGrid>
+                  </>
+                ),
+              },
+              {
+                key: 'qd-2',
+                title: 'Why It Matters',
+                content: (
+                  <>
+                    <h3 className="subhead">Why It Matters</h3>
+                    <MagicBentoGrid variant="auto" sectionId="quantdata-why-it-matters">
+                      <div className="card"><h4 className="card-title">Access + meaning</h4><p className="card-text">Entitlement governance fails if data meaning is broken.</p></div>
+                      <div className="card"><h4 className="card-title">Meaning + access</h4><p className="card-text">Data governance fails if access governance is broken.</p></div>
+                    </MagicBentoGrid>
+                    <p className="section-note">QuantData and QuantCertify are designed to work together so data meaning and permissions evolve in lockstep.</p>
+                  </>
+                ),
+              },
+            ]}
+          />
+        </div>
+      </section>
 
-          <h3 className="subhead">Why It’s Different</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantcertify-why-different">
-            <div className="card">
-              <h4 className="card-title">Quantifies entitlements</h4>
-              <p className="card-text">The only certification system that quantifies entitlements.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">AI-first architecture</h4>
-              <p className="card-text">
-                Built from the ground up with AI in mind, not bolted on later.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Improves over time</h4>
-              <p className="card-text">
-                Designed to improve governance quality over time, not degrade.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Risk thinking</h4>
-              <p className="card-text">
-                Grounded in quantitative risk thinking, not static policy engines.
-              </p>
-            </div>
-          </MagicBentoGrid>
-
-          <h3 className="subhead">How It Fits Your Environment</h3>
-          <p className="section-note">
-            QuantCertify integrates with and enhances your existing IAM solutions.
-            It works alongside SailPoint, Okta, Active Directory, and other IAM
-            platforms, adding quantitative insight to existing certification workflows
-            — without disrupting current systems.
-          </p>
-          <p className="section-note strong">
-            QuantCertify does not replace your IAM stack. It makes it measurably better.
-          </p>
-
-          <h3 className="subhead">Outcomes</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantcertify-outcomes">
-            <div className="card">
-              <h4 className="card-title">Cleaner roles</h4>
-              <p className="card-text">Cleaner roles and access structures.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Faster certifications</h4>
-              <p className="card-text">Faster, defensible certifications.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Reduced drift</h4>
-              <p className="card-text">Reduced over-entitlement and drift.</p>
-            </div>
-          </MagicBentoGrid>
-
-          <div className="cta-strip">
-            <p className="cta-text">Talk to Us About QuantCertify</p>
-            <a className="btn btn-primary" href="#contact">
-              Contact
-            </a>
-            </div>
-        </section>
-
-        {/* QUANTVAULT */}
-        <section id="quantvault" className="section">
-          <h2 className="section-title">QuantVault</h2>
-          <p className="section-lead">Enterprise Entitlement Intelligence</p>
-
-          <p className="section-note">
-            QuantVault provides a system-level view of entitlements across your organization.
-          </p>
-
-          <h3 className="subhead">What It Does</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantvault-what-it-does">
-            <div className="card">
-              <h4 className="card-title">Aggregates entitlements</h4>
-              <p className="card-text">Aggregates entitlements across IAM platforms and systems.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Unified view</h4>
-              <p className="card-text">Creates a unified view of users, resources, roles, and access.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Cross-system analysis</h4>
-              <p className="card-text">
-                Enables cross-system analysis of entitlement structure and risk.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Governance foundation</h4>
-              <p className="card-text">
-                Foundation for quantitative entitlement governance at scale.
-              </p>
-            </div>
-          </MagicBentoGrid>
-
-          <h3 className="subhead">Relationship to QuantCertify</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantvault-relationship">
-            <div className="card">
-              <h4 className="card-title">Runs on top</h4>
-              <p className="card-text">QuantCertify runs on top of QuantVault.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">System context</h4>
-              <p className="card-text">QuantVault provides the system-wide context.</p>
-            </div>
-          </MagicBentoGrid>
-
-          <h3 className="subhead">Integration Philosophy</h3>
-          <p className="section-note">
-            QuantVault plugs into and enhances your existing IAM solutions. It does not replace them.
-          </p>
-        </section>
-
-        {/* QUANTDATA */}
-        <section id="quantdata" className="section">
-          <h2 className="section-title">QuantData</h2>
-          <p className="section-lead">Semantic Governance for Enterprise Data</p>
-
-          <p className="section-note">
-            QuantData governs what enterprise data means and how it evolves safely over time.
-          </p>
-
-          <h3 className="subhead">What It Does</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantdata-what-it-does">
-            <div className="card">
-              <h4 className="card-title">Canonical models</h4>
-              <p className="card-text">Establishes canonical data models and nomenclature.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Controlled evolution</h4>
-              <p className="card-text">
-                Governs evolution without breaking reporting or workflows.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Detects semantic drift</h4>
-              <p className="card-text">
-                Detects semantic drift, ambiguity, and incompatibility.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">AI readiness</h4>
-              <p className="card-text">
-                Ensures data is fit for reporting, automation, and AI.
-              </p>
-            </div>
-          </MagicBentoGrid>
-
-          <h3 className="subhead">Why It Matters</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantdata-why-it-matters">
-            <div className="card">
-              <h4 className="card-title">Access + meaning</h4>
-              <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Meaning + access</h4>
-              <p className="card-text">Data governance fails if access governance is broken.</p>
-            </div>
-          </MagicBentoGrid>
-
-          <p className="section-note">
-            QuantData and QuantCertify are designed to work together so data meaning and permissions evolve in lockstep.
-          </p>
-        </section>
-
-        {/* CAPABILITIES */}
-        <section id="capabilities" className="section">
+      {/* CAPABILITIES */}
+      <section id="capabilities" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">What We’re Exceptional At</h2>
 
           <MagicBentoGrid variant="auto" sectionId="capabilities">
@@ -743,10 +793,12 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+        </div>
+      </section>
 
-        {/* SERVICES */}
-        <section id="services" className="section">
+      {/* SERVICES */}
+      <section id="services" className="snap-step">
+        <div className="step-inner container">
           <h2 className="section-title">Accelerating Governance and AI Readiness</h2>
 
           <p className="section-lead">
@@ -791,10 +843,11 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+        </div>
+      </section>
 
-        {/* ABOUT */}
-        <section id="about" className="section">
+
+      <section id="about" className="container">
           <h2 className="section-title">About QuantEnt</h2>
 
           <p className="section-lead">
@@ -820,10 +873,9 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+      </section>
 
-        {/* CONTACT */}
-        <section id="contact" className="section">
+      <section id="contact" className="container">
           <h2 className="section-title">Talk to Us</h2>
           <p className="section-lead muted">Email addresses and Contact Phone Numbers</p>
 
@@ -833,11 +885,9 @@ export default function Home() {
               Products
             </button>
             </div>
-        </section>
+      </section>
 
-        <Footer />
-        </main>
-      </div>
+      <Footer />
 
       {/* Overlay */}
       <div

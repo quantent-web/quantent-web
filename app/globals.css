@@ -317,16 +317,100 @@ p {
   height: auto;
 }
 
-main[data-snap-scroll='true'] {
-  height: 100svh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
+html.snap-enabled {
+  scroll-snap-type: y proximity;
 }
 
-main[data-snap-scroll='true'] > .section {
-  min-height: calc(100svh - var(--nav-h));
+.snap-step {
+  min-height: var(--step-min-h);
+  width: 100%;
+  padding-inline: var(--page-gutter);
+  padding-block: var(--page-gutter-y);
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+.step-inner {
+  width: 100%;
+}
+
+.hpinned {
+  position: relative;
+}
+
+.hpinned__track {
+  height: calc(var(--hp-panels, 1) * 100dvh);
+}
+
+.hpinned__sticky {
+  position: sticky;
+  top: var(--nav-h);
+  height: var(--step-min-h);
+  overflow: hidden;
+}
+
+.hpinned__frame {
+  height: 100%;
+  padding-inline: var(--page-gutter);
+  padding-block: var(--page-gutter-y);
+}
+
+.hpinned__rail {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  will-change: transform;
+}
+
+.hpinned__panel {
+  flex: 0 0 100%;
+  height: 100%;
+  min-width: 100%;
+}
+
+.hpinned__panelInner {
+  height: 100%;
+}
+
+.hpinned--fallback .hpinned__panel--stacked {
+  margin-bottom: var(--space-8);
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse), (max-width: 768px) {
+  html.snap-enabled {
+    scroll-snap-type: none;
+  }
+
+  .snap-step {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+
+  .hpinned__track {
+    height: auto;
+  }
+
+  .hpinned__sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+
+  .hpinned__rail {
+    display: block;
+    transform: none !important;
+  }
+
+  .hpinned__panel {
+    min-width: 100%;
+    height: auto;
+    margin-bottom: var(--space-8);
+  }
+
+  .hpinned__frame {
+    padding-inline: 0;
+    padding-block: 0;
+  }
 }
 
 
@@ -353,7 +437,6 @@ main[data-snap-scroll='true'] > .section {
   color: var(--color-muted);
 }
 /* Hero content must sit ABOVE DotGrid */
-.header-bg__nav,
 .header-bg__content {
   position: relative;
   z-index: 2;
@@ -518,6 +601,9 @@ main[data-snap-scroll='true'] > .section {
 
   /* Drawer */
   --drawer-w: 360px;
+  --page-gutter: clamp(16px, 3vw, 48px);
+  --page-gutter-y: clamp(16px, 3vw, 56px);
+  --step-min-h: calc(100dvh - var(--nav-h));
 }
 
 html {
@@ -1413,19 +1499,24 @@ html[data-theme="dark"] body {
 /* Header background wrapper (DotGrid behind sticky nav) */
 .header-bg {
   position: relative;
+  isolation: isolate;
 }
 
 .header-bg__grid {
   position: absolute;
   inset: 0;
-  height: 100vh;
-   z-index:-2;
+  z-index: 0;
 }
 
-.header-bg__nav {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+.header-bg .dotgrid-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.header-bg .dotgrid-canvas {
+  width: 100%;
+  height: 100%;
 }
 
 .hero-title {
