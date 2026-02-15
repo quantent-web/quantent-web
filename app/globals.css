@@ -317,57 +317,75 @@ p {
   height: auto;
 }
 
-main[data-snap-scroll='true'] {
-  height: 100svh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
+html.snap-enabled {
+  scroll-snap-type: y proximity;
 }
 
-main[data-snap-scroll='true'] > .section {
-  min-height: calc(100svh - var(--nav-h));
+.snap-step {
+  min-height: calc(100dvh - var(--nav-h));
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
 
-.pinned {
+.hpinned {
   position: relative;
 }
 
-.pinned__track {
-  height: calc(var(--steps, 1) * 100svh);
+.hpinned__track {
+  height: calc(var(--hp-panels, 1) * 100dvh);
 }
 
-.pinned__sticky {
+.hpinned__sticky {
   position: sticky;
   top: var(--nav-h);
-  height: calc(100svh - var(--nav-h));
+  height: calc(100dvh - var(--nav-h));
   overflow: hidden;
-  display: flex;
-  align-items: flex-start;
 }
 
-.pinned__step-content {
+.hpinned__rail {
+  display: flex;
+  height: 100%;
   width: 100%;
+  will-change: transform;
+}
+
+.hpinned__panel {
+  flex: 0 0 100%;
+  min-width: 100%;
+}
+
+.hpinned--fallback .hpinned__panel--stacked {
+  margin-bottom: var(--space-8);
 }
 
 @media (prefers-reduced-motion: reduce), (pointer: coarse), (max-width: 768px) {
-  main[data-snap-scroll='true'] {
+  html.snap-enabled {
     scroll-snap-type: none;
   }
 
-  main[data-snap-scroll='true'] > .section {
+  .snap-step {
     scroll-snap-align: none;
     scroll-snap-stop: normal;
   }
 
-  .pinned__track {
+  .hpinned__track {
     height: auto;
   }
 
-  .pinned__sticky {
+  .hpinned__sticky {
     position: static;
     height: auto;
     overflow: visible;
+  }
+
+  .hpinned__rail {
+    display: block;
+    transform: none !important;
+  }
+
+  .hpinned__panel {
+    min-width: 100%;
+    margin-bottom: var(--space-8);
   }
 }
 

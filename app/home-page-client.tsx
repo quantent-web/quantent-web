@@ -8,14 +8,13 @@ import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
-import PinnedSection from './components/scroll/PinnedSection';
+import HorizontalPinned from './components/scroll/HorizontalPinned';
 import { shouldEnablePinned, shouldEnableSnap } from '@/src/config/scrollExperience';
 
 type NavItem = { label: string; href: string };
 
 export default function Home() {
   const navRef = useRef<HTMLElement | null>(null);
-  const mainRef = useRef<HTMLElement | null>(null);
 
   const navInnerRef = useRef<HTMLDivElement | null>(null);
   const brandRef = useRef<HTMLAnchorElement | null>(null);
@@ -92,6 +91,13 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('snap-enabled', snapEnabled);
+    return () => {
+      document.documentElement.classList.remove('snap-enabled');
+    };
+  }, [snapEnabled]);
+
   // Bloquea scroll del body cuando el drawer está abierto
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -102,105 +108,67 @@ export default function Home() {
 
   // Scroll spy usando IntersectionObserver para activar links
   useEffect(() => {
-    const snapIds = [
-      'what-we-do',
-      'different',
-      'products',
-      'quantcertify',
-      'quantvault',
-      'quantdata',
-      'capabilities',
-      'services',
-    ];
-
-    const outsideIds = ['home', 'about', 'contact'];
-    const snapSections = snapIds
-      .map((id) => document.getElementById(id))
-      .filter((section): section is HTMLElement => Boolean(section));
-    const outsideSections = outsideIds
+    const sectionIds = navItems
+      .map((item) => item.href.replace('#', ''))
+      .filter(Boolean);
+    const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => Boolean(section));
 
-    const snapRatios = new Map<string, number>();
-    const outsideRatios = new Map<string, number>();
+    if (!sections.length) return;
 
+    const ratios = new Map<string, number>();
     const updateActive = () => {
-      let outsideBestId = '';
-      let outsideBestRatio = 0;
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
 
-      for (const id of outsideIds) {
-        const ratio = outsideRatios.get(id) ?? 0;
-        if (ratio > outsideBestRatio) {
-          outsideBestRatio = ratio;
-          outsideBestId = id;
-        }
-      }
-
-      if (outsideBestRatio >= 0.35) {
-        setActiveHref(`#${outsideBestId}`);
+      if (scrollTop <= 8) {
+        setActiveHref('#home');
         return;
       }
 
-      const snapRoot = snapEnabled ? mainRef.current : null;
-
-      if (snapRoot && snapRoot.scrollTop <= 8) {
-        setActiveHref('#what-we-do');
+      if (scrollTop + windowHeight >= docHeight - 8) {
+        setActiveHref(`#${sectionIds[sectionIds.length - 1]}`);
         return;
       }
 
-      let snapBestId = snapIds[0];
-      let snapBestRatio = 0;
-      for (const id of snapIds) {
-        const ratio = snapRatios.get(id) ?? 0;
-        if (ratio > snapBestRatio) {
-          snapBestRatio = ratio;
-          snapBestId = id;
+      let bestId = sectionIds[0];
+      let bestRatio = 0;
+      for (const id of sectionIds) {
+        const ratio = ratios.get(id) ?? 0;
+        if (ratio > bestRatio) {
+          bestRatio = ratio;
+          bestId = id;
         }
       }
 
-      if (snapBestRatio > 0) {
-        setActiveHref(`#${snapBestId}`);
+      if (bestRatio >= 0.35) {
+        setActiveHref(`#${bestId}`);
       }
     };
 
-    const outsideObserver = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          outsideRatios.set(entry.target.id, entry.intersectionRatio);
+          ratios.set(entry.target.id, entry.intersectionRatio);
         });
         updateActive();
       },
       {
         root: null,
         rootMargin: '0px 0px -20% 0px',
-        threshold: [0, 0.2, 0.35, 0.6, 1],
-      }
-    );
-
-    outsideSections.forEach((section) => outsideObserver.observe(section));
-
-    const snapObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          snapRatios.set(entry.target.id, entry.intersectionRatio);
-        });
-        updateActive();
-      },
-      {
-        root: snapEnabled ? mainRef.current : null,
-        rootMargin: '0px 0px -20% 0px',
         threshold: [0, 0.25, 0.4, 0.6, 1],
       }
     );
 
-    snapSections.forEach((section) => snapObserver.observe(section));
+    sections.forEach((section) => observer.observe(section));
     updateActive();
 
     return () => {
-      outsideObserver.disconnect();
-      snapObserver.disconnect();
+      observer.disconnect();
     };
-  }, [snapEnabled]);
+  }, [navItems]);
 
   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
@@ -409,23 +377,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SNAP STEPS */}
-      <main
-        id="top"
-        className="container"
-        ref={mainRef}
-        data-snap-scroll={snapEnabled ? 'true' : 'false'}
-      >
 
+      {/* SNAP STEPS */}
         {/* WHAT WE DO */}
-        <section id="what-we-do" className="section">
-          <PinnedSection
-            id="what-we-do"
+        <section id="what-we-do" className="container snap-step">
+          <HorizontalPinned
             enabled={pinnedEnabled}
-            steps={[
+            panels={[
               {
                 key: 'wtd-1',
-                label: 'What We Do',
+                title: 'What We Do',
                 content: (
                   <div className="what-we-do-layout">
                     <div className="what-we-do-left">
@@ -455,7 +416,7 @@ export default function Home() {
               },
               {
                 key: 'wtd-2',
-                label: 'Data Cleaning, Categorizing, and Governance',
+                title: 'Data Cleaning, Categorizing, and Governance',
                 content: (
                   <div className="what-we-do-layout what-we-do-layout--inverted">
                     <div className="what-we-do-left what-we-do-left--description">
@@ -491,7 +452,7 @@ export default function Home() {
 
 
         {/* WHAT MAKES DIFFERENT */}
-        <section id="different" className="section">
+        <section id="different" className="container snap-step">
           <h2 className="section-title">What Makes QuantEnt Different</h2>
 
           <MagicBentoGrid variant="auto" sectionId="different">
@@ -529,7 +490,7 @@ export default function Home() {
         </section>
 
         {/* PRODUCTS */}
-        <section id="products" className="section">
+        <section id="products" className="container snap-step">
           <h2 className="section-title">Our Products</h2>
 
           <MagicBentoGrid variant="auto" sectionId="products">
@@ -573,14 +534,13 @@ export default function Home() {
         </section>
 
         {/* QUANTCERTIFY */}
-        <section id="quantcertify" className="section">
-          <PinnedSection
-            id="quantcertify"
+        <section id="quantcertify" className="container snap-step">
+          <HorizontalPinned
             enabled={pinnedEnabled}
-            steps={[
+            panels={[
               {
                 key: 'qc-1',
-                label: 'QuantCertify overview and What It Does',
+                title: 'QuantCertify overview and What It Does',
                 content: (
                   <>
                     <h2 className="section-title">QuantCertify</h2>
@@ -603,7 +563,7 @@ export default function Home() {
               },
               {
                 key: 'qc-2',
-                label: 'Why It’s Different',
+                title: 'Why It’s Different',
                 content: (
                   <>
                     <h3 className="subhead">Why It’s Different</h3>
@@ -618,7 +578,7 @@ export default function Home() {
               },
               {
                 key: 'qc-3',
-                label: 'How It Fits Your Environment',
+                title: 'How It Fits Your Environment',
                 content: (
                   <>
                     <h3 className="subhead">How It Fits Your Environment</h3>
@@ -642,14 +602,13 @@ export default function Home() {
         </section>
 
         {/* QUANTVAULT */}
-        <section id="quantvault" className="section">
-          <PinnedSection
-            id="quantvault"
+        <section id="quantvault" className="container snap-step">
+          <HorizontalPinned
             enabled={pinnedEnabled}
-            steps={[
+            panels={[
               {
                 key: 'qv-1',
-                label: 'QuantVault overview and What It Does',
+                title: 'QuantVault overview and What It Does',
                 content: (
                   <>
                     <h2 className="section-title">QuantVault</h2>
@@ -667,7 +626,7 @@ export default function Home() {
               },
               {
                 key: 'qv-2',
-                label: 'Relationship to QuantCertify',
+                title: 'Relationship to QuantCertify',
                 content: (
                   <>
                     <h3 className="subhead">Relationship to QuantCertify</h3>
@@ -680,7 +639,7 @@ export default function Home() {
               },
               {
                 key: 'qv-3',
-                label: 'Integration Philosophy',
+                title: 'Integration Philosophy',
                 content: (
                   <>
                     <h3 className="subhead">Integration Philosophy</h3>
@@ -693,14 +652,13 @@ export default function Home() {
         </section>
 
         {/* QUANTDATA */}
-        <section id="quantdata" className="section">
-          <PinnedSection
-            id="quantdata"
+        <section id="quantdata" className="container snap-step">
+          <HorizontalPinned
             enabled={pinnedEnabled}
-            steps={[
+            panels={[
               {
                 key: 'qd-1',
-                label: 'QuantData overview and What It Does',
+                title: 'QuantData overview and What It Does',
                 content: (
                   <>
                     <h2 className="section-title">QuantData</h2>
@@ -718,7 +676,7 @@ export default function Home() {
               },
               {
                 key: 'qd-2',
-                label: 'Why It Matters',
+                title: 'Why It Matters',
                 content: (
                   <>
                     <h3 className="subhead">Why It Matters</h3>
@@ -735,7 +693,7 @@ export default function Home() {
         </section>
 
         {/* CAPABILITIES */}
-        <section id="capabilities" className="section">
+        <section id="capabilities" className="container snap-step">
           <h2 className="section-title">What We’re Exceptional At</h2>
 
           <MagicBentoGrid variant="auto" sectionId="capabilities">
@@ -771,7 +729,7 @@ export default function Home() {
         </section>
 
         {/* SERVICES */}
-        <section id="services" className="section">
+        <section id="services" className="container snap-step">
           <h2 className="section-title">Accelerating Governance and AI Readiness</h2>
 
           <p className="section-lead">
@@ -818,7 +776,6 @@ export default function Home() {
           </MagicBentoGrid>
         </section>
 
-      </main>
 
       <section id="about" className="container">
           <h2 className="section-title">About QuantEnt</h2>
