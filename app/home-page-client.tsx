@@ -12,6 +12,7 @@ import ContactStepperModal from './components/contact/ContactStepperModal';
 type NavItem = { label: string; href: string };
 
 export default function Home() {
+  const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
   const navInnerRef = useRef<HTMLDivElement | null>(null);
@@ -197,6 +198,55 @@ export default function Home() {
   const openContact = () => setIsContactOpen(true);
   const closeContact = () => setIsContactOpen(false);
 
+  const whatWeDoCards = [
+    {
+      title: 'System Analysis',
+      text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
+    },
+    {
+      title: 'Quantitative Certification',
+      text: 'Certify access and meaning with mathematical rigor.',
+    },
+    {
+      title: 'Risk Detection',
+      text: 'Detect drift, over-exposure, and structural risk early.',
+    },
+    {
+      title: 'Continuous Control',
+      text: 'Maintain control as systems, data, and organizations evolve.',
+    },
+  ];
+
+  const renderWhatWeDoGrid = (sectionId: string) => (
+    <>
+      <p className="section-kicker">We help organizations:</p>
+
+      <MagicBentoGrid variant="4" sectionId={sectionId}>
+        {whatWeDoCards.map((card) => (
+          <div className="card" key={`${sectionId}-${card.title}`}>
+            <h3 className="card-title">{card.title}</h3>
+            <p className="card-text">{card.text}</p>
+          </div>
+        ))}
+      </MagicBentoGrid>
+      <p className="section-note">
+        QuantEnt is built for complex, regulated environments where correctness,
+        scale, and evolution matter.
+      </p>
+    </>
+  );
+
+  const renderWhatWeDoDescription = () => (
+    <>
+      <h2 className="section-title">What We Do</h2>
+
+      <p className="section-lead">
+        QuantEnt analyzes and certifies who can access what — and what that data
+        means — using quantitative models instead of static rules.
+      </p>
+    </>
+  );
+
   return (
     <>
       {/* STICKY NAV + DOT GRID BACKGROUND */}
@@ -276,7 +326,11 @@ export default function Home() {
         </header>
 
         {/* CONTENT */}
-        <main id="top" className="container">
+        <main
+          id="top"
+          className="container"
+          data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
+        >
         {/* HOME / HERO */}
         <section id="home" className="section">
      <BlurText
@@ -306,52 +360,25 @@ export default function Home() {
 
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
-          <div className="what-we-do-layout">
+          <div className="what-we-do-blocks">
+            <div className="what-we-do-layout">
             <div className="what-we-do-left">
-              <h2 className="section-title">What We Do</h2>
-
-              <p className="section-lead">
-                QuantEnt analyzes and certifies who can access what — and what that data
-                means — using quantitative models instead of static rules.
-              </p>
+              {renderWhatWeDoDescription()}
             </div>
 
             <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
+              {renderWhatWeDoGrid('what-we-do')}
+            </div>
+            </div>
 
-              <MagicBentoGrid variant="4" sectionId="what-we-do">
-                <div className="card">
-                  <h3 className="card-title">System Analysis</h3>
-                  <p className="card-text">
-                    Analyze users, roles, entitlements, and data as interconnected systems.
-                  </p>
-                </div>
+            <div className="what-we-do-layout what-we-do-layout--inverted">
+            <div className="what-we-do-right">
+              {renderWhatWeDoGrid('what-we-do-inverted')}
+            </div>
 
-                <div className="card">
-                  <h3 className="card-title">Quantitative Certification</h3>
-                  <p className="card-text">
-                    Certify access and meaning with mathematical rigor.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Risk Detection</h3>
-                  <p className="card-text">
-                    Detect drift, over-exposure, and structural risk early.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Continuous Control</h3>
-                  <p className="card-text">
-                    Maintain control as systems, data, and organizations evolve.
-                  </p>
-                </div>
-              </MagicBentoGrid>
-              <p className="section-note">
-                QuantEnt is built for complex, regulated environments where correctness,
-                scale, and evolution matter.
-              </p>
+            <div className="what-we-do-left what-we-do-left--description">
+              {renderWhatWeDoDescription()}
+            </div>
             </div>
           </div>
         </section>
@@ -438,7 +465,7 @@ export default function Home() {
             <a className="btn btn-primary" href="#contact">
               Start
             </a>
-          </div>
+            </div>
         </section>
 
         {/* QUANTCERTIFY */}
@@ -549,7 +576,7 @@ export default function Home() {
             <a className="btn btn-primary" href="#contact">
               Contact
             </a>
-          </div>
+            </div>
         </section>
 
         {/* QUANTVAULT */}
@@ -778,7 +805,7 @@ export default function Home() {
             <button className="btn btn-primary" type="button" onClick={openContact}>
               Products
             </button>
-          </div>
+            </div>
         </section>
 
         <Footer />

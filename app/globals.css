@@ -267,24 +267,29 @@ p {
 .section {
   padding-top: var(--space-8);
   padding-bottom: var(--space-8);
+  scroll-margin-top: calc(var(--nav-h) + var(--space-4));
 
 }
 
 #home {
   display: grid;
   place-items: center;
-  height: 100vh;
+  min-height: 100svh;
+  height: auto;
   align-content:center;
   justify-content:center;
 }
 #what-we-do {
-  height: 90vh;
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 #different {
-  height: 90vh;
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 #products {
-  height: 90vh;
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 #quantcertify {
  
@@ -296,16 +301,32 @@ p {
  ;
 }
 #capabilities {
-  height: 90vh;
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 #services {
-  height: 90vh;
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 #about{
-  height: 90vh;
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 #contact {
-  height: 90vh;
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
+}
+
+main[data-snap-scroll='true'] {
+  height: 100svh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+}
+
+main[data-snap-scroll='true'] > .section {
+  min-height: calc(100svh - var(--nav-h));
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 
@@ -420,14 +441,38 @@ p {
   color: var(--text-secondary);
 }
 
+.what-we-do-blocks {
+  display: grid;
+  gap: clamp(var(--space-8), 6vw, var(--space-12));
+}
+
 .what-we-do-layout {
   display: grid;
   gap: var(--space-6);
+  align-items: start;
+}
+
+.what-we-do-layout--inverted {
+  margin-top: 0;
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border);
+  margin-bottom: var(--space-8);
 }
 
 .what-we-do-right {
   display: grid;
   gap: var(--space-5);
+}
+
+.what-we-do-left--description {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.what-we-do-left--description .section-lead,
+.what-we-do-left--description .section-note {
+  margin: 0;
 }
 
 .what-we-do-right .section-kicker {
@@ -450,6 +495,10 @@ p {
   .what-we-do-layout {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     align-items: start;
+  }
+
+  .what-we-do-layout--inverted {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
 }
 
