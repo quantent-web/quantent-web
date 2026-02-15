@@ -1,0 +1,154 @@
+.switch {
+  --switch-w: 3.2rem;
+  --switch-h: 1.8rem;
+  --padding: 0.16rem;
+  --thumb-size: calc(var(--switch-h) - (var(--padding) * 2));
+  --duration: 400ms;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--switch-w);
+  block-size: var(--switch-h);
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  position: relative;
+  transition: transform 180ms ease;
+}
+
+.switch:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.switch:active {
+  transform: translateY(1px);
+}
+
+.track {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background:
+    radial-gradient(circle at 24% 50%, color-mix(in srgb, var(--background) 75%, transparent) 0%, transparent 50%),
+    linear-gradient(120deg, color-mix(in srgb, var(--muted-foreground) 12%, var(--background)), color-mix(in srgb, var(--foreground) 8%, var(--background)));
+  overflow: hidden;
+  transition: background var(--duration) ease, border-color var(--duration) ease;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 35% 50%, color-mix(in srgb, var(--primary) 26%, transparent), transparent 68%);
+  opacity: 0.35;
+  transition: opacity var(--duration) ease;
+}
+
+.thumb {
+  position: absolute;
+  top: var(--padding);
+  left: var(--padding);
+  inline-size: var(--thumb-size);
+  block-size: var(--thumb-size);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--background) 88%, var(--foreground));
+  border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--foreground) 16%, transparent),
+    inset 0 1px 1px color-mix(in srgb, var(--background) 65%, transparent);
+  transform: translateX(0);
+  transition: transform var(--duration) cubic-bezier(0.22, 1, 0.36, 1),
+    background var(--duration) ease,
+    border-color var(--duration) ease,
+    box-shadow var(--duration) ease;
+}
+
+.iconSun,
+.iconMoon {
+  position: absolute;
+  top: 50%;
+  inline-size: 0.86rem;
+  block-size: 0.86rem;
+  transform: translateY(-50%);
+  transition: opacity var(--duration) ease, transform var(--duration) ease, color var(--duration) ease;
+}
+
+.iconSun {
+  left: 0.34rem;
+  color: color-mix(in srgb, var(--primary) 78%, var(--foreground));
+  opacity: 1;
+}
+
+.iconMoon {
+  right: 0.34rem;
+  color: color-mix(in srgb, var(--foreground) 90%, var(--background));
+  opacity: 0.45;
+  transform: translateY(-50%) scale(0.9);
+}
+
+.iconSun svg,
+.iconMoon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.iconSun path,
+.iconSun circle,
+.iconMoon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.iconMoon path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.checked .track {
+  border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+  background:
+    radial-gradient(circle at 76% 40%, color-mix(in srgb, var(--primary) 24%, transparent) 0%, transparent 44%),
+    linear-gradient(120deg, color-mix(in srgb, var(--foreground) 26%, var(--background)), color-mix(in srgb, var(--foreground) 8%, var(--background)));
+}
+
+.checked .glow {
+  opacity: 0.66;
+}
+
+.checked .thumb {
+  transform: translateX(calc(var(--switch-w) - var(--thumb-size) - (var(--padding) * 2)));
+  background: color-mix(in srgb, var(--foreground) 14%, var(--background));
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+
+.checked .iconSun {
+  opacity: 0.35;
+  transform: translateY(-50%) scale(0.9);
+}
+
+.checked .iconMoon {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch,
+  .track,
+  .thumb,
+  .glow,
+  .iconSun,
+  .iconMoon {
+    transition-duration: 1ms;
+  }
+}
