@@ -12,7 +12,6 @@ import ContactStepperModal from './components/contact/ContactStepperModal';
 type NavItem = { label: string; href: string };
 
 export default function Home() {
-  const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
   const navInnerRef = useRef<HTMLDivElement | null>(null);
@@ -238,21 +237,9 @@ export default function Home() {
 
   return (
     <>
-      {/* STICKY NAV + DOT GRID BACKGROUND */}
-      <div className="header-bg">
-        {/* DotGrid fondo */}
-        <div className="header-bg__grid">
-          <DotGrid
-            dotSize={5}
-            gap={15}
-            proximity={200}
-            style={{}}
-          />
-        </div>
-
-        {/* STICKY NAV */}
-        <header className="nav header-bg__nav" ref={navRef}>
-          <div className="nav-inner nav-container" ref={navInnerRef}>
+      {/* STICKY NAV */}
+      <header className="nav header-bg__nav" ref={navRef}>
+        <div className="nav-inner nav-container" ref={navInnerRef}>
             <a
               className="nav-brand"
               href="#top"
@@ -314,36 +301,36 @@ export default function Home() {
           </div>
         </header>
 
-        {/* CONTENT */}
-        <main
-          id="top"
-          className="container"
-          data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
-        >
+      {/* CONTENT */}
+      <main id="top" className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
-     <BlurText
-  as="h1"
-  className="hero-title"
-  text="Creating Institutional Control over Entitlements and Data"
-  delay={120}
-  animateBy="words"
-  direction="top"
-/>
+          <div className="hero-grid" aria-hidden="true">
+            <DotGrid dotSize={5} gap={15} proximity={200} style={{}} />
+          </div>
 
+          <div className="hero-content">
+            <BlurText
+              as="h1"
+              className="hero-title"
+              text="Creating Institutional Control over Entitlements and Data"
+              delay={120}
+              animateBy="words"
+              direction="top"
+            />
 
+            <p className="hero-subtitle">
+              Quantitative models and mathematics for entitlement and data governance.
+            </p>
 
-          <p className="hero-subtitle">
-            Quantitative models and mathematics for entitlement and data governance.
-          </p>
-
-          <div className="hero-actions">
-            <button className="btn btn-primary" type="button" onClick={openContact}>
-              Talk to Us
-            </button>
-            <a className="btn btn-secondary" href="#what-we-do">
-              What we do
-            </a>
+            <div className="hero-actions">
+              <button className="btn btn-primary" type="button" onClick={openContact}>
+                Talk to Us
+              </button>
+              <a className="btn btn-secondary" href="#what-we-do">
+                What we do
+              </a>
+            </div>
           </div>
         </section>
 
@@ -836,8 +823,7 @@ export default function Home() {
         </section>
 
         <Footer />
-        </main>
-      </div>
+      </main>
 
       {/* Overlay */}
       <div
