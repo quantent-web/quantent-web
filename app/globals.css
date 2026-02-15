@@ -426,7 +426,9 @@ p {
 }
 
 .what-we-do-layout--inverted {
-  margin-top: var(--space-8);
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border);
 }
 
 .what-we-do-right {

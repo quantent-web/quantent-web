@@ -197,6 +197,55 @@ export default function Home() {
   const openContact = () => setIsContactOpen(true);
   const closeContact = () => setIsContactOpen(false);
 
+  const whatWeDoCards = [
+    {
+      title: 'System Analysis',
+      text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
+    },
+    {
+      title: 'Quantitative Certification',
+      text: 'Certify access and meaning with mathematical rigor.',
+    },
+    {
+      title: 'Risk Detection',
+      text: 'Detect drift, over-exposure, and structural risk early.',
+    },
+    {
+      title: 'Continuous Control',
+      text: 'Maintain control as systems, data, and organizations evolve.',
+    },
+  ];
+
+  const renderWhatWeDoGrid = (sectionId: string) => (
+    <>
+      <p className="section-kicker">We help organizations:</p>
+
+      <MagicBentoGrid variant="4" sectionId={sectionId}>
+        {whatWeDoCards.map((card) => (
+          <div className="card" key={`${sectionId}-${card.title}`}>
+            <h3 className="card-title">{card.title}</h3>
+            <p className="card-text">{card.text}</p>
+          </div>
+        ))}
+      </MagicBentoGrid>
+      <p className="section-note">
+        QuantEnt is built for complex, regulated environments where correctness,
+        scale, and evolution matter.
+      </p>
+    </>
+  );
+
+  const renderWhatWeDoDescription = () => (
+    <>
+      <h2 className="section-title">What We Do</h2>
+
+      <p className="section-lead">
+        QuantEnt analyzes and certifies who can access what — and what that data
+        means — using quantitative models instead of static rules.
+      </p>
+    </>
+  );
+
   return (
     <>
       {/* STICKY NAV + DOT GRID BACKGROUND */}
@@ -308,97 +357,21 @@ export default function Home() {
         <section id="what-we-do" className="section">
           <div className="what-we-do-layout">
             <div className="what-we-do-left">
-              <h2 className="section-title">What We Do</h2>
-
-              <p className="section-lead">
-                QuantEnt analyzes and certifies who can access what — and what that data
-                means — using quantitative models instead of static rules.
-              </p>
+              {renderWhatWeDoDescription()}
             </div>
 
             <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do">
-                <div className="card">
-                  <h3 className="card-title">System Analysis</h3>
-                  <p className="card-text">
-                    Analyze users, roles, entitlements, and data as interconnected systems.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Quantitative Certification</h3>
-                  <p className="card-text">
-                    Certify access and meaning with mathematical rigor.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Risk Detection</h3>
-                  <p className="card-text">
-                    Detect drift, over-exposure, and structural risk early.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Continuous Control</h3>
-                  <p className="card-text">
-                    Maintain control as systems, data, and organizations evolve.
-                  </p>
-                </div>
-              </MagicBentoGrid>
-              <p className="section-note">
-                QuantEnt is built for complex, regulated environments where correctness,
-                scale, and evolution matter.
-              </p>
+              {renderWhatWeDoGrid('what-we-do')}
             </div>
           </div>
 
           <div className="what-we-do-layout what-we-do-layout--inverted">
             <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
-                <div className="card">
-                  <h3 className="card-title">System Analysis</h3>
-                  <p className="card-text">
-                    Analyze users, roles, entitlements, and data as interconnected systems.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Quantitative Certification</h3>
-                  <p className="card-text">
-                    Certify access and meaning with mathematical rigor.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Risk Detection</h3>
-                  <p className="card-text">
-                    Detect drift, over-exposure, and structural risk early.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="card-title">Continuous Control</h3>
-                  <p className="card-text">
-                    Maintain control as systems, data, and organizations evolve.
-                  </p>
-                </div>
-              </MagicBentoGrid>
+              {renderWhatWeDoGrid('what-we-do-inverted')}
             </div>
 
             <div className="what-we-do-left what-we-do-left--description">
-              <p className="section-lead">
-                QuantEnt analyzes and certifies who can access what — and what that data
-                means — using quantitative models instead of static rules.
-              </p>
-              <p className="section-note">
-                QuantEnt is built for complex, regulated environments where correctness,
-                scale, and evolution matter.
-              </p>
+              {renderWhatWeDoDescription()}
             </div>
           </div>
         </section>
