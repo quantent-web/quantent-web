@@ -453,7 +453,7 @@ main[data-snap-scroll='true'] > .section {
 }
 
 .what-we-do-layout--inverted {
-  margin-top: 0;
+  margin-top: var(--space-8);
   padding-top: var(--space-8);
   border-top: 1px solid var(--border);
   margin-bottom: var(--space-8);
