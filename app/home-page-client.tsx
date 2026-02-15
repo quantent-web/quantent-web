@@ -102,53 +102,87 @@ export default function Home() {
 
   // Scroll spy usando IntersectionObserver para activar links
   useEffect(() => {
-    const sectionIds = navItems
-      .map((item) => item.href.replace('#', ''))
-      .filter(Boolean);
-    const sections = sectionIds
+    const snapIds = [
+      'what-we-do',
+      'different',
+      'products',
+      'quantcertify',
+      'quantvault',
+      'quantdata',
+      'capabilities',
+      'services',
+    ];
+
+    const outsideIds = ['home', 'about', 'contact'];
+    const snapSections = snapIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const outsideSections = outsideIds
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => Boolean(section));
 
-    if (!sections.length) return;
+    const snapRatios = new Map<string, number>();
+    const outsideRatios = new Map<string, number>();
 
-    const ratios = new Map<string, number>();
     const updateActive = () => {
-      const snapRoot = snapEnabled ? mainRef.current : null;
-      const scrollTop = snapRoot ? snapRoot.scrollTop : window.scrollY;
-      const viewportHeight = snapRoot ? snapRoot.clientHeight : window.innerHeight;
-      const docHeight = snapRoot
-        ? snapRoot.scrollHeight
-        : document.documentElement.scrollHeight;
+      let outsideBestId = '';
+      let outsideBestRatio = 0;
 
-      if (scrollTop <= 8) {
-        setActiveHref('#home');
-        return;
-      }
-
-      if (scrollTop + viewportHeight >= docHeight - 8) {
-        setActiveHref(`#${sectionIds[sectionIds.length - 1]}`);
-        return;
-      }
-
-      let bestId = sectionIds[0];
-      let bestRatio = 0;
-      for (const id of sectionIds) {
-        const ratio = ratios.get(id) ?? 0;
-        if (ratio > bestRatio) {
-          bestRatio = ratio;
-          bestId = id;
+      for (const id of outsideIds) {
+        const ratio = outsideRatios.get(id) ?? 0;
+        if (ratio > outsideBestRatio) {
+          outsideBestRatio = ratio;
+          outsideBestId = id;
         }
       }
 
-      if (bestRatio >= 0.4) {
-        setActiveHref(`#${bestId}`);
+      if (outsideBestRatio >= 0.35) {
+        setActiveHref(`#${outsideBestId}`);
+        return;
+      }
+
+      const snapRoot = snapEnabled ? mainRef.current : null;
+
+      if (snapRoot && snapRoot.scrollTop <= 8) {
+        setActiveHref('#what-we-do');
+        return;
+      }
+
+      let snapBestId = snapIds[0];
+      let snapBestRatio = 0;
+      for (const id of snapIds) {
+        const ratio = snapRatios.get(id) ?? 0;
+        if (ratio > snapBestRatio) {
+          snapBestRatio = ratio;
+          snapBestId = id;
+        }
+      }
+
+      if (snapBestRatio > 0) {
+        setActiveHref(`#${snapBestId}`);
       }
     };
 
-    const observer = new IntersectionObserver(
+    const outsideObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          ratios.set(entry.target.id, entry.intersectionRatio);
+          outsideRatios.set(entry.target.id, entry.intersectionRatio);
+        });
+        updateActive();
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px -20% 0px',
+        threshold: [0, 0.2, 0.35, 0.6, 1],
+      }
+    );
+
+    outsideSections.forEach((section) => outsideObserver.observe(section));
+
+    const snapObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          snapRatios.set(entry.target.id, entry.intersectionRatio);
         });
         updateActive();
       },
@@ -159,13 +193,14 @@ export default function Home() {
       }
     );
 
-    sections.forEach((section) => observer.observe(section));
+    snapSections.forEach((section) => snapObserver.observe(section));
     updateActive();
 
     return () => {
-      observer.disconnect();
+      outsideObserver.disconnect();
+      snapObserver.disconnect();
     };
-  }, [navItems, snapEnabled]);
+  }, [snapEnabled]);
 
   // Detecta si el nav “rompe” (wrap) y activa hamburguesa justo en ese punto
   useEffect(() => {
@@ -272,24 +307,12 @@ export default function Home() {
 
   return (
     <>
-      {/* STICKY NAV + DOT GRID BACKGROUND */}
-      <div className="header-bg">
-        {/* DotGrid fondo */}
-        <div className="header-bg__grid">
-          <DotGrid
-            dotSize={5}
-            gap={15}
-            proximity={200}
-            style={{}}
-          />
-        </div>
-
-        {/* STICKY NAV */}
-        <header className="nav header-bg__nav" ref={navRef}>
+      {/* STICKY NAV */}
+      <header className="nav" ref={navRef}>
           <div className="nav-inner nav-container" ref={navInnerRef}>
             <a
               className="nav-brand"
-              href="#top"
+              href="#home"
               aria-label="Go to top"
               ref={brandRef}
             >
@@ -348,16 +371,19 @@ export default function Home() {
           </div>
         </header>
 
-        {/* CONTENT */}
-        <main
-          id="top"
-          className="container"
-          ref={mainRef}
-          data-snap-scroll={snapEnabled ? 'true' : 'false'}
-        >
-        {/* HOME / HERO */}
-        <section id="home">
-     <BlurText
+      {/* HOME / HERO */}
+      <section id="home" className="header-bg">
+        <div className="header-bg__grid" aria-hidden="true">
+          <DotGrid
+            dotSize={5}
+            gap={15}
+            proximity={200}
+            style={{}}
+          />
+        </div>
+
+        <div className="container header-bg__content">
+          <BlurText
   as="h1"
   className="hero-title"
   text="Creating Institutional Control over Entitlements and Data"
@@ -380,7 +406,16 @@ export default function Home() {
               What we do
             </a>
           </div>
-        </section>
+        </div>
+      </section>
+
+      {/* SNAP STEPS */}
+      <main
+        id="top"
+        className="container"
+        ref={mainRef}
+        data-snap-scroll={snapEnabled ? 'true' : 'false'}
+      >
 
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
@@ -783,8 +818,9 @@ export default function Home() {
           </MagicBentoGrid>
         </section>
 
-        {/* ABOUT */}
-        <section id="about">
+      </main>
+
+      <section id="about" className="container">
           <h2 className="section-title">About QuantEnt</h2>
 
           <p className="section-lead">
@@ -810,10 +846,9 @@ export default function Home() {
               </p>
             </div>
           </MagicBentoGrid>
-        </section>
+      </section>
 
-        {/* CONTACT */}
-        <section id="contact">
+      <section id="contact" className="container">
           <h2 className="section-title">Talk to Us</h2>
           <p className="section-lead muted">Email addresses and Contact Phone Numbers</p>
 
@@ -823,11 +858,9 @@ export default function Home() {
               Products
             </button>
             </div>
-        </section>
+      </section>
 
-        <Footer />
-        </main>
-      </div>
+      <Footer />
 
       {/* Overlay */}
       <div
