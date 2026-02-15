@@ -12,6 +12,7 @@ import ContactStepperModal from './components/contact/ContactStepperModal';
 type NavItem = { label: string; href: string };
 
 export default function Home() {
+  const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
   const navInnerRef = useRef<HTMLDivElement | null>(null);
@@ -325,7 +326,11 @@ export default function Home() {
         </header>
 
         {/* CONTENT */}
-        <main id="top" className="container">
+        <main
+          id="top"
+          className="container"
+          data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
+        >
         {/* HOME / HERO */}
         <section id="home" className="section">
      <BlurText
