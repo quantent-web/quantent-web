@@ -491,17 +491,6 @@ main[data-snap-scroll='true'] > .section {
   }
 }
 
-@media (min-width: 1024px) {
-  .what-we-do-layout {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    align-items: start;
-  }
-
-  .what-we-do-layout--inverted {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  }
-}
-
 @media (max-width: 640px) {
   .container {
     padding-left: var(--space-5);
