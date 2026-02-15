@@ -220,11 +220,11 @@ export default function Home() {
   const dataCleaningCards = [
     {
       title: 'MetaData Tagging',
-      text: 'Analyzing and Tagging API's, data, applications, and resources for use by users and AI.',
+      text: 'Analyzing and Tagging APIs, data, applications, and resources for use by users and AI.',
     },
     {
       title: 'Data Model Rigorization',
-      text: 'With software and consulting, our SME's will help create, refine, or just critique the data models of the firm.',
+      text: 'With software and consulting, our SMEs will help create, refine, or just critique the data models of the firm.',
     },
     {
       title: 'Ongoing Cleanliness',
