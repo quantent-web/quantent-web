@@ -272,6 +272,7 @@ p {
 }
 
 #home {
+  position: relative;
   display: grid;
   place-items: center;
   min-height: 100svh;
@@ -317,18 +318,6 @@ p {
   height: auto;
 }
 
-main[data-snap-scroll='true'] {
-  height: 100svh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-}
-
-main[data-snap-scroll='true'] > .section {
-  min-height: calc(100svh - var(--nav-h));
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
 
 
 
@@ -354,7 +343,7 @@ main[data-snap-scroll='true'] > .section {
 }
 /* Hero content must sit ABOVE DotGrid */
 .header-bg__nav,
-.header-bg__content {
+.hero-content {
   position: relative;
   z-index: 2;
 }
@@ -1410,21 +1399,16 @@ html[data-theme="dark"] body {
   }
 }
 
-/* Header background wrapper (DotGrid behind sticky nav) */
-.header-bg {
-  position: relative;
-}
-
-.header-bg__grid {
-  position: absolute;
-  inset: 0;
-  height: 100vh;
-   z-index:-2;
-}
-
+/* Sticky nav */
 .header-bg__nav {
   position: sticky;
   top: 0;
+  z-index: 3;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
   z-index: 1;
 }
 
