@@ -441,6 +441,11 @@ main[data-snap-scroll='true'] > .section {
   color: var(--text-secondary);
 }
 
+.what-we-do-blocks {
+  display: grid;
+  gap: clamp(var(--space-8), 6vw, var(--space-12));
+}
+
 .what-we-do-layout {
   display: grid;
   gap: var(--space-6);
@@ -448,7 +453,7 @@ main[data-snap-scroll='true'] > .section {
 }
 
 .what-we-do-layout--inverted {
-  margin-top: var(--space-10);
+  margin-top: 0;
   padding-top: var(--space-8);
   border-top: 1px solid var(--border);
   margin-bottom: var(--space-8);

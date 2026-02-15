@@ -360,7 +360,8 @@ export default function Home() {
 
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
-          <div className="what-we-do-layout">
+          <div className="what-we-do-blocks">
+            <div className="what-we-do-layout">
             <div className="what-we-do-left">
               {renderWhatWeDoDescription()}
             </div>
@@ -368,15 +369,16 @@ export default function Home() {
             <div className="what-we-do-right">
               {renderWhatWeDoGrid('what-we-do')}
             </div>
-          </div>
+            </div>
 
-          <div className="what-we-do-layout what-we-do-layout--inverted">
+            <div className="what-we-do-layout what-we-do-layout--inverted">
             <div className="what-we-do-right">
               {renderWhatWeDoGrid('what-we-do-inverted')}
             </div>
 
             <div className="what-we-do-left what-we-do-left--description">
               {renderWhatWeDoDescription()}
+            </div>
             </div>
           </div>
         </section>
@@ -463,7 +465,7 @@ export default function Home() {
             <a className="btn btn-primary" href="#contact">
               Start
             </a>
-          </div>
+            </div>
         </section>
 
         {/* QUANTCERTIFY */}
@@ -574,7 +576,7 @@ export default function Home() {
             <a className="btn btn-primary" href="#contact">
               Contact
             </a>
-          </div>
+            </div>
         </section>
 
         {/* QUANTVAULT */}
@@ -803,7 +805,7 @@ export default function Home() {
             <button className="btn btn-primary" type="button" onClick={openContact}>
               Products
             </button>
-          </div>
+            </div>
         </section>
 
         <Footer />
