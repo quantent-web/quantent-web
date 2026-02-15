@@ -425,9 +425,24 @@ p {
   gap: var(--space-6);
 }
 
+.what-we-do-layout--inverted {
+  margin-top: var(--space-8);
+}
+
 .what-we-do-right {
   display: grid;
   gap: var(--space-5);
+}
+
+.what-we-do-left--description {
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.what-we-do-left--description .section-lead,
+.what-we-do-left--description .section-note {
+  margin: 0;
 }
 
 .what-we-do-right .section-kicker {
@@ -450,6 +465,10 @@ p {
   .what-we-do-layout {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     align-items: start;
+  }
+
+  .what-we-do-layout--inverted {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   }
 }
 

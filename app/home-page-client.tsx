@@ -354,6 +354,53 @@ export default function Home() {
               </p>
             </div>
           </div>
+
+          <div className="what-we-do-layout what-we-do-layout--inverted">
+            <div className="what-we-do-right">
+              <p className="section-kicker">We help organizations:</p>
+
+              <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
+                <div className="card">
+                  <h3 className="card-title">System Analysis</h3>
+                  <p className="card-text">
+                    Analyze users, roles, entitlements, and data as interconnected systems.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h3 className="card-title">Quantitative Certification</h3>
+                  <p className="card-text">
+                    Certify access and meaning with mathematical rigor.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h3 className="card-title">Risk Detection</h3>
+                  <p className="card-text">
+                    Detect drift, over-exposure, and structural risk early.
+                  </p>
+                </div>
+
+                <div className="card">
+                  <h3 className="card-title">Continuous Control</h3>
+                  <p className="card-text">
+                    Maintain control as systems, data, and organizations evolve.
+                  </p>
+                </div>
+              </MagicBentoGrid>
+            </div>
+
+            <div className="what-we-do-left what-we-do-left--description">
+              <p className="section-lead">
+                QuantEnt analyzes and certifies who can access what — and what that data
+                means — using quantitative models instead of static rules.
+              </p>
+              <p className="section-note">
+                QuantEnt is built for complex, regulated environments where correctness,
+                scale, and evolution matter.
+              </p>
+            </div>
+          </div>
         </section>
 
       
