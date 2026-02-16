@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import type { MouseEvent, RefObject } from 'react';
 
 type HashHref = `#${string}`;
-type ScrollToFn = (target: HTMLElement | string, opts?: { offset?: number }) => void;
+type ScrollToFn = (target: HTMLElement | string, opts?: { offset?: number; immediate?: boolean }) => number;
 
 type UseAnchorScrollArgs = {
   scrollTo: ScrollToFn;
@@ -12,14 +12,16 @@ type UseAnchorScrollArgs = {
 };
 
 export function useAnchorScroll({ scrollTo, navRef }: UseAnchorScrollArgs) {
-  const scrollToHash = useCallback((href: HashHref) => {
+  const scrollToHash = useCallback((href: HashHref, opts?: { immediate?: boolean }) => {
     const targetId = href.replace('#', '');
     const el = document.getElementById(targetId);
     const navH = navRef.current?.getBoundingClientRect().height ?? 0;
     const offset = -(navH + 8);
 
-    scrollTo(el ?? href, { offset });
+    const durationMs = scrollTo(el ?? href, { offset, immediate: opts?.immediate });
     history.replaceState(null, '', href);
+
+    return durationMs;
   }, [navRef, scrollTo]);
 
   const handleAnchorClick = useCallback((e: MouseEvent<HTMLAnchorElement>, href: HashHref) => {

@@ -15,7 +15,7 @@ import { useAnchorScroll } from './home/useAnchorScroll';
 type NavItem = { label: string; href: `#${string}` };
 
 export default function Home() {
-  const { scrollTo } = useLenis();
+  const { scrollTo, programmaticDurationMs } = useLenis();
   const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
@@ -216,19 +216,28 @@ export default function Home() {
     pendingTargetHref.current = null;
   }, []);
 
-  const runProgrammaticScroll = useCallback((href: `#${string}`) => {
+  const runProgrammaticScroll = useCallback((href: `#${string}`, opts?: { immediate?: boolean }) => {
+    const immediate = opts?.immediate ?? false;
+
     clearProgrammaticScrollState();
+
+    if (immediate) {
+      scrollToHash(href, { immediate: true });
+      setActiveHref(href);
+      return;
+    }
 
     isProgrammaticScroll.current = true;
     pendingTargetHref.current = href;
     setActiveHref(href);
 
-    scrollToHash(href);
+    const durationMs = scrollToHash(href);
+    const freezeMs = (durationMs || programmaticDurationMs) + 200;
 
     programmaticScrollTimeoutRef.current = setTimeout(() => {
       clearProgrammaticScrollState();
-    }, 1350);
-  }, [clearProgrammaticScrollState, scrollToHash]);
+    }, freezeMs);
+  }, [clearProgrammaticScrollState, programmaticDurationMs, scrollToHash]);
 
   const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: `#${string}`) => {
     e.preventDefault();
