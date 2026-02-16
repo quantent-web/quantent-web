@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
@@ -211,8 +211,26 @@ export default function Home() {
     handleAnchorClick(e, href);
   };
   const closeMenu = () => setMenuOpen(false);
-  const openContact = () => setIsContactOpen(true);
+  const openContactStepper = useCallback(() => {
+    setIsContactOpen(true);
+  }, []);
   const closeContact = () => setIsContactOpen(false);
+
+  useEffect(() => {
+    const hash = window.location.hash as `#${string}` | '';
+
+    if (!hash) return;
+
+    if (hash === '#contact') {
+      setActiveHref('#contact');
+      openContactStepper();
+      history.replaceState(null, '', window.location.pathname);
+      return;
+    }
+
+    setActiveHref(hash);
+    scrollToHash(hash);
+  }, [openContactStepper, scrollToHash]);
 
   const whatWeDoCards = [
     {
@@ -352,10 +370,7 @@ export default function Home() {
             <button
               className="btn btn-primary"
               type="button"
-              onClick={() => {
-                setActiveHref('#contact');
-                scrollToHash('#contact');
-              }}
+              onClick={openContactStepper}
             >
               Talk to Us
             </button>
@@ -507,16 +522,9 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us — Start with QuantCertify</p>
-            <a
-              className="btn btn-primary"
-              href="#contact"
-              onClick={(e) => {
-                setActiveHref('#contact');
-                handleAnchorClick(e, '#contact');
-              }}
-            >
+            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
-            </a>
+            </button>
             </div>
         </section>
 
@@ -625,16 +633,9 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us About QuantCertify</p>
-            <a
-              className="btn btn-primary"
-              href="#contact"
-              onClick={(e) => {
-                setActiveHref('#contact');
-                handleAnchorClick(e, '#contact');
-              }}
-            >
+            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Contact
-            </a>
+            </button>
             </div>
         </section>
 
@@ -861,8 +862,8 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Start with QuantCertify</p>
-            <button className="btn btn-primary" type="button" onClick={openContact}>
-              Products
+            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
+              Contact
             </button>
             </div>
         </section>
