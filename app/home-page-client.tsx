@@ -44,7 +44,7 @@ export default function Home() {
       { label: 'Products', href: '#products' },
       { label: 'Capabilities', href: '#capabilities' },
       { label: 'Services', href: '#services' },
-      { label: 'Contact', href: '#contact' },
+      { label: 'Contact', href: '#about' },
     ],
     []
   );
