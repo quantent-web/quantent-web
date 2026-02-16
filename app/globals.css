@@ -216,7 +216,6 @@ html[data-theme="dark"] {
    Tipografía base
 ========================= */
 body {
-  overflow: visible;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-poppins), system-ui, -apple-system, Segoe UI, Roboto,
@@ -256,7 +255,6 @@ p {
 ========================= */
 
 .container {
-  overflow: visible;
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
@@ -267,7 +265,6 @@ p {
 
 
 .section {
-  overflow: visible;
   padding-top: var(--space-8);
   padding-bottom: var(--space-8);
   scroll-margin-top: calc(var(--nav-h) + var(--space-4));
@@ -282,15 +279,17 @@ p {
   align-content:center;
   justify-content:center;
 }
-#what-we-do,
-#different,
-#products,
-#capabilities,
-#services,
-#about,
-#contact {
+#what-we-do {
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
   height: auto;
-  min-height: unset;
+}
+#different {
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
+}
+#products {
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 #quantcertify {
  
@@ -301,14 +300,26 @@ p {
 #quantdata {
  ;
 }
-
-main {
-  overflow: visible;
+#capabilities {
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
+}
+#services {
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
+}
+#about{
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
+}
+#contact {
+  min-height: min(90svh, calc(100svh - var(--nav-h)));
+  height: auto;
 }
 
 main[data-snap-scroll='true'] {
   height: 100svh;
-  overflow: visible;
+  overflow-y: auto;
   scroll-snap-type: y mandatory;
 }
 
@@ -1405,7 +1416,6 @@ html[data-theme="dark"] body {
 
 /* Header background wrapper (DotGrid behind sticky nav) */
 .header-bg {
-  overflow: visible;
   position: relative;
 }
 
