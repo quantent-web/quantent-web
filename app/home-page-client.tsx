@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { MouseEvent } from 'react';
 import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
@@ -13,7 +14,7 @@ import { useLenis } from './home/useLenis';
 type NavItem = { label: string; href: string };
 
 export default function Home() {
-  useLenis();
+  const { scrollTo } = useLenis();
   const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
@@ -196,6 +197,23 @@ export default function Home() {
     };
   }, []);
 
+
+  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setActiveHref(href);
+
+    if (menuOpen) {
+      setMenuOpen(false);
+    }
+
+    const targetId = href.replace('#', '');
+    const el = document.getElementById(targetId);
+    const navH = navRef.current?.getBoundingClientRect().height ?? 0;
+    const offset = -(navH + 8);
+
+    scrollTo(el ?? href, { offset });
+    history.replaceState(null, '', href);
+  };
   const closeMenu = () => setMenuOpen(false);
   const openContact = () => setIsContactOpen(true);
   const closeContact = () => setIsContactOpen(false);
@@ -281,12 +299,7 @@ export default function Home() {
                     key={item.href}
                     href={item.href}
                     className={activeHref === item.href ? 'nav-link-active' : ''}
-                    onClick={() => {
-                      setActiveHref(item.href);
-                      if (menuOpen) {
-                        setMenuOpen(false);
-                      }
-                    }}
+                    onClick={(e) => handleNavClick(e, item.href)}
                   >
                     {item.label}
                   </a>
@@ -867,12 +880,7 @@ export default function Home() {
               key={item.href}
               href={item.href}
               className={activeHref === item.href ? 'nav-link-active' : ''}
-              onClick={() => {
-                setActiveHref(item.href);
-                if (menuOpen) {
-                  setMenuOpen(false);
-                }
-              }}
+              onClick={(e) => handleNavClick(e, item.href)}
             >
               {item.label}
             </a>
