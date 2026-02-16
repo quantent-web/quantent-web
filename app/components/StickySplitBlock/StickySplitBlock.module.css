@@ -1,18 +1,17 @@
 .block {
   width: 100%;
   overflow: visible;
+  overflow-x: clip;
 }
 
 .chapter {
-  --beatStep: clamp(220px, 35vh, 520px);
   display: grid;
   grid-template-columns: minmax(280px, 420px) 1fr;
   gap: 64px;
-  min-height: calc(100svh + (var(--beats, 1) - 1) * var(--beatStep));
+  min-height: calc(var(--beats, 1) * 100svh);
   padding-block: 120px;
   align-items: start;
   overflow: visible;
-  overflow-x: clip;
 }
 
 .left {
@@ -30,20 +29,21 @@
   flex-direction: column;
   gap: 32px;
   overflow: visible;
-  overflow-x: clip;
 }
 
 .stack {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   width: 100%;
   gap: 32px;
 }
 
 .beat {
   width: 100%;
-  min-height: var(--beatStep);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .beat > * {
@@ -57,6 +57,8 @@
 .right :global(.card) {
   width: 100%;
   max-width: 100%;
+  height: auto;
+  min-height: 0;
 }
 
 .h2 {
@@ -77,5 +79,9 @@
 
   .sticky {
     position: static;
+  }
+
+  .beat {
+    min-height: auto;
   }
 }
