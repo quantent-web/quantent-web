@@ -442,14 +442,12 @@ export default function Home() {
                 <>
                   <p className="section-kicker">We help organizations:</p>
 
-                  <MagicBentoGrid variant="4" sectionId="what-we-do">
-                    {whatWeDoCards.map((card) => (
-                      <div className="card" key={`what-we-do-${card.title}`}>
-                        <h3 className="card-title">{card.title}</h3>
-                        <p className="card-text">{card.text}</p>
-                      </div>
-                    ))}
-                  </MagicBentoGrid>
+                  {whatWeDoCards.map((card) => (
+                    <div className="card" key={`what-we-do-${card.title}`}>
+                      <h3 className="card-title">{card.title}</h3>
+                      <p className="card-text">{card.text}</p>
+                    </div>
+                  ))}
 
                   <p className="section-note">
                     QuantEnt is built for complex, regulated environments where correctness,
@@ -467,14 +465,12 @@ export default function Home() {
                 <>
                   <p className="section-kicker">Entitlement And User Analysis:</p>
 
-                  <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
-                    {dataCleaningCards.map((card) => (
-                      <div className="card" key={`what-we-do-inverted-${card.title}`}>
-                        <h3 className="card-title">{card.title}</h3>
-                        <p className="card-text">{card.text}</p>
-                      </div>
-                    ))}
-                  </MagicBentoGrid>
+                  {dataCleaningCards.map((card) => (
+                    <div className="card" key={`what-we-do-inverted-${card.title}`}>
+                      <h3 className="card-title">{card.title}</h3>
+                      <p className="card-text">{card.text}</p>
+                    </div>
+                  ))}
 
                   <p className="section-note">
                     QuantEnt provides end-to-end governance for high-volume, high-impact
@@ -487,40 +483,38 @@ export default function Home() {
               key: 'different',
               title: 'What Makes QuantEnt Different',
               content: (
-                <div id="different">
-                  <MagicBentoGrid variant="auto" sectionId="different">
-                    <div className="card">
-                      <h3 className="card-title">Quantitative by design</h3>
-                      <p className="card-text">
-                        Exposure, drift, and structural risk are measured — not guessed.
-                      </p>
-                    </div>
+                <>
+                  <div id="different" className="card">
+                    <h3 className="card-title">Quantitative by design</h3>
+                    <p className="card-text">
+                      Exposure, drift, and structural risk are measured — not guessed.
+                    </p>
+                  </div>
 
-                    <div className="card">
-                      <h3 className="card-title">AI-native governance</h3>
-                      <p className="card-text">
-                        Built so AI can reason, opine, and alert safely on entitlements and
-                        data.
-                      </p>
-                    </div>
+                  <div className="card">
+                    <h3 className="card-title">AI-native governance</h3>
+                    <p className="card-text">
+                      Built so AI can reason, opine, and alert safely on entitlements and
+                      data.
+                    </p>
+                  </div>
 
-                    <div className="card">
-                      <h3 className="card-title">Designed for complexity</h3>
-                      <p className="card-text">
-                        Proven in financial-services-grade systems with real risk and
-                        regulatory consequences.
-                      </p>
-                    </div>
+                  <div className="card">
+                    <h3 className="card-title">Designed for complexity</h3>
+                    <p className="card-text">
+                      Proven in financial-services-grade systems with real risk and
+                      regulatory consequences.
+                    </p>
+                  </div>
 
-                    <div className="card">
-                      <h3 className="card-title">Enhances existing IAM</h3>
-                      <p className="card-text">
-                        Integrates with what you already run. We don’t replace your identity
-                        stack — we make it work better.
-                      </p>
-                    </div>
-                  </MagicBentoGrid>
-                </div>
+                  <div className="card">
+                    <h3 className="card-title">Enhances existing IAM</h3>
+                    <p className="card-text">
+                      Integrates with what you already run. We don’t replace your identity
+                      stack — we make it work better.
+                    </p>
+                  </div>
+                </>
               ),
             },
           ]}

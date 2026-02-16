@@ -1,3 +1,4 @@
+import { Children } from 'react';
 import type { ReactNode } from 'react';
 import styles from './StickySplitBlock.module.css';
 
@@ -27,7 +28,15 @@ export default function StickySplitBlock({ id, chapters, className }: StickySpli
               {chapter.intro ? <p className={styles.intro}>{chapter.intro}</p> : null}
             </div>
           </div>
-          <div className={styles.right}>{chapter.content}</div>
+          <div className={styles.right}>
+            <div className={styles.stack}>
+              {Children.toArray(chapter.content).map((node, index) => (
+                <div className={styles.beat} key={`${chapter.key}-beat-${index}`}>
+                  {node}
+                </div>
+              ))}
+            </div>
+          </div>
         </article>
       ))}
     </section>

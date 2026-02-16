@@ -25,6 +25,16 @@
   min-width: 0;
 }
 
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vh, 36px);
+}
+
+.beat {
+  width: 100%;
+}
+
 .eyebrow {
   margin: 0 0 var(--space-3, 12px);
 }
