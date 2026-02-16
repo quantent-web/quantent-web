@@ -40,21 +40,13 @@ export default function Home() {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: 'Home', href: '#home' },
       { label: 'What we do', href: '#what-we-do' },
-      { label: 'Different', href: '#different' },
       { label: 'Products', href: '#products' },
-      { label: 'QuantCertify', href: '#quantcertify' },
-      { label: 'QuantVault', href: '#quantvault' },
-      { label: 'QuantData', href: '#quantdata' },
-      { label: 'Capabilities', href: '#capabilities' },
-      { label: 'Services', href: '#services' },
-      { label: 'About', href: '#about' },
       { label: 'Contact', href: '#contact' },
     ],
     []
   );
-  const [activeHref, setActiveHref] = useState('#home');
+  const [activeHref, setActiveHref] = useState('#what-we-do');
   const isProgrammaticScroll = useRef(false);
   const pendingTargetHref = useRef<string | null>(null);
   const programmaticScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -99,7 +91,7 @@ export default function Home() {
       const windowHeight = window.innerHeight;
 
       if (scrollTop <= 8) {
-        setActiveHref('#home');
+        setActiveHref('#what-we-do');
         return;
       }
 
