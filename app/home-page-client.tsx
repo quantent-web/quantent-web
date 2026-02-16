@@ -484,11 +484,13 @@ export default function Home() {
               title: 'What Makes QuantEnt Different',
               content: (
                 <>
-                  <div id="different" className="card">
+                  <div id="different">
+                    <div className="card">
                     <h3 className="card-title">Quantitative by design</h3>
                     <p className="card-text">
                       Exposure, drift, and structural risk are measured — not guessed.
                     </p>
+                    </div>
                   </div>
 
                   <div className="card">

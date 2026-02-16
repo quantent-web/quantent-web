@@ -1,18 +1,22 @@
 .block {
   width: 100%;
+  overflow: visible;
 }
 
 .chapter {
   display: grid;
   grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
   gap: var(--space-8, 32px);
-  padding-block: clamp(48px, 8vh, 96px);
+  padding-top: clamp(48px, 8vh, 96px);
+  padding-bottom: clamp(120px, 18vh, 240px);
   align-items: start;
   min-height: 100svh;
+  overflow: visible;
 }
 
 .left {
   position: relative;
+  overflow: visible;
 }
 
 .sticky {
@@ -23,6 +27,7 @@
 
 .right {
   min-width: 0;
+  overflow: visible;
 }
 
 .stack {
@@ -33,6 +38,17 @@
 
 .beat {
   width: 100%;
+  height: auto;
+}
+
+.beat > * {
+  height: auto;
+  min-height: 0;
+}
+
+.right :global(.card) {
+  height: auto !important;
+  min-height: 0 !important;
 }
 
 .eyebrow {
@@ -53,6 +69,7 @@
   .chapter {
     grid-template-columns: 1fr;
     min-height: auto;
+    padding-bottom: clamp(48px, 10vh, 96px);
   }
 
   .sticky {
