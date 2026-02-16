@@ -33,7 +33,7 @@
 .stack {
   display: flex;
   flex-direction: column;
-  gap: clamp(20px, 3vh, 36px);
+  gap: clamp(16px, 3vh, 32px);
 }
 
 .beat {
@@ -49,6 +49,11 @@
 .right :global(.card) {
   height: auto !important;
   min-height: 0 !important;
+}
+
+.right :global(#different) {
+  min-height: auto !important;
+  height: auto !important;
 }
 
 .eyebrow {
