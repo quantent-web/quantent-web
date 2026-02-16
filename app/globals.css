@@ -216,6 +216,7 @@ html[data-theme="dark"] {
    Tipografía base
 ========================= */
 body {
+  overflow: visible;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-poppins), system-ui, -apple-system, Segoe UI, Roboto,
@@ -255,6 +256,7 @@ p {
 ========================= */
 
 .container {
+  overflow: visible;
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
@@ -265,6 +267,7 @@ p {
 
 
 .section {
+  overflow: visible;
   padding-top: var(--space-8);
   padding-bottom: var(--space-8);
   scroll-margin-top: calc(var(--nav-h) + var(--space-4));
@@ -317,9 +320,13 @@ p {
   height: auto;
 }
 
+main {
+  overflow: visible;
+}
+
 main[data-snap-scroll='true'] {
   height: 100svh;
-  overflow-y: auto;
+  overflow: visible;
   scroll-snap-type: y mandatory;
 }
 
@@ -1416,6 +1423,7 @@ html[data-theme="dark"] body {
 
 /* Header background wrapper (DotGrid behind sticky nav) */
 .header-bg {
+  overflow: visible;
   position: relative;
 }
 

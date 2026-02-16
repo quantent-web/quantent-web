@@ -1,5 +1,5 @@
 import { Children } from 'react';
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import styles from './StickySplitBlock.module.css';
 
 type Chapter = {
@@ -21,11 +21,9 @@ export default function StickySplitBlock({ id, chapters, className }: StickySpli
     <section id={id} className={`${styles.block}${className ? ` ${className}` : ''}`}>
       {chapters.map((chapter) => {
         const beats = Children.toArray(chapter.content).filter(Boolean);
-        const beatsCount = beats.length;
-        const chapterStyle = { ['--beats' as any]: beatsCount } as CSSProperties;
 
         return (
-          <article key={chapter.key} className={styles.chapter} aria-label={chapter.title} style={chapterStyle}>
+          <article key={chapter.key} className={styles.chapter} aria-label={chapter.title}>
             <div className={styles.left}>
               <div className={styles.sticky}>
                 {chapter.eyebrow ? <p className={styles.eyebrow}>{chapter.eyebrow}</p> : null}
