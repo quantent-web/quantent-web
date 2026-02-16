@@ -1419,7 +1419,12 @@ html[data-theme="dark"] body {
   position: absolute;
   inset: 0;
   height: 100vh;
-   z-index:-2;
+  z-index: -2;
+  background: #ffffff;
+}
+
+html[data-theme="dark"] .header-bg__grid {
+  background: #0e1414;
 }
 
 .header-bg__nav {
