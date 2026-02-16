@@ -1,6 +1,7 @@
 .block {
   width: 100%;
   overflow: visible;
+  overflow-x: clip;
 }
 
 .chapter {
@@ -9,6 +10,7 @@
   gap: var(--space-8, 32px);
   align-items: start;
   overflow: visible;
+  overflow-x: clip;
   padding-block: clamp(56px, 10vh, 120px);
   min-height: calc((var(--beats, 3) * 60svh) + 40svh);
 }
@@ -28,22 +30,26 @@
 .right {
   min-width: 0;
   overflow: visible;
+  overflow-x: clip;
 }
 
 .stack {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  width: 100%;
   gap: clamp(18px, 4vh, 40px);
 }
 
 .beat {
   width: 100%;
-  min-height: 48svh;
+  min-height: clamp(140px, 28svh, 360px);
   display: flex;
   align-items: flex-start;
 }
 
 .beat > * {
+  width: 100%;
   height: auto !important;
   min-height: 0 !important;
   flex: 0 0 auto !important;
