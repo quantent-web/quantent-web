@@ -282,17 +282,15 @@ p {
   align-content:center;
   justify-content:center;
 }
-#what-we-do {
-  min-height: min(90svh, calc(100svh - var(--nav-h)));
+#what-we-do,
+#different,
+#products,
+#capabilities,
+#services,
+#about,
+#contact {
   height: auto;
-}
-#different {
-  min-height: min(90svh, calc(100svh - var(--nav-h)));
-  height: auto;
-}
-#products {
-  min-height: min(90svh, calc(100svh - var(--nav-h)));
-  height: auto;
+  min-height: unset;
 }
 #quantcertify {
  
@@ -302,22 +300,6 @@ p {
 }
 #quantdata {
  ;
-}
-#capabilities {
-  min-height: min(90svh, calc(100svh - var(--nav-h)));
-  height: auto;
-}
-#services {
-  min-height: min(90svh, calc(100svh - var(--nav-h)));
-  height: auto;
-}
-#about{
-  min-height: min(90svh, calc(100svh - var(--nav-h)));
-  height: auto;
-}
-#contact {
-  min-height: min(90svh, calc(100svh - var(--nav-h)));
-  height: auto;
 }
 
 main {
