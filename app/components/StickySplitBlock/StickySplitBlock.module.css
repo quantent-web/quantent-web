@@ -25,18 +25,37 @@
 .stack {
   display: flex;
   flex-direction: column;
+  gap: 0;
+  align-items: stretch;
 }
 
-/* 🔥 CLAVE: cada beat debe ocupar viewport completo */
 .beat {
-  min-height: 100vh;
+  min-height: calc(100svh - var(--nav-h, 64px));
   display: flex;
   align-items: center;
+  padding-block: clamp(24px, 8vh, 72px);
 }
 
-/* evitar que las cards se expandan raro */
 .beat > * {
   width: 100%;
+  max-width: 100%;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.h2 {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.1;
+}
+
+.intro {
+  margin-top: 24px;
 }
 
 /* responsive */
