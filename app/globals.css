@@ -245,8 +245,8 @@ h6 {
 }
 
 h2 {
-  font-size: 40px;
-  line-height: 1.2;
+  font-size: 64px;
+  line-height: 70px;
 }
 
 h3 {
@@ -272,10 +272,14 @@ h6 {
 
 p {
   margin: 0;
+  font-size: 18px;
+  line-height: 32px;
 }
 
 .muted {
   color: var(--color-muted);
+  font-size: 16px;
+  line-height: 26px;
 }
 
 /* =========================
@@ -365,21 +369,20 @@ main[data-snap-scroll='true'] > .section {
 
 
 .hero-title {
-  font-size: clamp(32px, 4vw, 56px);
+  font-size: 90px;
   line-height: 1.12;
   letter-spacing: -0.02em;
   text-align: center;
      font-family: "Spline Sans Mono", monospace;
   font-weight: 700;
-  font-size: 56px;
 }
 
 .hero-subtitle {
   margin-top: var(--space-4);
   margin-bottom: var(--space-8);
   max-width: 58ch;
-  font-size: 24px;
-  line-height: 1.35;
+  font-size: 16px;
+  line-height: 26px;
   text-align: center;
   color: var(--color-muted);
 }
@@ -394,13 +397,15 @@ main[data-snap-scroll='true'] > .section {
    (solo para la landing)
 ========================= */
 .section-title {
-  font-size: clamp(20px, 2.2vw, 28px);
+  font-size: inherit;
+  line-height: inherit;
   margin-bottom: var(--space-3);
 }
 
 .section-lead {
   max-width: 70ch;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 32px;
   margin-top: var(--space-2);
   color: var(--color-text);
 }
@@ -466,8 +471,8 @@ main[data-snap-scroll='true'] > .section {
 }
 
 .card-text {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 26px;
   color: var(--text-secondary);
 }
 
@@ -1048,7 +1053,8 @@ html[data-theme="dark"] .nav {
   margin-top: var(--space-5);
   max-width: 75ch;
   color: var(--color-muted);
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .section-note.strong {
