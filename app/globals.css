@@ -288,11 +288,9 @@ p {
 
 .container {
   width: 100%;
-  max-width: var(--container);
   margin: 0 auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);;
-
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 
@@ -397,8 +395,8 @@ main[data-snap-scroll='true'] > .section {
    (solo para la landing)
 ========================= */
 .section-title {
-  font-size: inherit;
-  line-height: inherit;
+  font-size: 64px;
+  line-height: 70px;
   margin-bottom: var(--space-3);
 }
 
