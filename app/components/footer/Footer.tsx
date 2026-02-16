@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
 import Image from 'next/image';
 
 const SOCIAL_LINKS = [
@@ -41,7 +41,7 @@ const LEGAL_CONTENT: Record<
   {
     title: string;
     description: string;
-    body: JSX.Element;
+    body: ReactNode;
   }
 > = {
   privacy: {
