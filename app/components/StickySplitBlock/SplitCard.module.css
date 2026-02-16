@@ -1,0 +1,22 @@
+.card {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(17, 33, 26, 0.95) 0%, rgba(12, 24, 19, 0.98) 100%);
+  border: 1px solid rgba(160, 255, 213, 0.16);
+  border-radius: 18px;
+  padding: clamp(20px, 2.6vw, 30px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+  line-height: 1.25;
+  color: #ecfff6;
+}
+
+.text {
+  margin: 12px 0 0;
+  color: rgba(236, 255, 246, 0.86);
+  line-height: 1.6;
+  font-size: 1rem;
+}

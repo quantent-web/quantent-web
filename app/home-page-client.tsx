@@ -10,6 +10,7 @@ import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 import StickySplitBlock from './components/StickySplitBlock/StickySplitBlock';
+import SplitCard from './components/StickySplitBlock/SplitCard';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
 
@@ -440,16 +441,13 @@ export default function Home() {
                 'QuantEnt analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.',
               content: (
                 <>
-                  <p className="section-kicker">We help organizations:</p>
+                  <p className="splitKicker">We help organizations:</p>
 
                   {whatWeDoCards.map((card) => (
-                    <div className="card" key={`what-we-do-${card.title}`}>
-                      <h3 className="card-title">{card.title}</h3>
-                      <p className="card-text">{card.text}</p>
-                    </div>
+                    <SplitCard key={`what-we-do-${card.title}`} title={card.title} text={card.text} />
                   ))}
 
-                  <p className="section-note">
+                  <p className="splitNote">
                     QuantEnt is built for complex, regulated environments where correctness,
                     scale, and evolution matter.
                   </p>
@@ -463,16 +461,17 @@ export default function Home() {
                 'QuantEnt structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies.',
               content: (
                 <>
-                  <p className="section-kicker">Entitlement And User Analysis:</p>
+                  <p className="splitKicker">Entitlement And User Analysis:</p>
 
                   {dataCleaningCards.map((card) => (
-                    <div className="card" key={`what-we-do-inverted-${card.title}`}>
-                      <h3 className="card-title">{card.title}</h3>
-                      <p className="card-text">{card.text}</p>
-                    </div>
+                    <SplitCard
+                      key={`what-we-do-inverted-${card.title}`}
+                      title={card.title}
+                      text={card.text}
+                    />
                   ))}
 
-                  <p className="section-note">
+                  <p className="splitNote">
                     QuantEnt provides end-to-end governance for high-volume, high-impact
                     enterprise data ecosystems.
                   </p>
@@ -484,36 +483,25 @@ export default function Home() {
               title: 'What Makes QuantEnt Different',
               content: (
                 <>
-                  <div className="card">
-                    <h3 className="card-title">Quantitative by design</h3>
-                    <p className="card-text">
-                      Exposure, drift, and structural risk are measured — not guessed.
-                    </p>
-                  </div>
+                  <SplitCard
+                    title="Quantitative by design"
+                    text="Exposure, drift, and structural risk are measured — not guessed."
+                  />
 
-                  <div className="card">
-                    <h3 className="card-title">AI-native governance</h3>
-                    <p className="card-text">
-                      Built so AI can reason, opine, and alert safely on entitlements and
-                      data.
-                    </p>
-                  </div>
+                  <SplitCard
+                    title="AI-native governance"
+                    text="Built so AI can reason, opine, and alert safely on entitlements and data."
+                  />
 
-                  <div className="card">
-                    <h3 className="card-title">Designed for complexity</h3>
-                    <p className="card-text">
-                      Proven in financial-services-grade systems with real risk and
-                      regulatory consequences.
-                    </p>
-                  </div>
+                  <SplitCard
+                    title="Designed for complexity"
+                    text="Proven in financial-services-grade systems with real risk and regulatory consequences."
+                  />
 
-                  <div className="card">
-                    <h3 className="card-title">Enhances existing IAM</h3>
-                    <p className="card-text">
-                      Integrates with what you already run. We don’t replace your identity
-                      stack — we make it work better.
-                    </p>
-                  </div>
+                  <SplitCard
+                    title="Enhances existing IAM"
+                    text="Integrates with what you already run. We don’t replace your identity stack — we make it work better."
+                  />
                 </>
               ),
             },
