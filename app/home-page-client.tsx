@@ -42,6 +42,8 @@ export default function Home() {
     () => [
       { label: 'What we do', href: '#what-we-do' },
       { label: 'Products', href: '#products' },
+      { label: 'Capabilities', href: '#capabilities' },
+      { label: 'Services', href: '#services' },
       { label: 'Contact', href: '#contact' },
     ],
     []
