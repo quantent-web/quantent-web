@@ -1,12 +1,12 @@
-import styles from './SplitCard.module.css';
+import styles from './StickySplitCard.module.css';
 
-type SplitCardProps = {
+type StickySplitCardProps = {
   title: string;
   text: string;
   className?: string;
 };
 
-export default function SplitCard({ title, text, className }: SplitCardProps) {
+export default function StickySplitCard({ title, text, className }: StickySplitCardProps) {
   return (
     <article className={`${styles.card}${className ? ` ${className}` : ''}`}>
       <h3 className={styles.title}>{title}</h3>

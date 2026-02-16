@@ -10,7 +10,7 @@ import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 import StickySplitBlock from './components/StickySplitBlock/StickySplitBlock';
-import SplitCard from './components/StickySplitBlock/SplitCard';
+import StickySplitCard from './components/StickySplitCard/StickySplitCard';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
 
@@ -444,7 +444,7 @@ export default function Home() {
                   <p className="splitKicker">We help organizations:</p>
 
                   {whatWeDoCards.map((card) => (
-                    <SplitCard key={`what-we-do-${card.title}`} title={card.title} text={card.text} />
+                    <StickySplitCard key={`what-we-do-${card.title}`} title={card.title} text={card.text} />
                   ))}
 
                   <p className="splitNote">
@@ -464,7 +464,7 @@ export default function Home() {
                   <p className="splitKicker">Entitlement And User Analysis:</p>
 
                   {dataCleaningCards.map((card) => (
-                    <SplitCard
+                    <StickySplitCard
                       key={`what-we-do-inverted-${card.title}`}
                       title={card.title}
                       text={card.text}
@@ -483,22 +483,22 @@ export default function Home() {
               title: 'What Makes QuantEnt Different',
               content: (
                 <>
-                  <SplitCard
+                  <StickySplitCard
                     title="Quantitative by design"
                     text="Exposure, drift, and structural risk are measured — not guessed."
                   />
 
-                  <SplitCard
+                  <StickySplitCard
                     title="AI-native governance"
                     text="Built so AI can reason, opine, and alert safely on entitlements and data."
                   />
 
-                  <SplitCard
+                  <StickySplitCard
                     title="Designed for complexity"
                     text="Proven in financial-services-grade systems with real risk and regulatory consequences."
                   />
 
-                  <SplitCard
+                  <StickySplitCard
                     title="Enhances existing IAM"
                     text="Integrates with what you already run. We don’t replace your identity stack — we make it work better."
                   />

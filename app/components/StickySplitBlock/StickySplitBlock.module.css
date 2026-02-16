@@ -7,6 +7,7 @@
   grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
   gap: var(--space-8, 32px);
   align-items: start;
+  min-height: calc(var(--beats, 1) * 100svh);
 }
 
 .left {
@@ -25,8 +26,9 @@
 .stack {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  width: 100%;
   gap: 0;
-  padding-block: 50svh;
 }
 
 .beat {
@@ -38,6 +40,22 @@
 .beat > * {
   width: 100%;
   max-width: 560px;
+}
+
+.beat :global(.splitKicker),
+.beat :global(.splitNote) {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.beat :global(.splitKicker) {
+  color: rgba(160, 255, 213, 0.92);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.beat :global(.splitNote) {
+  color: rgba(236, 255, 246, 0.75);
 }
 
 .eyebrow {
@@ -57,39 +75,21 @@
   margin-top: 24px;
 }
 
-:global(.splitKicker),
-:global(.splitNote) {
-  margin: 0;
-  color: rgba(236, 255, 246, 0.88);
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-:global(.splitKicker) {
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(160, 255, 213, 0.92);
-}
-
-:global(.splitNote) {
-  color: rgba(236, 255, 246, 0.75);
-}
-
 @media (max-width: 900px) {
   .chapter {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 
   .sticky {
     position: static;
-  }
-
-  .stack {
-    padding-block: 0;
+    top: auto;
   }
 
   .beat {
     min-height: auto;
+    padding-block: 24px;
+    align-items: stretch;
   }
 
   .beat > * {

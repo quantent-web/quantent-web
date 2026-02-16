@@ -1,5 +1,6 @@
 .card {
   width: 100%;
+  max-width: 560px;
   background: linear-gradient(180deg, rgba(17, 33, 26, 0.95) 0%, rgba(12, 24, 19, 0.98) 100%);
   border: 1px solid rgba(160, 255, 213, 0.16);
   border-radius: 18px;
