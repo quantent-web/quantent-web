@@ -25,7 +25,7 @@ export default function Home() {
 
   const linksRef = useRef<HTMLDivElement | null>(null);
 
-  const { scrollToHash, handleAnchorClick } = useAnchorScroll({ scrollTo, navRef });
+  const { scrollToHash } = useAnchorScroll({ scrollTo, navRef });
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
@@ -55,6 +55,9 @@ export default function Home() {
     []
   );
   const [activeHref, setActiveHref] = useState('#home');
+  const isProgrammaticScroll = useRef(false);
+  const pendingTargetHref = useRef<string | null>(null);
+  const programmaticScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Cierra menú con ESC
   useEffect(() => {
@@ -89,6 +92,8 @@ export default function Home() {
 
     const ratios = new Map<string, number>();
     const updateActive = () => {
+      if (isProgrammaticScroll.current) return;
+
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
@@ -201,14 +206,38 @@ export default function Home() {
   }, []);
 
 
-  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: `#${string}`) => {
+  const clearProgrammaticScrollState = useCallback(() => {
+    if (programmaticScrollTimeoutRef.current) {
+      clearTimeout(programmaticScrollTimeoutRef.current);
+      programmaticScrollTimeoutRef.current = null;
+    }
+
+    isProgrammaticScroll.current = false;
+    pendingTargetHref.current = null;
+  }, []);
+
+  const runProgrammaticScroll = useCallback((href: `#${string}`) => {
+    clearProgrammaticScrollState();
+
+    isProgrammaticScroll.current = true;
+    pendingTargetHref.current = href;
     setActiveHref(href);
+
+    scrollToHash(href);
+
+    programmaticScrollTimeoutRef.current = setTimeout(() => {
+      clearProgrammaticScrollState();
+    }, 1350);
+  }, [clearProgrammaticScrollState, scrollToHash]);
+
+  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: `#${string}`) => {
+    e.preventDefault();
 
     if (menuOpen) {
       setMenuOpen(false);
     }
 
-    handleAnchorClick(e, href);
+    runProgrammaticScroll(href);
   };
   const closeMenu = () => setMenuOpen(false);
   const openContactStepper = useCallback(() => {
@@ -228,9 +257,25 @@ export default function Home() {
       return;
     }
 
-    setActiveHref(hash);
-    scrollToHash(hash);
-  }, [openContactStepper, scrollToHash]);
+    runProgrammaticScroll(hash);
+  }, [openContactStepper, runProgrammaticScroll]);
+
+  useEffect(() => {
+    const onUserScrollIntent = () => {
+      if (isProgrammaticScroll.current) {
+        clearProgrammaticScrollState();
+      }
+    };
+
+    window.addEventListener('wheel', onUserScrollIntent, { passive: true });
+    window.addEventListener('touchmove', onUserScrollIntent, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', onUserScrollIntent);
+      window.removeEventListener('touchmove', onUserScrollIntent);
+      clearProgrammaticScrollState();
+    };
+  }, [clearProgrammaticScrollState]);
 
   const whatWeDoCards = [
     {
