@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Spline_Sans_Mono, Poppins } from 'next/font/google';
 import './globals.css';
-import StarfieldBackground from './components/effects/StarfieldBackground';
 
 const splineSansMono = Spline_Sans_Mono({
   subsets: ['latin'],
@@ -63,10 +62,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <main id="main-content">
-          <StarfieldBackground className="main-content__starfield" />
-          <div className="main-content__inner">{children}</div>
-        </main>
+        <main id="main-content">{children}</main>
       </body>
     </html>
   );
