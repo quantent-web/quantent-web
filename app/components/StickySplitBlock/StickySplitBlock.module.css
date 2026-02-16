@@ -38,19 +38,21 @@
   flex-direction: column;
   align-items: stretch;
   width: 100%;
-  gap: 32px;
+  gap: 0;
 }
 
 .beat {
   width: 100%;
-  min-height: calc(100svh - var(--nav-h, 64px));
+  min-height: calc(100svh - (var(--nav-h, 64px) + 24px));
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-block: clamp(20px, 6vh, 72px);
 }
 
 .beat > * {
   width: 100%;
+  max-width: 100%;
   height: auto !important;
   min-height: 0 !important;
   flex: 0 0 auto !important;
