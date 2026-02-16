@@ -10,8 +10,9 @@ import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 import { useLenis } from './home/useLenis';
+import { useAnchorScroll } from './home/useAnchorScroll';
 
-type NavItem = { label: string; href: string };
+type NavItem = { label: string; href: `#${string}` };
 
 export default function Home() {
   const { scrollTo } = useLenis();
@@ -23,6 +24,8 @@ export default function Home() {
   const burgerRef = useRef<HTMLButtonElement | null>(null);
 
   const linksRef = useRef<HTMLDivElement | null>(null);
+
+  const { scrollToHash, handleAnchorClick } = useAnchorScroll({ scrollTo, navRef });
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
@@ -198,21 +201,14 @@ export default function Home() {
   }, []);
 
 
-  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: `#${string}`) => {
     setActiveHref(href);
 
     if (menuOpen) {
       setMenuOpen(false);
     }
 
-    const targetId = href.replace('#', '');
-    const el = document.getElementById(targetId);
-    const navH = navRef.current?.getBoundingClientRect().height ?? 0;
-    const offset = -(navH + 8);
-
-    scrollTo(el ?? href, { offset });
-    history.replaceState(null, '', href);
+    handleAnchorClick(e, href);
   };
   const closeMenu = () => setMenuOpen(false);
   const openContact = () => setIsContactOpen(true);
@@ -353,7 +349,14 @@ export default function Home() {
           </p>
 
           <div className="hero-actions">
-            <button className="btn btn-primary" type="button" onClick={openContact}>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={() => {
+                setActiveHref('#contact');
+                scrollToHash('#contact');
+              }}
+            >
               Talk to Us
             </button>
             <a className="btn btn-secondary" href="#what-we-do">
@@ -504,7 +507,14 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us — Start with QuantCertify</p>
-            <a className="btn btn-primary" href="#contact">
+            <a
+              className="btn btn-primary"
+              href="#contact"
+              onClick={(e) => {
+                setActiveHref('#contact');
+                handleAnchorClick(e, '#contact');
+              }}
+            >
               Start
             </a>
             </div>
@@ -615,7 +625,14 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us About QuantCertify</p>
-            <a className="btn btn-primary" href="#contact">
+            <a
+              className="btn btn-primary"
+              href="#contact"
+              onClick={(e) => {
+                setActiveHref('#contact');
+                handleAnchorClick(e, '#contact');
+              }}
+            >
               Contact
             </a>
             </div>
