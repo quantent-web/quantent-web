@@ -524,6 +524,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html[data-lenis="on"] {
+  scroll-behavior: auto;
+}
+
 /* Compensa el sticky nav al hacer click en anchors */
 section[id] {
   scroll-margin-top: calc(var(--nav-h) + var(--space-4));

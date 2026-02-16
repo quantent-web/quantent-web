@@ -8,10 +8,12 @@ import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
+import { useLenis } from './home/useLenis';
 
 type NavItem = { label: string; href: string };
 
 export default function Home() {
+  useLenis();
   const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
