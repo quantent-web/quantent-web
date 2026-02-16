@@ -13,15 +13,27 @@ export function useLenis() {
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const width = window.innerWidth;
 
-    if (reduced || coarse) {
+    const shouldDisable = reduced || width < 768 || (coarse && width < 1024);
+
+    if (shouldDisable) {
+      console.log('[Lenis] OFF', { reduced, coarse, width });
+      document.documentElement.removeAttribute('data-lenis');
       setEnabled(false);
       return;
     }
 
     const lenis = new Lenis({
       autoRaf: true,
+      duration: 1.15,
+      easing: (t: number) => 1 - Math.pow(1 - t, 3),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
     });
+
+    console.log('[Lenis] ON', { reduced, coarse, width });
 
     lenisRef.current = lenis;
     setEnabled(true);
