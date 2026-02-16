@@ -1,0 +1,35 @@
+import type { ReactNode } from 'react';
+import styles from './StickySplitBlock.module.css';
+
+type Chapter = {
+  key: string;
+  title: string;
+  eyebrow?: string;
+  intro?: string;
+  content: ReactNode;
+};
+
+type StickySplitBlockProps = {
+  id?: string;
+  chapters: Chapter[];
+  className?: string;
+};
+
+export default function StickySplitBlock({ id, chapters, className }: StickySplitBlockProps) {
+  return (
+    <section id={id} className={`${styles.block}${className ? ` ${className}` : ''}`}>
+      {chapters.map((chapter) => (
+        <article key={chapter.key} className={styles.chapter} aria-label={chapter.title}>
+          <div className={styles.left}>
+            <div className={styles.sticky}>
+              {chapter.eyebrow ? <p className={styles.eyebrow}>{chapter.eyebrow}</p> : null}
+              <h2 className={styles.h2}>{chapter.title}</h2>
+              {chapter.intro ? <p className={styles.intro}>{chapter.intro}</p> : null}
+            </div>
+          </div>
+          <div className={styles.right}>{chapter.content}</div>
+        </article>
+      ))}
+    </section>
+  );
+}

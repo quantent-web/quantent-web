@@ -9,6 +9,7 @@ import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
+import StickySplitBlock from './components/StickySplitBlock/StickySplitBlock';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
 
@@ -429,108 +430,101 @@ export default function Home() {
         </section>
 
         {/* WHAT WE DO */}
-        <section id="what-we-do" className="section">
-          <div className="what-we-do-blocks">
-            <div className="what-we-do-layout">
-            <div className="what-we-do-left">
-              <h2 className="section-title">What We Do</h2>
+        <StickySplitBlock
+          id="what-we-do"
+          chapters={[
+            {
+              key: 'what',
+              title: 'What we do',
+              intro:
+                'QuantEnt analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.',
+              content: (
+                <>
+                  <p className="section-kicker">We help organizations:</p>
 
-              <p className="section-lead">
-                QuantEnt analyzes and certifies who can access what — and what that data
-                means — using quantitative models instead of static rules.
-              </p>
-            </div>
+                  <MagicBentoGrid variant="4" sectionId="what-we-do">
+                    {whatWeDoCards.map((card) => (
+                      <div className="card" key={`what-we-do-${card.title}`}>
+                        <h3 className="card-title">{card.title}</h3>
+                        <p className="card-text">{card.text}</p>
+                      </div>
+                    ))}
+                  </MagicBentoGrid>
 
-            <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
+                  <p className="section-note">
+                    QuantEnt is built for complex, regulated environments where correctness,
+                    scale, and evolution matter.
+                  </p>
+                </>
+              ),
+            },
+            {
+              key: 'governance',
+              title: 'Data Cleaning, Categorizing, and Governance',
+              intro:
+                'QuantEnt structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies.',
+              content: (
+                <>
+                  <p className="section-kicker">Entitlement And User Analysis:</p>
 
-              <MagicBentoGrid variant="4" sectionId="what-we-do">
-                {whatWeDoCards.map((card) => (
-                  <div className="card" key={`what-we-do-${card.title}`}>
-                    <h3 className="card-title">{card.title}</h3>
-                    <p className="card-text">{card.text}</p>
-                  </div>
-                ))}
-              </MagicBentoGrid>
+                  <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
+                    {dataCleaningCards.map((card) => (
+                      <div className="card" key={`what-we-do-inverted-${card.title}`}>
+                        <h3 className="card-title">{card.title}</h3>
+                        <p className="card-text">{card.text}</p>
+                      </div>
+                    ))}
+                  </MagicBentoGrid>
 
-              <p className="section-note">
-                QuantEnt is built for complex, regulated environments where correctness,
-                scale, and evolution matter.
-              </p>
-            </div>
-            </div>
+                  <p className="section-note">
+                    QuantEnt provides end-to-end governance for high-volume, high-impact
+                    enterprise data ecosystems.
+                  </p>
+                </>
+              ),
+            },
+            {
+              key: 'different',
+              title: 'What Makes QuantEnt Different',
+              content: (
+                <div id="different">
+                  <MagicBentoGrid variant="auto" sectionId="different">
+                    <div className="card">
+                      <h3 className="card-title">Quantitative by design</h3>
+                      <p className="card-text">
+                        Exposure, drift, and structural risk are measured — not guessed.
+                      </p>
+                    </div>
 
-            <div className="what-we-do-layout what-we-do-layout--inverted">
-            <div className="what-we-do-left what-we-do-left--description">
-              <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
+                    <div className="card">
+                      <h3 className="card-title">AI-native governance</h3>
+                      <p className="card-text">
+                        Built so AI can reason, opine, and alert safely on entitlements and
+                        data.
+                      </p>
+                    </div>
 
-              <p className="section-lead">
-                QuantEnt structures and governs enterprise data so every dataset is clean,
-                categorized, and controlled with transparent policies.
-              </p>
-            </div>
+                    <div className="card">
+                      <h3 className="card-title">Designed for complexity</h3>
+                      <p className="card-text">
+                        Proven in financial-services-grade systems with real risk and
+                        regulatory consequences.
+                      </p>
+                    </div>
 
-            <div className="what-we-do-right">
-              <p className="section-kicker">Entitlement And User Analysis:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
-                {dataCleaningCards.map((card) => (
-                  <div className="card" key={`what-we-do-inverted-${card.title}`}>
-                    <h3 className="card-title">{card.title}</h3>
-                    <p className="card-text">{card.text}</p>
-                  </div>
-                ))}
-              </MagicBentoGrid>
-
-              <p className="section-note">
-                QuantEnt provides end-to-end governance for high-volume, high-impact
-                enterprise data ecosystems.
-              </p>
-            </div>
-            </div>
-          </div>
-        </section>
-
-      
-
-
-        {/* WHAT MAKES DIFFERENT */}
-        <section id="different" className="section">
-          <h2 className="section-title">What Makes QuantEnt Different</h2>
-
-          <MagicBentoGrid variant="auto" sectionId="different">
-            <div className="card">
-              <h3 className="card-title">Quantitative by design</h3>
-              <p className="card-text">
-                Exposure, drift, and structural risk are measured — not guessed.
-              </p>
-            </div>
-
-            <div className="card">
-              <h3 className="card-title">AI-native governance</h3>
-              <p className="card-text">
-                Built so AI can reason, opine, and alert safely on entitlements and
-                data.
-              </p>
-            </div>
-
-            <div className="card">
-              <h3 className="card-title">Designed for complexity</h3>
-              <p className="card-text">
-                Proven in financial-services-grade systems with real risk and
-                regulatory consequences.
-              </p>
-            </div>
-
-            <div className="card">
-              <h3 className="card-title">Enhances existing IAM</h3>
-              <p className="card-text">
-                Integrates with what you already run. We don’t replace your identity
-                stack — we make it work better.
-              </p>
-            </div>
-          </MagicBentoGrid>
-        </section>
+                    <div className="card">
+                      <h3 className="card-title">Enhances existing IAM</h3>
+                      <p className="card-text">
+                        Integrates with what you already run. We don’t replace your identity
+                        stack — we make it work better.
+                      </p>
+                    </div>
+                  </MagicBentoGrid>
+                </div>
+              ),
+            },
+          ]}
+        />
 
         {/* PRODUCTS */}
         <section id="products" className="section">
