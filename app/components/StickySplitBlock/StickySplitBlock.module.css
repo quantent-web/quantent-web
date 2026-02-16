@@ -1,73 +1,39 @@
 .block {
   width: 100%;
-  overflow: visible;
-  overflow-x: clip;
 }
 
 .chapter {
   display: grid;
-  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
-  gap: var(--space-8, 32px);
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 64px;
+  min-height: 100vh;
+  padding: 120px 0;
   align-items: start;
-  overflow: visible;
-  overflow-x: clip;
-  padding-block: clamp(56px, 10vh, 120px);
-  min-height: calc((var(--beats, 3) * 60svh) + 40svh);
 }
 
 .left {
   position: relative;
-  overflow: visible;
-  align-self: start;
 }
 
 .sticky {
   position: sticky;
-  top: calc(var(--nav-h, 64px) + 24px);
-  padding-inline: clamp(16px, 2vw, 24px);
+  top: calc(var(--nav-h, 64px) + 40px);
 }
 
 .right {
-  min-width: 0;
-  overflow: visible;
-  overflow-x: clip;
-}
-
-.stack {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  gap: clamp(18px, 4vh, 40px);
-}
-
-.beat {
-  width: 100%;
-  min-height: clamp(140px, 28svh, 360px);
-  display: flex;
-  align-items: flex-start;
-}
-
-.beat > * {
-  width: 100%;
-  height: auto !important;
-  min-height: 0 !important;
-  flex: 0 0 auto !important;
-  align-self: flex-start;
-}
-
-.eyebrow {
-  margin: 0 0 var(--space-3, 12px);
+  gap: 32px;
 }
 
 .h2 {
   margin: 0;
-  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
-  line-height: 1.15;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.1;
 }
 
 .intro {
-  margin: var(--space-5, 24px) 0 0;
+  margin-top: 24px;
 }
 
 @media (max-width: 900px) {
@@ -78,10 +44,5 @@
 
   .sticky {
     position: static;
-    padding-inline: 0;
-  }
-
-  .beat {
-    min-height: auto;
   }
 }
