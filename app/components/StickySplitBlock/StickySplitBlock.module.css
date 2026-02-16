@@ -7,24 +7,22 @@
   display: grid;
   grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
   gap: var(--space-8, 32px);
-  min-height: 100svh;
-  padding-block: clamp(56px, 10vh, 120px);
-  padding-bottom: clamp(180px, 22vh, 320px);
   align-items: start;
   overflow: visible;
-  outline: 1px dashed rgba(0, 255, 180, 0.15);
+  padding-block: clamp(56px, 10vh, 120px);
+  min-height: calc((var(--beats, 3) * 60svh) + 40svh);
 }
 
 .left {
   position: relative;
   overflow: visible;
+  align-self: start;
 }
 
 .sticky {
   position: sticky;
   top: calc(var(--nav-h, 64px) + 24px);
   padding-inline: clamp(16px, 2vw, 24px);
-  outline: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .right {
@@ -35,31 +33,21 @@
 .stack {
   display: flex;
   flex-direction: column;
-  gap: clamp(18px, 3.5vh, 36px);
-}
-
-.stack > * {
-  margin: 0;
+  gap: clamp(18px, 4vh, 40px);
 }
 
 .beat {
   width: 100%;
-  height: auto;
+  min-height: 48svh;
+  display: flex;
+  align-items: flex-start;
 }
 
 .beat > * {
-  height: auto;
-  min-height: 0;
-}
-
-.right :global(.card) {
   height: auto !important;
   min-height: 0 !important;
-}
-
-.right :global(#different) {
-  min-height: auto !important;
-  height: auto !important;
+  flex: 0 0 auto !important;
+  align-self: flex-start;
 }
 
 .eyebrow {
@@ -80,11 +68,14 @@
   .chapter {
     grid-template-columns: 1fr;
     min-height: auto;
-    padding-bottom: clamp(48px, 10vh, 96px);
   }
 
   .sticky {
     position: static;
     padding-inline: 0;
+  }
+
+  .beat {
+    min-height: auto;
   }
 }

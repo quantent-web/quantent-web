@@ -1,5 +1,5 @@
 import { Children } from 'react';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import styles from './StickySplitBlock.module.css';
 
 type Chapter = {
@@ -19,26 +19,32 @@ type StickySplitBlockProps = {
 export default function StickySplitBlock({ id, chapters, className }: StickySplitBlockProps) {
   return (
     <section id={id} className={`${styles.block}${className ? ` ${className}` : ''}`}>
-      {chapters.map((chapter) => (
-        <article key={chapter.key} className={styles.chapter} aria-label={chapter.title}>
-          <div className={styles.left}>
-            <div className={styles.sticky}>
-              {chapter.eyebrow ? <p className={styles.eyebrow}>{chapter.eyebrow}</p> : null}
-              <h2 className={styles.h2}>{chapter.title}</h2>
-              {chapter.intro ? <p className={styles.intro}>{chapter.intro}</p> : null}
+      {chapters.map((chapter) => {
+        const beats = Children.toArray(chapter.content).filter(Boolean);
+        const beatsCount = beats.length;
+        const chapterStyle = { ['--beats' as any]: beatsCount } as CSSProperties;
+
+        return (
+          <article key={chapter.key} className={styles.chapter} aria-label={chapter.title} style={chapterStyle}>
+            <div className={styles.left}>
+              <div className={styles.sticky}>
+                {chapter.eyebrow ? <p className={styles.eyebrow}>{chapter.eyebrow}</p> : null}
+                <h2 className={styles.h2}>{chapter.title}</h2>
+                {chapter.intro ? <p className={styles.intro}>{chapter.intro}</p> : null}
+              </div>
             </div>
-          </div>
-          <div className={styles.right}>
-            <div className={styles.stack}>
-              {Children.toArray(chapter.content).map((node, index) => (
-                <div className={styles.beat} key={`${chapter.key}-beat-${index}`}>
-                  {node}
-                </div>
-              ))}
+            <div className={styles.right}>
+              <div className={styles.stack}>
+                {beats.map((node, index) => (
+                  <div className={styles.beat} key={`${chapter.key}-beat-${index}`}>
+                    {node}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
     </section>
   );
 }
