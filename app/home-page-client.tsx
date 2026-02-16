@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { MouseEvent } from 'react';
 import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
@@ -8,10 +9,13 @@ import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
+import { useLenis } from './home/useLenis';
+import { useAnchorScroll } from './home/useAnchorScroll';
 
-type NavItem = { label: string; href: string };
+type NavItem = { label: string; href: `#${string}` };
 
 export default function Home() {
+  const { scrollTo, programmaticDurationMs } = useLenis();
   const enableSnapScroll = false;
   const navRef = useRef<HTMLElement | null>(null);
 
@@ -20,6 +24,8 @@ export default function Home() {
   const burgerRef = useRef<HTMLButtonElement | null>(null);
 
   const linksRef = useRef<HTMLDivElement | null>(null);
+
+  const { scrollToHash } = useAnchorScroll({ scrollTo, navRef });
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
@@ -34,21 +40,18 @@ export default function Home() {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: 'Home', href: '#home' },
       { label: 'What we do', href: '#what-we-do' },
-      { label: 'Different', href: '#different' },
       { label: 'Products', href: '#products' },
-      { label: 'QuantCertify', href: '#quantcertify' },
-      { label: 'QuantVault', href: '#quantvault' },
-      { label: 'QuantData', href: '#quantdata' },
       { label: 'Capabilities', href: '#capabilities' },
       { label: 'Services', href: '#services' },
-      { label: 'About', href: '#about' },
-      { label: 'Contact', href: '#contact' },
+      { label: 'Contact', href: '#about' },
     ],
     []
   );
-  const [activeHref, setActiveHref] = useState('#home');
+  const [activeHref, setActiveHref] = useState('#what-we-do');
+  const isProgrammaticScroll = useRef(false);
+  const pendingTargetHref = useRef<string | null>(null);
+  const programmaticScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Cierra menú con ESC
   useEffect(() => {
@@ -83,12 +86,14 @@ export default function Home() {
 
     const ratios = new Map<string, number>();
     const updateActive = () => {
+      if (isProgrammaticScroll.current) return;
+
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
 
       if (scrollTop <= 8) {
-        setActiveHref('#home');
+        setActiveHref('#what-we-do');
         return;
       }
 
@@ -194,9 +199,86 @@ export default function Home() {
     };
   }, []);
 
+
+  const clearProgrammaticScrollState = useCallback(() => {
+    if (programmaticScrollTimeoutRef.current) {
+      clearTimeout(programmaticScrollTimeoutRef.current);
+      programmaticScrollTimeoutRef.current = null;
+    }
+
+    isProgrammaticScroll.current = false;
+    pendingTargetHref.current = null;
+  }, []);
+
+  const runProgrammaticScroll = useCallback((href: `#${string}`, opts?: { immediate?: boolean }) => {
+    const immediate = opts?.immediate ?? false;
+
+    clearProgrammaticScrollState();
+
+    if (immediate) {
+      scrollToHash(href, { immediate: true });
+      setActiveHref(href);
+      return;
+    }
+
+    isProgrammaticScroll.current = true;
+    pendingTargetHref.current = href;
+    setActiveHref(href);
+
+    const durationMs = scrollToHash(href);
+    const freezeMs = (durationMs || programmaticDurationMs) + 200;
+
+    programmaticScrollTimeoutRef.current = setTimeout(() => {
+      clearProgrammaticScrollState();
+    }, freezeMs);
+  }, [clearProgrammaticScrollState, programmaticDurationMs, scrollToHash]);
+
+  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: `#${string}`) => {
+    e.preventDefault();
+
+    if (menuOpen) {
+      setMenuOpen(false);
+    }
+
+    runProgrammaticScroll(href);
+  };
   const closeMenu = () => setMenuOpen(false);
-  const openContact = () => setIsContactOpen(true);
+  const openContactStepper = useCallback(() => {
+    setIsContactOpen(true);
+  }, []);
   const closeContact = () => setIsContactOpen(false);
+
+  useEffect(() => {
+    const hash = window.location.hash as `#${string}` | '';
+
+    if (!hash) return;
+
+    if (hash === '#contact') {
+      setActiveHref('#contact');
+      openContactStepper();
+      history.replaceState(null, '', window.location.pathname);
+      return;
+    }
+
+    runProgrammaticScroll(hash);
+  }, [openContactStepper, runProgrammaticScroll]);
+
+  useEffect(() => {
+    const onUserScrollIntent = () => {
+      if (isProgrammaticScroll.current) {
+        clearProgrammaticScrollState();
+      }
+    };
+
+    window.addEventListener('wheel', onUserScrollIntent, { passive: true });
+    window.addEventListener('touchmove', onUserScrollIntent, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', onUserScrollIntent);
+      window.removeEventListener('touchmove', onUserScrollIntent);
+      clearProgrammaticScrollState();
+    };
+  }, [clearProgrammaticScrollState]);
 
   const whatWeDoCards = [
     {
@@ -279,12 +361,7 @@ export default function Home() {
                     key={item.href}
                     href={item.href}
                     className={activeHref === item.href ? 'nav-link-active' : ''}
-                    onClick={() => {
-                      setActiveHref(item.href);
-                      if (menuOpen) {
-                        setMenuOpen(false);
-                      }
-                    }}
+                    onClick={(e) => handleNavClick(e, item.href)}
                   >
                     {item.label}
                   </a>
@@ -338,7 +415,11 @@ export default function Home() {
           </p>
 
           <div className="hero-actions">
-            <button className="btn btn-primary" type="button" onClick={openContact}>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={openContactStepper}
+            >
               Talk to Us
             </button>
             <a className="btn btn-secondary" href="#what-we-do">
@@ -428,24 +509,23 @@ export default function Home() {
             <div className="card">
               <h3 className="card-title">AI-native governance</h3>
               <p className="card-text">
-                Built so AI can reason, opine, and alert safely on entitlements and
-                data.
+                Built so AI can reason, opine, and alert safely on entitlements and data.
               </p>
             </div>
 
             <div className="card">
               <h3 className="card-title">Designed for complexity</h3>
               <p className="card-text">
-                Proven in financial-services-grade systems with real risk and
-                regulatory consequences.
+                Proven in financial-services-grade systems with real risk and regulatory
+                consequences.
               </p>
             </div>
 
             <div className="card">
               <h3 className="card-title">Enhances existing IAM</h3>
               <p className="card-text">
-                Integrates with what you already run. We don’t replace your identity
-                stack — we make it work better.
+                Integrates with what you already run. We don’t replace your identity stack
+                — we make it work better.
               </p>
             </div>
           </MagicBentoGrid>
@@ -489,9 +569,9 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us — Start with QuantCertify</p>
-            <a className="btn btn-primary" href="#contact">
+            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
-            </a>
+            </button>
             </div>
         </section>
 
@@ -600,9 +680,9 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us About QuantCertify</p>
-            <a className="btn btn-primary" href="#contact">
+            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Contact
-            </a>
+            </button>
             </div>
         </section>
 
@@ -829,8 +909,8 @@ export default function Home() {
 
           <div className="cta-strip">
             <p className="cta-text">Start with QuantCertify</p>
-            <button className="btn btn-primary" type="button" onClick={openContact}>
-              Products
+            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
+              Contact
             </button>
             </div>
         </section>
@@ -865,12 +945,7 @@ export default function Home() {
               key={item.href}
               href={item.href}
               className={activeHref === item.href ? 'nav-link-active' : ''}
-              onClick={() => {
-                setActiveHref(item.href);
-                if (menuOpen) {
-                  setMenuOpen(false);
-                }
-              }}
+              onClick={(e) => handleNavClick(e, item.href)}
             >
               {item.label}
             </a>
