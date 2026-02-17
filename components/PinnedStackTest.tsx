@@ -129,14 +129,17 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                     aria-hidden="true"
                   />
                   <div className={`${styles.stage} ${styles.copyStage} ${showTitle ? styles.stageActive : ''}`}>
-                    <BlurText
-                      as="h2"
-                      className="section-title"
-                      text={sectionData.title}
-                      delay={120}
-                      animateBy="words"
-                      direction="top"
-                    />
+                    {showTitle ? (
+                      <BlurText
+                        key={`${sectionData.id}-title-${activeStage}`}
+                        as="h2"
+                        className="section-title"
+                        text={sectionData.title}
+                        delay={120}
+                        animateBy="words"
+                        direction="top"
+                      />
+                    ) : null}
                     <p className="section-lead">{sectionData.description}</p>
                   </div>
 
@@ -149,6 +152,9 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                       variant="4"
                       sectionId={`pinned-stack-${sectionData.id}`}
                       className={styles.cardsGrid}
+                      enableGlow
+                      enableTilt
+                      disabled={false}
                     >
                       {sectionData.cards.map((card, index) => {
                         const isShown = localStage >= 3 + index;
