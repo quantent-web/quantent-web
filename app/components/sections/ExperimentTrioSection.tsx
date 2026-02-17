@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import type { ReactNode, RefObject } from 'react';
+import type { RefObject } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -10,6 +10,12 @@ type ScrollContainerRef = RefObject<HTMLElement | null>;
 type ExperimentTrioSectionProps = {
   scrollContainerRef?: ScrollContainerRef;
   id?: string;
+};
+
+type StepMeta = {
+  key: string;
+  className: string;
+  content: React.ReactNode;
 };
 
 let isScrollTriggerRegistered = false;
@@ -24,59 +30,151 @@ const ensureScrollTrigger = () => {
 const resolveScroller = (scrollContainerRef?: ScrollContainerRef) =>
   scrollContainerRef?.current ?? window;
 
+const STEP_GAP_PX = 24;
+
+const STEP_ITEMS: StepMeta[] = [
+  {
+    key: 'title',
+    className: 'experiment-step experiment-step--title',
+    content: <h2>What We Do</h2>,
+  },
+  {
+    key: 'lead',
+    className: 'experiment-step experiment-step--lead section-lead',
+    content: (
+      <p>
+        QuantEnt analyzes and certifies who can access what — and what that data means — using
+        quantitative models instead of static rules.
+      </p>
+    ),
+  },
+  {
+    key: 'kicker',
+    className: 'experiment-step experiment-step--kicker section-kicker',
+    content: <p>We help organizations</p>,
+  },
+  {
+    key: 'card-1',
+    className: 'experiment-step experiment-step--card',
+    content: (
+      <article className="experiment-card">
+        <h3>System Analysis</h3>
+        <p>Analyze users, roles, entitlements, and data as interconnected systems.</p>
+      </article>
+    ),
+  },
+  {
+    key: 'card-2',
+    className: 'experiment-step experiment-step--card',
+    content: (
+      <article className="experiment-card">
+        <h3>Quantitative Certification</h3>
+        <p>Certify access and meaning with mathematical rigor.</p>
+      </article>
+    ),
+  },
+  {
+    key: 'card-3',
+    className: 'experiment-step experiment-step--card',
+    content: (
+      <article className="experiment-card">
+        <h3>Risk Detection</h3>
+        <p>Detect drift, over-exposure, and structural risk early.</p>
+      </article>
+    ),
+  },
+  {
+    key: 'card-4',
+    className: 'experiment-step experiment-step--card',
+    content: (
+      <article className="experiment-card">
+        <h3>Continuous Control</h3>
+        <p>Detect drift, over-exposure, and structural risk early.</p>
+      </article>
+    ),
+  },
+  {
+    key: 'note',
+    className: 'experiment-step experiment-step--note section-note',
+    content: (
+      <p>
+        QuantEnt is built for complex, regulated environments where correctness, scale, and
+        evolution matter.
+      </p>
+    ),
+  },
+];
+
 export default function ExperimentTrioSection({
   scrollContainerRef,
   id = 'experiment-trio',
 }: ExperimentTrioSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const cardsRef = useRef<HTMLDivElement>(null);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const title = titleRef.current;
-    const description = descriptionRef.current;
-    const cardsRoot = cardsRef.current;
+    const steps = stepRefs.current.filter((node): node is HTMLDivElement => Boolean(node));
 
-    if (!section || !title || !description || !cardsRoot) return;
+    if (!section || steps.length !== STEP_ITEMS.length) return;
 
     ensureScrollTrigger();
-
-    const cards = Array.from(cardsRoot.querySelectorAll<HTMLElement>('.experiment-card'));
     const scroller = resolveScroller(scrollContainerRef);
 
     const ctx = gsap.context(() => {
-      gsap.set([title, description, ...cards], {
-        opacity: 0,
-        yPercent: 30,
+      gsap.set(steps, {
+        autoAlpha: 0,
+        y: 56,
       });
 
-      const timeline = gsap.timeline({
-        defaults: { ease: 'none' },
+      const heights = steps.map((el) => el.getBoundingClientRect().height);
+      const offsets = new Array(steps.length).fill(0);
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'power2.out' },
         scrollTrigger: {
           trigger: section,
           scroller,
           start: 'top top',
-          end: () => `+=${window.innerHeight * 4.8}`,
-          scrub: 1.1,
+          end: () => `+=${window.innerHeight * (steps.length * 0.72 + 1.9)}`,
+          scrub: 1,
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      timeline
-        .to(title, { opacity: 1, yPercent: 0, duration: 0.65 })
-        .to({}, { duration: 0.25 })
-        .to(description, { opacity: 1, yPercent: 0, duration: 0.55 })
-        .to({}, { duration: 0.2 });
+      steps.forEach((step, index) => {
+        if (index > 0) {
+          const push = heights[index] + STEP_GAP_PX;
 
-      cards.forEach((card) => {
-        timeline.to(card, { opacity: 1, yPercent: 0, duration: 0.42 }, '+=0.1');
+          for (let prev = 0; prev < index; prev += 1) {
+            offsets[prev] -= push;
+            tl.to(
+              steps[prev],
+              {
+                y: offsets[prev],
+                duration: 0.28,
+              },
+              '<'
+            );
+          }
+        }
+
+        tl.to(
+          step,
+          {
+            autoAlpha: 1,
+            y: offsets[index],
+            duration: 0.44,
+          },
+          index > 0 ? '<' : '+=0.1'
+        );
+
+        tl.to({}, { duration: 0.18 });
       });
 
-      timeline.to({}, { duration: 0.55 });
+      tl.to({}, { duration: 0.55 });
     }, section);
 
     return () => {
@@ -85,38 +183,22 @@ export default function ExperimentTrioSection({
   }, [scrollContainerRef]);
 
   return (
-    <section id={id} ref={sectionRef} className="section experiment-trio" aria-label="Experimental scroll section">
-      <div className="experiment-trio__inner">
-        <h2 ref={titleRef} className="experiment-trio__title">
-          Make governance feel measurable.
-        </h2>
-
-        <p ref={descriptionRef} className="experiment-trio__description">
-          QuantEnt turns entitlements and data governance into something you can prove — with
-          clear controls, evidence, and repeatable processes.
-        </p>
-
-        <div ref={cardsRef} className="experiment-trio__stack">
-          <ScrollStackItem>
-            <h3>Evidence-ready controls</h3>
-            <p>Replace “we think it’s compliant” with audit-friendly proof.</p>
-          </ScrollStackItem>
-
-          <ScrollStackItem>
-            <h3>Entitlements you can explain</h3>
-            <p>Map access decisions to policy and ownership.</p>
-          </ScrollStackItem>
-
-          <ScrollStackItem>
-            <h3>Operational clarity</h3>
-            <p>Make governance visible and measurable.</p>
-          </ScrollStackItem>
+    <section id={id} ref={sectionRef} className="section experiment-trio" aria-label="What we do scroll story">
+      <div className="experiment-trio__viewport">
+        <div className="experiment-trio__flow">
+          {STEP_ITEMS.map((step, index) => (
+            <div
+              key={step.key}
+              ref={(node) => {
+                stepRefs.current[index] = node;
+              }}
+              className={step.className}
+            >
+              {step.content}
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
-}
-
-function ScrollStackItem({ children }: { children: ReactNode }) {
-  return <article className="experiment-card">{children}</article>;
 }
