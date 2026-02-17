@@ -502,6 +502,7 @@ main[data-snap-scroll='true'] > .section {
   display: grid;
   gap: var(--space-5);
   align-content: start;
+  justify-items: center;
 }
 
 .what-we-do-left--description .section-lead,
