@@ -12,8 +12,118 @@ import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
+import PinnedStackTest from '../components/PinnedStackTest';
 
 type NavItem = { label: string; href: `#${string}` };
+
+type CardItem = {
+  title: string;
+  text: string;
+};
+
+const whatWeDoCards: CardItem[] = [
+  {
+    title: 'System Analysis',
+    text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
+  },
+  {
+    title: 'Quantitative Certification',
+    text: 'Certify access and meaning with mathematical rigor.',
+  },
+  {
+    title: 'Risk Detection',
+    text: 'Detect drift, over-exposure, and structural risk early.',
+  },
+  {
+    title: 'Continuous Control',
+    text: 'Maintain control as systems, data, and organizations evolve.',
+  },
+];
+
+const dataCleaningCards: CardItem[] = [
+  {
+    title: 'MetaData Tagging',
+    text: 'Analyzing and Tagging APIs, data, applications, and resources for use by users and AI.',
+  },
+  {
+    title: 'Data Model Rigorization',
+    text: 'With software and consulting, our SMEs will help create, refine, or just critique the data models of the firm.',
+  },
+  {
+    title: 'Ongoing Cleanliness',
+    text: 'Institutional Data Cleanliness starts at the data model process',
+  },
+  {
+    title: 'Agentic AI Compatibility',
+    text: 'Our future product is designed to make Agentic AI work with the highest possible confidence level, with the safest data protection possible.',
+  },
+];
+
+function WhatWeDoContent({ sectionId, keyPrefix }: { sectionId: string; keyPrefix: string }) {
+  return (
+    <div className="what-we-do-layout">
+      <div className="what-we-do-left">
+        <h2 className="section-title">What We Do</h2>
+
+        <p className="section-lead">
+          QuantEnt analyzes and certifies who can access what — and what that data
+          means — using quantitative models instead of static rules.
+        </p>
+      </div>
+
+      <div className="what-we-do-right">
+        <p className="section-kicker">We help organizations:</p>
+
+        <MagicBentoGrid variant="4" sectionId={sectionId}>
+          {whatWeDoCards.map((card) => (
+            <div className="card" key={`${keyPrefix}-${card.title}`}>
+              <h4 className="card-title">{card.title}</h4>
+              <p className="card-text">{card.text}</p>
+            </div>
+          ))}
+        </MagicBentoGrid>
+
+        <p className="section-note">
+          QuantEnt is built for complex, regulated environments where correctness,
+          scale, and evolution matter.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function DataCleaningContent({ sectionId, keyPrefix }: { sectionId: string; keyPrefix: string }) {
+  return (
+    <div className="what-we-do-layout what-we-do-layout--inverted">
+      <div className="what-we-do-left what-we-do-left--description">
+        <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
+
+        <p className="section-lead">
+          QuantEnt structures and governs enterprise data so every dataset is clean,
+          categorized, and controlled with transparent policies.
+        </p>
+      </div>
+
+      <div className="what-we-do-right">
+        <p className="section-kicker">Entitlement And User Analysis:</p>
+
+        <MagicBentoGrid variant="4" sectionId={sectionId}>
+          {dataCleaningCards.map((card) => (
+            <div className="card" key={`${keyPrefix}-${card.title}`}>
+              <h4 className="card-title">{card.title}</h4>
+              <p className="card-text">{card.text}</p>
+            </div>
+          ))}
+        </MagicBentoGrid>
+
+        <p className="section-note">
+          QuantEnt provides end-to-end governance for high-volume, high-impact
+          enterprise data ecosystems.
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const { scrollTo, programmaticDurationMs } = useLenis();
@@ -281,44 +391,6 @@ export default function Home() {
     };
   }, [clearProgrammaticScrollState]);
 
-  const whatWeDoCards = [
-    {
-      title: 'System Analysis',
-      text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
-    },
-    {
-      title: 'Quantitative Certification',
-      text: 'Certify access and meaning with mathematical rigor.',
-    },
-    {
-      title: 'Risk Detection',
-      text: 'Detect drift, over-exposure, and structural risk early.',
-    },
-    {
-      title: 'Continuous Control',
-      text: 'Maintain control as systems, data, and organizations evolve.',
-    },
-  ];
-
-  const dataCleaningCards = [
-    {
-      title: 'MetaData Tagging',
-      text: 'Analyzing and Tagging APIs, data, applications, and resources for use by users and AI.',
-    },
-    {
-      title: 'Data Model Rigorization',
-      text: 'With software and consulting, our SMEs will help create, refine, or just critique the data models of the firm.',
-    },
-    {
-      title: 'Ongoing Cleanliness',
-      text: 'Institutional Data Cleanliness starts at the data model process',
-    },
-    {
-      title: 'Agentic AI Compatibility',
-      text: 'Our future product is designed to make Agentic AI work with the highest possible confidence level, with the safest data protection possible.',
-    },
-  ];
-
   return (
     <>
       {/* STICKY NAV + DOT GRID BACKGROUND */}
@@ -433,66 +505,16 @@ export default function Home() {
           </div>
         </section>
 
+        <PinnedStackTest
+          stepOne={<WhatWeDoContent sectionId="pinned-stack-what-we-do" keyPrefix="pinned-stack-what-we-do" />}
+          stepTwo={<DataCleaningContent sectionId="pinned-stack-data-cleaning" keyPrefix="pinned-stack-data-cleaning" />}
+        />
+
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
           <div className="what-we-do-blocks">
-            <div className="what-we-do-layout">
-            <div className="what-we-do-left">
-              <h2 className="section-title">What We Do</h2>
-
-              <p className="section-lead">
-                QuantEnt analyzes and certifies who can access what — and what that data
-                means — using quantitative models instead of static rules.
-              </p>
-            </div>
-
-            <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do">
-                {whatWeDoCards.map((card) => (
-                  <div className="card" key={`what-we-do-${card.title}`}>
-                    <h4 className="card-title">{card.title}</h4>
-                    <p className="card-text">{card.text}</p>
-                  </div>
-                ))}
-              </MagicBentoGrid>
-
-              <p className="section-note">
-                QuantEnt is built for complex, regulated environments where correctness,
-                scale, and evolution matter.
-              </p>
-            </div>
-            </div>
-
-            <div className="what-we-do-layout what-we-do-layout--inverted">
-            <div className="what-we-do-left what-we-do-left--description">
-              <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
-
-              <p className="section-lead">
-                QuantEnt structures and governs enterprise data so every dataset is clean,
-                categorized, and controlled with transparent policies.
-              </p>
-            </div>
-
-            <div className="what-we-do-right">
-              <p className="section-kicker">Entitlement And User Analysis:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
-                {dataCleaningCards.map((card) => (
-                  <div className="card" key={`what-we-do-inverted-${card.title}`}>
-                    <h4 className="card-title">{card.title}</h4>
-                    <p className="card-text">{card.text}</p>
-                  </div>
-                ))}
-              </MagicBentoGrid>
-
-              <p className="section-note">
-                QuantEnt provides end-to-end governance for high-volume, high-impact
-                enterprise data ecosystems.
-              </p>
-            </div>
-            </div>
+            <WhatWeDoContent sectionId="what-we-do" keyPrefix="what-we-do" />
+            <DataCleaningContent sectionId="what-we-do-inverted" keyPrefix="what-we-do-inverted" />
           </div>
         </section>
 

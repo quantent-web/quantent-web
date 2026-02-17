@@ -1,0 +1,66 @@
+.section {
+  position: relative;
+  scroll-snap-align: none;
+}
+
+.track {
+  position: relative;
+  min-height: 240svh;
+}
+
+.viewport {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100svh - var(--nav-h));
+  overflow: hidden;
+}
+
+.step {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(24px);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.defaultVisible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+@media (max-width: 1023px) {
+  .track {
+    min-height: auto;
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .viewport {
+    position: static;
+    height: auto;
+    overflow: visible;
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .step {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step {
+    transition: none;
+  }
+}
