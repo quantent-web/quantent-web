@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Spline_Sans_Mono, Poppins } from 'next/font/google';
 import './globals.css';
+import Aurora from './components/effects/Aurora';
 
 const splineSansMono = Spline_Sans_Mono({
   subsets: ['latin'],
@@ -62,7 +63,10 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <main id="main-content">{children}</main>
+        <main id="main-content">
+          <Aurora className="main-content__aurora" />
+          <div className="main-content__inner">{children}</div>
+        </main>
       </body>
     </html>
   );
