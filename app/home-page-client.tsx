@@ -21,6 +21,16 @@ type CardItem = {
   text: string;
 };
 
+type ContentSection = {
+  id: string;
+  title: string;
+  description: string;
+  kicker: string;
+  note: string;
+  cards: CardItem[];
+  inverted?: boolean;
+};
+
 const whatWeDoCards: CardItem[] = [
   {
     title: 'System Analysis',
@@ -59,23 +69,44 @@ const dataCleaningCards: CardItem[] = [
   },
 ];
 
-function WhatWeDoContent({ sectionId, keyPrefix }: { sectionId: string; keyPrefix: string }) {
-  return (
-    <div className="what-we-do-layout">
-      <div className="what-we-do-left">
-        <h2 className="section-title">What We Do</h2>
+const contentSections: ContentSection[] = [
+  {
+    id: 'what-we-do',
+    title: 'What We Do',
+    description:
+      'QuantEnt analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.',
+    kicker: 'We help organizations:',
+    note:
+      'QuantEnt is built for complex, regulated environments where correctness, scale, and evolution matter.',
+    cards: whatWeDoCards,
+  },
+  {
+    id: 'what-we-do-inverted',
+    title: 'Data Cleaning, Categorizing, and Governance',
+    description:
+      'QuantEnt structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies.',
+    kicker: 'Entitlement And User Analysis:',
+    note:
+      'QuantEnt provides end-to-end governance for high-volume, high-impact enterprise data ecosystems.',
+    cards: dataCleaningCards,
+    inverted: true,
+  },
+];
 
-        <p className="section-lead">
-          QuantEnt analyzes and certifies who can access what — and what that data
-          means — using quantitative models instead of static rules.
-        </p>
+function ContentSectionLayout({ section, sectionId, keyPrefix }: { section: ContentSection; sectionId: string; keyPrefix: string }) {
+  return (
+    <div className={`what-we-do-layout ${section.inverted ? 'what-we-do-layout--inverted' : ''}`}>
+      <div className={`what-we-do-left ${section.inverted ? 'what-we-do-left--description' : ''}`}>
+        <h2 className="section-title">{section.title}</h2>
+
+        <p className="section-lead">{section.description}</p>
       </div>
 
       <div className="what-we-do-right">
-        <p className="section-kicker">We help organizations:</p>
+        <p className="section-kicker">{section.kicker}</p>
 
         <MagicBentoGrid variant="4" sectionId={sectionId}>
-          {whatWeDoCards.map((card) => (
+          {section.cards.map((card) => (
             <div className="card" key={`${keyPrefix}-${card.title}`}>
               <h4 className="card-title">{card.title}</h4>
               <p className="card-text">{card.text}</p>
@@ -83,43 +114,7 @@ function WhatWeDoContent({ sectionId, keyPrefix }: { sectionId: string; keyPrefi
           ))}
         </MagicBentoGrid>
 
-        <p className="section-note">
-          QuantEnt is built for complex, regulated environments where correctness,
-          scale, and evolution matter.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function DataCleaningContent({ sectionId, keyPrefix }: { sectionId: string; keyPrefix: string }) {
-  return (
-    <div className="what-we-do-layout what-we-do-layout--inverted">
-      <div className="what-we-do-left what-we-do-left--description">
-        <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
-
-        <p className="section-lead">
-          QuantEnt structures and governs enterprise data so every dataset is clean,
-          categorized, and controlled with transparent policies.
-        </p>
-      </div>
-
-      <div className="what-we-do-right">
-        <p className="section-kicker">Entitlement And User Analysis:</p>
-
-        <MagicBentoGrid variant="4" sectionId={sectionId}>
-          {dataCleaningCards.map((card) => (
-            <div className="card" key={`${keyPrefix}-${card.title}`}>
-              <h4 className="card-title">{card.title}</h4>
-              <p className="card-text">{card.text}</p>
-            </div>
-          ))}
-        </MagicBentoGrid>
-
-        <p className="section-note">
-          QuantEnt provides end-to-end governance for high-volume, high-impact
-          enterprise data ecosystems.
-        </p>
+        <p className="section-note">{section.note}</p>
       </div>
     </div>
   );
@@ -505,16 +500,21 @@ export default function Home() {
           </div>
         </section>
 
-        <PinnedStackTest
-          stepOne={<WhatWeDoContent sectionId="pinned-stack-what-we-do" keyPrefix="pinned-stack-what-we-do" />}
-          stepTwo={<DataCleaningContent sectionId="pinned-stack-data-cleaning" keyPrefix="pinned-stack-data-cleaning" />}
-        />
+        <PinnedStackTest sections={contentSections} />
 
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
           <div className="what-we-do-blocks">
-            <WhatWeDoContent sectionId="what-we-do" keyPrefix="what-we-do" />
-            <DataCleaningContent sectionId="what-we-do-inverted" keyPrefix="what-we-do-inverted" />
+            <ContentSectionLayout
+              section={contentSections[0]}
+              sectionId="what-we-do"
+              keyPrefix="what-we-do"
+            />
+            <ContentSectionLayout
+              section={contentSections[1]}
+              sectionId="what-we-do-inverted"
+              keyPrefix="what-we-do-inverted"
+            />
           </div>
         </section>
 

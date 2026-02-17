@@ -5,7 +5,7 @@
 
 .track {
   position: relative;
-  min-height: 240svh;
+  min-height: calc((var(--stage-count, 14) * 72svh) + (100svh - var(--nav-h)));
 }
 
 .viewport {
@@ -20,28 +20,90 @@
   inset: 0;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(24px);
-  transition: opacity 320ms ease, transform 320ms ease;
+  transition: opacity 320ms ease;
+  background-color: transparent;
 }
 
 .defaultVisible {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
 }
 
 .active {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
   background-color: #0e1414;
+}
+
+.stageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: var(--space-8);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: var(--space-5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.stage > :global(.section-title),
+.stage > :global(.section-lead),
+.stage > :global(.section-kicker),
+.stage > :global(.section-note) {
+  max-width: 900px;
+  text-align: center;
+}
+
+.stage > :global(.section-kicker) {
+  margin-top: 0;
+}
+
+.stageActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardsGrid {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.cardAnimated {
+  opacity: 0;
+  transition: transform 360ms ease, opacity 360ms ease;
+}
+
+.fromLeft {
+  transform: translateX(-140%);
+}
+
+.fromRight {
+  transform: translateX(140%);
+}
+
+.fromBottom {
+  transform: translateY(140%);
+}
+
+.cardShown {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 @media (max-width: 1023px) {
   .track {
     min-height: auto;
-    display: grid;
-    gap: var(--space-8);
   }
 
   .viewport {
@@ -49,19 +111,45 @@
     height: auto;
     overflow: visible;
     display: grid;
-    gap: var(--space-8);
+    gap: var(--space-10);
   }
 
   .step {
     position: static;
     opacity: 1;
     pointer-events: auto;
+    background-color: transparent;
+  }
+
+  .stageContainer {
+    position: static;
+    height: auto;
+    gap: var(--space-6);
+    padding: 0;
+  }
+
+  .stage {
+    position: static;
+    opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardAnimated {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .step {
+  .step,
+  .stage,
+  .cardAnimated {
     transition: none;
   }
 }
