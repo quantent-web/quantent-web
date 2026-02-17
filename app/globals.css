@@ -285,7 +285,7 @@ p {
 }
 
 .card-text {
-  text-align: center;
+  text-align: left;
 }
 
 /* =========================
@@ -470,7 +470,7 @@ main[data-snap-scroll='true'] > .section {
 }
 
 .card-title {
-  text-align: center;
+  text-align: left;
   margin-bottom: var(--space-2);
   color: var(--text-primary);
 }
@@ -554,6 +554,11 @@ main[data-snap-scroll='true'] > .section {
 
   .card {
     padding: var(--space-7);
+    text-align: center;
+  }
+
+  .card-title,
+  .card-text {
     text-align: center;
   }
 }
