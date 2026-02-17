@@ -48,11 +48,21 @@
   position: absolute;
   inset: 0;
   display: grid;
-  place-items: center;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
   gap: var(--space-5);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.copyStage {
+  align-items: center;
+}
+
+.emptyStage {
+  background: transparent;
 }
 
 .stage > :global(.section-title),
@@ -133,6 +143,10 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .emptyStage {
+    display: none;
   }
 
   .cardsGrid {

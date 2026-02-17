@@ -24,7 +24,7 @@ type PinnedStackTestProps = {
 
 const DESKTOP_QUERY = '(min-width: 1024px)';
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-const STAGES_PER_SECTION = 7;
+const STAGES_PER_SECTION = 8;
 
 export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -96,15 +96,21 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
         <div className={styles.viewport}>
           {sections.map((sectionData, sectionIndex) => {
             const base = sectionIndex * STAGES_PER_SECTION;
-            const localStage = Math.min(Math.max(activeStage - base, 0), STAGES_PER_SECTION - 1);
-            const isSectionVisible = !isDesktop || !isReducedMotion
-              ? sectionIndex === 0
-              : activeStage >= base && activeStage < base + STAGES_PER_SECTION;
+            const computedStage = Math.min(Math.max(activeStage - base, 0), STAGES_PER_SECTION - 1);
+            const isStaticMobile = !isDesktop;
+            const isStaticReduced = isDesktop && isReducedMotion;
+            const localStage = isStaticReduced ? 1 : computedStage;
+            const isSectionVisible = isStaticMobile
+              ? true
+              : isStaticReduced
+                ? sectionIndex === 0
+                : activeStage >= base && activeStage < base + STAGES_PER_SECTION;
 
-            const showTitle = localStage === 0;
-            const showKicker = localStage === 1;
-            const showCards = localStage >= 2 && localStage <= 5;
-            const showNote = localStage === 6;
+            const showEmptyIntro = localStage === 0;
+            const showTitle = localStage === 1;
+            const showKicker = localStage === 2;
+            const showCards = localStage >= 3 && localStage <= 6;
+            const showNote = localStage === 7;
 
             return (
               <article
@@ -115,7 +121,12 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                 aria-hidden={!isSectionVisible && isDesktop}
               >
                 <div className={styles.stageContainer}>
-                  <div className={`${styles.stage} ${showTitle ? styles.stageActive : ''}`}>
+
+                  <div
+                    className={`${styles.stage} ${styles.emptyStage} ${showEmptyIntro ? styles.stageActive : ''}`}
+                    aria-hidden="true"
+                  />
+                  <div className={`${styles.stage} ${styles.copyStage} ${showTitle ? styles.stageActive : ''}`}>
                     <h2 className="section-title">{sectionData.title}</h2>
                     <p className="section-lead">{sectionData.description}</p>
                   </div>
@@ -127,7 +138,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                   <div className={`${styles.stage} ${showCards ? styles.stageActive : ''}`}>
                     <div className={styles.cardsGrid}>
                       {sectionData.cards.map((card, index) => {
-                        const isShown = localStage >= 2 + index;
+                        const isShown = localStage >= 3 + index;
                         const fromClass =
                           index === 0
                             ? styles.fromLeft
