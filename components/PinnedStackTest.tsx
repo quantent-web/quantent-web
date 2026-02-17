@@ -99,7 +99,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
             const computedStage = Math.min(Math.max(activeStage - base, 0), STAGES_PER_SECTION - 1);
             const isStaticMobile = !isDesktop;
             const isStaticReduced = isDesktop && isReducedMotion;
-            const localStage = isStaticReduced ? 1 : computedStage;
+            const localStage = computedStage;
             const isSectionVisible = isStaticMobile
               ? true
               : isStaticReduced
