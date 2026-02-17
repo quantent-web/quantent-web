@@ -1631,7 +1631,9 @@ html[data-theme="dark"] body {
    Experiment Trio Section
 ========================= */
 .experiment-trio {
-  min-height: min(100svh, calc(100svh - var(--nav-h)));
+  min-height: calc(100svh - var(--nav-h));
+  display: grid;
+  align-items: center;
 }
 
 .experiment-trio__inner {
@@ -1639,16 +1641,13 @@ html[data-theme="dark"] body {
   margin: 0 auto;
   display: grid;
   gap: var(--space-6);
+  width: 100%;
 }
 
 .experiment-trio__title {
   text-align: center;
   line-height: 1.1;
   letter-spacing: -0.02em;
-}
-
-.experiment-char {
-  display: inline-block;
   will-change: transform, opacity;
 }
 
@@ -1657,11 +1656,7 @@ html[data-theme="dark"] body {
   max-width: 74ch;
   text-align: center;
   color: var(--color-muted);
-}
-
-.experiment-word {
-  display: inline-block;
-  will-change: opacity;
+  will-change: transform, opacity;
 }
 
 .experiment-trio__stack {
