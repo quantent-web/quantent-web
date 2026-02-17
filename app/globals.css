@@ -234,20 +234,58 @@ h1 {
 }
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   font-family: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo,
     Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.2;
   margin: 0;
+}
+
+h2 {
+  font-size: 48px;
+  line-height: 56px;
+}
+
+h3 {
+  font-size: 32px;
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+h5 {
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+h6 {
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 p {
   margin: 0;
+  font-size: 18px;
+  line-height: 32px;
 }
 
-.muted {
+.muted,
+.card-text,
+.section-note {
   color: var(--color-muted);
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.card-text {
+  text-align: left;
 }
 
 /* =========================
@@ -256,11 +294,9 @@ p {
 
 .container {
   width: 100%;
-  max-width: var(--container);
   margin: 0 auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);;
-
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 
@@ -337,18 +373,20 @@ main[data-snap-scroll='true'] > .section {
 
 
 .hero-title {
-  font-size: clamp(32px, 4vw, 56px);
+  font-size: 90px;
+  line-height: 1.12;
   letter-spacing: -0.02em;
   text-align: center;
      font-family: "Spline Sans Mono", monospace;
   font-weight: 700;
-  font-size: 56px;
 }
 
 .hero-subtitle {
   margin-top: var(--space-4);
+  margin-bottom: var(--space-8);
   max-width: 58ch;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 26px;
   text-align: center;
   color: var(--color-muted);
 }
@@ -363,14 +401,16 @@ main[data-snap-scroll='true'] > .section {
    (solo para la landing)
 ========================= */
 .section-title {
-  font-size: clamp(20px, 2.2vw, 28px);
+  text-align: center;
   margin-bottom: var(--space-3);
 }
 
 .section-lead {
   max-width: 70ch;
-  font-size: 16px;
+  text-align: center;
   margin-top: var(--space-2);
+  margin-left: auto;
+  margin-right: auto;
   color: var(--color-text);
 }
 
@@ -425,20 +465,14 @@ main[data-snap-scroll='true'] > .section {
 .card {
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: var(--space-5);
+  padding: var(--space-8);
   background: var(--surface);
 }
 
 .card-title {
-  font-size: 16px;
+  text-align: left;
   margin-bottom: var(--space-2);
   color: var(--text-primary);
-}
-
-.card-text {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text-secondary);
 }
 
 .what-we-do-blocks {
@@ -468,6 +502,7 @@ main[data-snap-scroll='true'] > .section {
   display: grid;
   gap: var(--space-5);
   align-content: start;
+  justify-items: center;
 }
 
 .what-we-do-left--description .section-lead,
@@ -476,10 +511,12 @@ main[data-snap-scroll='true'] > .section {
 }
 
 .what-we-do-right .section-kicker {
+  text-align: center;
   margin-top: 0;
 }
 
 .what-we-do-right .section-note {
+  text-align: center;
   margin-top: 0;
 }
 
@@ -504,6 +541,26 @@ main[data-snap-scroll='true'] > .section {
 
   .cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  h2 {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .card {
+    padding: var(--space-7);
+    text-align: center;
+  }
+
+  .card-title,
+  .card-text {
+    text-align: center;
   }
 }
 
@@ -1002,14 +1059,17 @@ html[data-theme="dark"] .nav {
   font-size: 13px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  text-align: center;
   color: var(--color-muted);
 }
 
 .section-note {
   margin-top: var(--space-5);
   max-width: 75ch;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
   color: var(--color-muted);
-  font-size: 14px;
 }
 
 .section-note.strong {
@@ -1020,6 +1080,7 @@ html[data-theme="dark"] .nav {
 .subhead {
   margin-top: var(--space-7);
   font-size: 18px;
+  text-align: center;
 }
 
 .card-actions {

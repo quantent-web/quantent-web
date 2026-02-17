@@ -5,6 +5,7 @@ import type { MouseEvent } from 'react';
 import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
+import DecryptedText from './components/DecryptedText/DecryptedText';
 import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
@@ -410,9 +411,13 @@ export default function Home() {
 
 
 
-          <p className="hero-subtitle">
-            Quantitative models and mathematics for entitlement and data governance.
-          </p>
+          <DecryptedText
+            text="Quantitative models and mathematics for entitlement and data governance."
+            parentClassName="hero-subtitle"
+            animateOn="view"
+            speed={45}
+            maxIterations={12}
+          />
 
           <div className="hero-actions">
             <button
@@ -447,7 +452,7 @@ export default function Home() {
               <MagicBentoGrid variant="4" sectionId="what-we-do">
                 {whatWeDoCards.map((card) => (
                   <div className="card" key={`what-we-do-${card.title}`}>
-                    <h3 className="card-title">{card.title}</h3>
+                    <h4 className="card-title">{card.title}</h4>
                     <p className="card-text">{card.text}</p>
                   </div>
                 ))}
@@ -476,7 +481,7 @@ export default function Home() {
               <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
                 {dataCleaningCards.map((card) => (
                   <div className="card" key={`what-we-do-inverted-${card.title}`}>
-                    <h3 className="card-title">{card.title}</h3>
+                    <h4 className="card-title">{card.title}</h4>
                     <p className="card-text">{card.text}</p>
                   </div>
                 ))}
@@ -500,21 +505,21 @@ export default function Home() {
 
           <MagicBentoGrid variant="auto" sectionId="different">
             <div className="card">
-              <h3 className="card-title">Quantitative by design</h3>
+              <h4 className="card-title">Quantitative by design</h4>
               <p className="card-text">
                 Exposure, drift, and structural risk are measured — not guessed.
               </p>
             </div>
 
             <div className="card">
-              <h3 className="card-title">AI-native governance</h3>
+              <h4 className="card-title">AI-native governance</h4>
               <p className="card-text">
                 Built so AI can reason, opine, and alert safely on entitlements and data.
               </p>
             </div>
 
             <div className="card">
-              <h3 className="card-title">Designed for complexity</h3>
+              <h4 className="card-title">Designed for complexity</h4>
               <p className="card-text">
                 Proven in financial-services-grade systems with real risk and regulatory
                 consequences.
@@ -522,7 +527,7 @@ export default function Home() {
             </div>
 
             <div className="card">
-              <h3 className="card-title">Enhances existing IAM</h3>
+              <h4 className="card-title">Enhances existing IAM</h4>
               <p className="card-text">
                 Integrates with what you already run. We don’t replace your identity stack
                 — we make it work better.
@@ -537,7 +542,7 @@ export default function Home() {
 
           <MagicBentoGrid variant="auto" sectionId="products">
             <div className="card">
-              <h3 className="card-title">QuantCertify</h3>
+              <h4 className="card-title">QuantCertify</h4>
               <p className="card-text">Certification with quantitative control.</p>
               <div className="card-actions">
                 <a className="btn btn-secondary" href="#quantcertify">
@@ -547,7 +552,7 @@ export default function Home() {
             </div>
 
             <div className="card">
-              <h3 className="card-title">QuantVault</h3>
+              <h4 className="card-title">QuantVault</h4>
               <p className="card-text">Enterprise entitlement intelligence.</p>
               <div className="card-actions">
                 <a className="btn btn-secondary" href="#quantvault">
@@ -557,7 +562,7 @@ export default function Home() {
             </div>
 
             <div className="card">
-              <h3 className="card-title">QuantData</h3>
+              <h4 className="card-title">QuantData</h4>
               <p className="card-text">Semantic governance for enterprise data.</p>
               <div className="card-actions">
                 <a className="btn btn-secondary" href="#quantdata">
@@ -795,7 +800,7 @@ export default function Home() {
 
           <MagicBentoGrid variant="auto" sectionId="capabilities">
             <div className="card">
-              <h3 className="card-title">Quantitative Governance</h3>
+              <h4 className="card-title">Quantitative Governance</h4>
               <p className="card-text">
                 Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact.
                 Governance focused on material risk.
@@ -803,21 +808,21 @@ export default function Home() {
             </div>
 
             <div className="card">
-              <h3 className="card-title">Semantic Data Modeling</h3>
+              <h4 className="card-title">Semantic Data Modeling</h4>
               <p className="card-text">
                 Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.
               </p>
             </div>
 
             <div className="card">
-              <h3 className="card-title">Safe Model Evolution</h3>
+              <h4 className="card-title">Safe Model Evolution</h4>
               <p className="card-text">
                 Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.
               </p>
             </div>
 
             <div className="card">
-              <h3 className="card-title">Financial Services Depth</h3>
+              <h4 className="card-title">Financial Services Depth</h4>
               <p className="card-text">
                 Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.
               </p>
@@ -836,36 +841,36 @@ export default function Home() {
           <p className="section-kicker">What We Offer</p>
           <MagicBentoGrid variant="auto" sectionId="services-offer">
             <div className="card">
-              <h3 className="card-title">Tech review & scorecarding</h3>
+              <h4 className="card-title">Tech review & scorecarding</h4>
               <p className="card-text">
                 Full stack technology review and scorecarding of data, AI, and entitlements.
               </p>
             </div>
             <div className="card">
-              <h3 className="card-title">Access cleanup</h3>
+              <h4 className="card-title">Access cleanup</h4>
               <p className="card-text">Entitlement and access cleanup.</p>
             </div>
             <div className="card">
-              <h3 className="card-title">Semantic alignment</h3>
+              <h4 className="card-title">Semantic alignment</h4>
               <p className="card-text">Data model and semantic alignment.</p>
             </div>
             <div className="card">
-              <h3 className="card-title">AI readiness</h3>
+              <h4 className="card-title">AI readiness</h4>
               <p className="card-text">AI and automation readiness assessments.</p>
             </div>
             <div className="card">
-              <h3 className="card-title">Architecture & operating model</h3>
+              <h4 className="card-title">Architecture & operating model</h4>
               <p className="card-text">Architecture and operating-model design.</p>
             </div>
           </MagicBentoGrid>
 
           <MagicBentoGrid variant="auto" sectionId="services-structure">
             <div className="card">
-              <h3 className="card-title">Services establish structure</h3>
+              <h4 className="card-title">Services establish structure</h4>
               <p className="card-text">Products enforce and maintain it.</p>
             </div>
             <div className="card">
-              <h3 className="card-title">No perpetual cleanup cycles</h3>
+              <h4 className="card-title">No perpetual cleanup cycles</h4>
               <p className="card-text">
                 We don’t just prepare organizations — we help them stay prepared.
               </p>
