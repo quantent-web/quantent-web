@@ -73,8 +73,24 @@
   text-align: center;
 }
 
+.stage > :global(.section-title) {
+  font-size: 5.625rem;
+  line-height: 5.75rem;
+}
+
 .stage > :global(.section-kicker) {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: 0.125rem;
   margin-top: 0;
+}
+
+.stage > :global(.section-note) {
+  font-family: 'Spline Sans Mono', monospace;
+  font-size: 3rem;
+  line-height: 3.375rem;
+  font-weight: 700;
+  text-align: left;
 }
 
 .stageActive {
@@ -108,7 +124,6 @@
 
 .cardShown {
   opacity: 1;
-  transform: translate(0, 0);
 }
 
 @media (max-width: 1023px) {
