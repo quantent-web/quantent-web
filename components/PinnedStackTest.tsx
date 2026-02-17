@@ -168,7 +168,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                         return (
                           <div
                             key={`${sectionData.id}-${card.title}`}
-                            className={`card ${styles.cardAnimated} ${fromClass} ${isShown ? styles.cardShown : ''}`}
+                            className={`card ${styles.cardAnimated} ${!isShown ? fromClass : ''} ${isShown ? styles.cardShown : ''}`}
                           >
                             <h4 className="card-title">{card.title}</h4>
                             <p className="card-text">{card.text}</p>
