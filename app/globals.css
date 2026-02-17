@@ -1626,3 +1626,81 @@ html[data-theme="dark"] body {
     padding-right: var(--space-4);
   }
 }
+
+/* =========================
+   Experiment Trio Section
+========================= */
+.experiment-trio {
+  min-height: min(100svh, calc(100svh - var(--nav-h)));
+}
+
+.experiment-trio__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-6);
+}
+
+.experiment-trio__title {
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.experiment-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.experiment-trio__description {
+  margin: 0 auto;
+  max-width: 74ch;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.experiment-word {
+  display: inline-block;
+  will-change: opacity;
+}
+
+.experiment-trio__stack {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-3);
+}
+
+.experiment-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
+  will-change: transform, opacity;
+}
+
+.experiment-card h3 {
+  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+}
+
+.experiment-card p {
+  margin-top: var(--space-3);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+}
+
+@media (max-width: 768px) {
+  .experiment-trio {
+    min-height: auto;
+  }
+
+  .experiment-trio__inner {
+    gap: var(--space-5);
+  }
+
+  .experiment-card {
+    padding: var(--space-5);
+  }
+}

@@ -7,6 +7,7 @@ import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import DecryptedText from './components/DecryptedText/DecryptedText';
 import MagicBentoGrid from './components/effects/MagicBentoGrid';
+import ExperimentTrioSection from './components/sections/ExperimentTrioSection';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
@@ -432,6 +433,8 @@ export default function Home() {
             </a>
           </div>
         </section>
+
+        <ExperimentTrioSection />
 
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
