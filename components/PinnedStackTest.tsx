@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import styles from './PinnedStackTest.module.css';
+import BlurText from '../app/components/BlurText/BlurText';
+import MagicBentoGrid from '../app/components/effects/MagicBentoGrid';
 
 type CardItem = {
   title: string;
@@ -127,7 +129,14 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                     aria-hidden="true"
                   />
                   <div className={`${styles.stage} ${styles.copyStage} ${showTitle ? styles.stageActive : ''}`}>
-                    <h2 className="section-title">{sectionData.title}</h2>
+                    <BlurText
+                      as="h2"
+                      className="section-title"
+                      text={sectionData.title}
+                      delay={120}
+                      animateBy="words"
+                      direction="top"
+                    />
                     <p className="section-lead">{sectionData.description}</p>
                   </div>
 
@@ -136,7 +145,11 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                   </div>
 
                   <div className={`${styles.stage} ${showCards ? styles.stageActive : ''}`}>
-                    <div className={styles.cardsGrid}>
+                    <MagicBentoGrid
+                      variant="4"
+                      sectionId={`pinned-stack-${sectionData.id}`}
+                      className={styles.cardsGrid}
+                    >
                       {sectionData.cards.map((card, index) => {
                         const isShown = localStage >= 3 + index;
                         const fromClass =
@@ -156,7 +169,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                           </div>
                         );
                       })}
-                    </div>
+                    </MagicBentoGrid>
                   </div>
 
                   <div className={`${styles.stage} ${showNote ? styles.stageActive : ''}`}>
