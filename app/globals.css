@@ -1626,3 +1626,90 @@ html[data-theme="dark"] body {
     padding-right: var(--space-4);
   }
 }
+
+/* =========================
+   Experiment Trio Section
+========================= */
+.experiment-trio {
+  min-height: calc(100svh - var(--nav-h));
+  display: grid;
+  align-items: center;
+}
+
+.experiment-trio__viewport {
+  position: relative;
+  width: 100%;
+  min-height: calc(100svh - var(--nav-h));
+  overflow: hidden;
+}
+
+.experiment-trio__flow {
+  position: relative;
+  width: min(980px, 100%);
+  height: calc(100svh - var(--nav-h));
+  margin: 0 auto;
+}
+
+.experiment-step {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
+.experiment-step--title h2 {
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.experiment-step--lead p,
+.experiment-step--note p {
+  max-width: 74ch;
+  margin: 0 auto;
+}
+
+.experiment-step--kicker p {
+  margin: 0;
+}
+
+.experiment-step--card {
+  display: flex;
+  justify-content: center;
+}
+
+.experiment-card {
+  width: min(860px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-6);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
+}
+
+.experiment-card h3 {
+  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+}
+
+.experiment-card p {
+  margin-top: var(--space-3);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .experiment-trio,
+  .experiment-trio__viewport,
+  .experiment-trio__flow {
+    min-height: calc(100svh - var(--nav-h));
+  }
+
+  .experiment-card {
+    padding: var(--space-5);
+  }
+}
