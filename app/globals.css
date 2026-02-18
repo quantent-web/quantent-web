@@ -229,16 +229,23 @@ body {
 
 h1,
 h2,
+h3,
 h4,
+h5,
 h6 {
-  font-family: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo,
-    Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  font-weight: 700;
+  font-family: "Spline Sans Mono", monospace;
   margin: 0;
+}
+
+h1,
+h2,
+h4 {
+  font-weight: 700;
 }
 
 h3,
 h5,
+h6,
 p,
 .hero-subtitle,
 .card-text,
@@ -249,15 +256,30 @@ p,
   margin: 0;
 }
 
-h1 { font-size: 5rem; line-height: 6rem; }
-h2 { font-size: 4rem; line-height: 4.8125rem; }
+h1 { font-size: 4.5rem; line-height: 6.25rem; }
+h2 { font-size: 3rem; line-height: 4rem; }
 h3 { font-size: 2.5rem; line-height: 3.5rem; }
-h4 { font-size: 1.75rem; line-height: 2.25rem; }
-h5 { font-size: 1.5rem; line-height: 2rem; }
-h6 { font-size: 1.25rem; line-height: 1.875rem; }
-p, .section-lead { font-size: 1.125rem; line-height: 1.875rem; }
-.card-text-secondary, .muted { font-size: 1rem; line-height: 1.75rem; color: var(--color-muted); }
-.hero-subtitle { font-size: 1.75rem; line-height: 2.875rem; color: var(--color-muted); }
+h4 { font-size: 1.5rem; line-height: 2.125rem; }
+h5 { font-size: 1.25rem; line-height: 1.875rem; }
+h6 { font-size: 1.125rem; line-height: 1.75rem; }
+p,
+.section-lead {
+  font-size: 1.125rem;
+  line-height: 1.875rem;
+  letter-spacing: 0.0625rem;
+}
+.card-text,
+.card-text-secondary {
+  font-size: 1rem;
+  line-height: 1.75rem;
+}
+.card-text-secondary,
+.muted { color: var(--color-muted); }
+.hero-subtitle {
+  font-size: 1.75rem;
+  line-height: 2.875rem;
+  color: var(--color-muted);
+}
 
 .section-note {
   font-size: 3rem;
@@ -277,12 +299,17 @@ p, .section-lead { font-size: 1.125rem; line-height: 1.875rem; }
 @media (max-width: 640px) {
   h1 { font-size: 3rem; line-height: 3.5rem; }
   h2 { font-size: 2.25rem; line-height: 2.75rem; }
-  h3 { font-size: 2rem; line-height: 2.625rem; }
-  h4 { font-size: 1.5rem; line-height: 2rem; }
-  h5 { font-size: 1.25rem; line-height: 1.875rem; }
-  h6 { font-size: 1.125rem; line-height: 1.75rem; }
-  p, .section-lead { font-size: 1.125rem; line-height: 1.875rem; }
-  .card-text-secondary, .muted { font-size: 1rem; line-height: 1.75rem; }
+  h3 { font-size: 1.5rem; line-height: 2.25rem; }
+  h4 { font-size: 1.375rem; line-height: 1.875rem; }
+  h5 { font-size: 1.125rem; line-height: 1.75rem; }
+  h6 { font-size: 1rem; line-height: 1.625rem; }
+  p,
+  .section-lead {
+    font-size: 1.125rem;
+    line-height: 1.875rem;
+  }
+  .card-text,
+  .card-text-secondary { font-size: 1rem; }
   .hero-subtitle { font-size: 1.5rem; line-height: 2.5rem; }
   .section-note { font-size: 1.875rem; line-height: 2.25rem; }
 }
@@ -372,22 +399,16 @@ main[data-snap-scroll='true'] > .section {
 
 
 .hero-title {
-  font-size: 90px;
-  line-height: 1.12;
+  margin: 0;
   letter-spacing: -0.02em;
   text-align: center;
-     font-family: "Spline Sans Mono", monospace;
-  font-weight: 700;
 }
 
 .hero-subtitle {
   margin-top: var(--space-4);
   margin-bottom: var(--space-8);
   max-width: 58ch;
-  font-size: 16px;
-  line-height: 26px;
   text-align: center;
-  color: var(--color-muted);
 }
 /* Hero content must sit ABOVE DotGrid */
 .header-bg__nav,
@@ -426,7 +447,7 @@ main[data-snap-scroll='true'] > .section {
   justify-content: center;
   padding: 18px 32px;
   border-radius: 999px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
   border: 1px solid transparent;
   font-family: inherit;
@@ -462,10 +483,11 @@ main[data-snap-scroll='true'] > .section {
 }
 
 .card {
-  border: 1px solid rgba(var(--primary-rgb), 0.35);
+  border: none;
   border-radius: var(--radius);
   padding: var(--space-8);
-  background: color-mix(in srgb, var(--surface) 74%, transparent);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.14);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -499,24 +521,8 @@ main[data-snap-scroll='true'] > .section {
     grid-template-columns: 1fr;
   }
 
-  .hero-title {
-    font-size: 48px;
-    line-height: 56px;
-  }
-
-  h2 {
-    font-size: 40px;
-    line-height: 48px;
-  }
-
   .card {
     padding: var(--space-7);
-    text-align: center;
-  }
-
-  .card-title,
-  .card-text {
-    text-align: center;
   }
 }
 
@@ -1441,10 +1447,6 @@ html[data-theme="dark"] body {
   z-index: 1;
 }
 
-.hero-title {
-  margin: 0;
-
-}
 
 .blurtext-root {
   display: flex;
@@ -1608,6 +1610,7 @@ html[data-theme="dark"] body {
 #what-we-do-capabilities {
   padding: var(--space-8);
   border: 1px solid var(--primary);
+  border-radius: 1.5rem;
   display: grid;
   gap: var(--space-8);
 }
@@ -1627,36 +1630,37 @@ html[data-theme="dark"] body {
 }
 
 .what-we-do-card {
-  padding: var(--space-8) var(--space-6);
+  padding: var(--space-6) var(--space-6) var(--space-8);
   display: flex;
   flex-direction: column;
-  gap: var(--space-7);
+  gap: var(--space-5);
   align-items: flex-start;
-  min-height: 100%;
 }
 
 .what-we-do-icon {
-  width: 3.875rem;
-  height: 3.875rem;
+  width: 3.125rem;
+  height: 3.125rem;
 }
 
 .what-we-do-card-copy {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-2);
   width: 100%;
 }
 
 .what-we-do-card .card-title {
-  min-height: 4.5rem;
+  max-width: 12ch;
+  text-wrap: balance;
 }
 
-.what-we-do-card .card-text {
-  min-height: 7.5rem;
-}
-
-.primary-highlight {
+.text-highlight {
   color: var(--primary);
   font-weight: 700;
+}
+
+.header-section p,
+.header-subsection p {
+  max-width: 50%;
 }
 
 @media (max-width: 1024px) {
@@ -1667,6 +1671,11 @@ html[data-theme="dark"] body {
 
   .what-we-do-grid--two {
     gap: var(--space-4);
+  }
+
+  .header-section p,
+  .header-subsection p {
+    max-width: 100%;
   }
 }
 
@@ -1691,12 +1700,17 @@ html[data-theme="dark"] body {
   }
 
   .what-we-do-card {
-    padding: var(--space-8) var(--space-6);
-    gap: var(--space-7);
+    padding: var(--space-4) var(--space-4) var(--space-6);
+    gap: var(--space-5);
   }
 
-  .what-we-do-card .card-title,
-  .what-we-do-card .card-text {
-    min-height: 0;
+  .what-we-do-icon {
+    margin-inline: auto;
+  }
+
+  .header-section p,
+  .header-subsection p,
+  .what-we-do-card .card-title {
+    max-width: 100%;
   }
 }
