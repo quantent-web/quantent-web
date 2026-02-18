@@ -397,15 +397,23 @@ main[data-snap-scroll='true'] > .section {
 
 .container-scroll {
   width: 100%;
-  min-height: clamp(560px, 90vh, 920px);
-  perspective: 1200px;
+  height: clamp(1200px, 170vh, 1700px);
+  perspective: 1800px;
+}
+
+.container-scroll__sticky {
+  position: sticky;
+  top: calc(var(--nav-h) + clamp(10px, 2vw, 22px));
+  min-height: calc(100svh - var(--nav-h));
   display: grid;
-  gap: var(--space-6);
+  align-content: start;
   justify-items: center;
+  gap: clamp(var(--space-4), 3vw, var(--space-6));
 }
 
 .container-scroll__header {
   text-align: center;
+  will-change: transform;
 }
 
 .container-scroll-section__eyebrow {
@@ -438,6 +446,8 @@ main[data-snap-scroll='true'] > .section {
   background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 90%, transparent), var(--surface));
   box-shadow: 0 26px 50px rgba(0, 0, 0, 0.14);
   transform-style: preserve-3d;
+  transform-origin: center top;
+  will-change: transform, opacity;
   overflow: hidden;
 }
 
@@ -620,6 +630,18 @@ html[data-theme='dark'] .container-scroll__card {
   .container-scroll-section__inner {
     padding-left: var(--space-5);
     padding-right: var(--space-5);
+  }
+
+  .container-scroll {
+    height: clamp(980px, 145vh, 1300px);
+  }
+
+  .container-scroll__sticky {
+    top: calc(var(--nav-h) + 6px);
+  }
+
+  .container-scroll-section__title {
+    font-size: clamp(34px, 11vw, 48px);
   }
 
   .section {
