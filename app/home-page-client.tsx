@@ -75,7 +75,7 @@ const contentSections: ContentSection[] = [
     title: 'What We Do',
     description:
       'QuantEnt analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.',
-    kicker: 'We help organizations:',
+    kicker: 'We help organizations',
     note:
       'QuantEnt is built for complex, regulated environments where correctness, scale, and evolution matter.',
     cards: whatWeDoCards,
@@ -85,7 +85,7 @@ const contentSections: ContentSection[] = [
     title: 'Data Cleaning, Categorizing, and Governance',
     description:
       'QuantEnt structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies.',
-    kicker: 'Entitlement And User Analysis:',
+    kicker: 'Entitlement And User Analysis',
     note:
       'QuantEnt provides end-to-end governance for high-volume, high-impact enterprise data ecosystems.',
     cards: dataCleaningCards,
