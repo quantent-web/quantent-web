@@ -82,7 +82,7 @@ export default function BackgroundRippleEffect({
       aria-hidden="true"
     >
       {cells.map((index) => {
-        const isActive = activeCell !== null;
+        const isActive = activeCell === index;
 
         return (
           <div

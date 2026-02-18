@@ -60,7 +60,7 @@
 .active {
   opacity: 1;
   pointer-events: auto;
-  background-color: #0e1414;
+  background-color: transparent;
 }
 
 .stageContainer {
