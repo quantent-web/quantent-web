@@ -15,6 +15,27 @@
   overflow: hidden;
 }
 
+.rippleBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(var(--ripple-cols), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--ripple-rows), minmax(0, 1fr));
+}
+
+.rippleBackground > div {
+  border: 1px solid var(--ripple-border-color);
+  background: transparent;
+  animation: none;
+}
+
+.rippleBackground > div.is-ripple-active {
+  animation: cell-ripple var(--duration, 320ms) ease-out none 1 var(--delay, 0ms);
+  background: color-mix(in oklab, var(--ripple-fill-color) 42%, transparent);
+}
+
 .step {
   position: absolute;
   inset: 0;
@@ -22,6 +43,7 @@
   pointer-events: none;
   transition: opacity 320ms ease;
   background-color: transparent;
+  z-index: 1;
 }
 
 .defaultVisible {
@@ -91,6 +113,7 @@
   line-height: 3.375rem;
   font-weight: 700;
   text-align: left;
+  color: #fff;
 }
 
 .stageActive {
@@ -146,6 +169,11 @@
     background-color: transparent;
   }
 
+  .rippleBackground {
+    position: absolute;
+    inset: 0;
+  }
+
   .stageContainer {
     position: static;
     height: auto;
@@ -180,5 +208,22 @@
   .stage,
   .cardAnimated {
     transition: none;
+  }
+
+  .rippleBackground > div.is-ripple-active {
+    animation: none;
+    background: transparent;
+  }
+}
+
+@keyframes cell-ripple {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
   }
 }
