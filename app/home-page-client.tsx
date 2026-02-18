@@ -507,43 +507,6 @@ export default function Home() {
         <div className="container">
 
 
-        {/* WHAT MAKES DIFFERENT */}
-        <section id="different" className="section">
-          <h2 className="section-title">What Makes QuantEnt Different</h2>
-
-          <MagicBentoGrid variant="auto" sectionId="different">
-            <div className="card">
-              <h4 className="card-title">Quantitative by design</h4>
-              <p className="card-text">
-                Exposure, drift, and structural risk are measured — not guessed.
-              </p>
-            </div>
-
-            <div className="card">
-              <h4 className="card-title">AI-native governance</h4>
-              <p className="card-text">
-                Built so AI can reason, opine, and alert safely on entitlements and data.
-              </p>
-            </div>
-
-            <div className="card">
-              <h4 className="card-title">Designed for complexity</h4>
-              <p className="card-text">
-                Proven in financial-services-grade systems with real risk and regulatory
-                consequences.
-              </p>
-            </div>
-
-            <div className="card">
-              <h4 className="card-title">Enhances existing IAM</h4>
-              <p className="card-text">
-                Integrates with what you already run. We don’t replace your identity stack
-                — we make it work better.
-              </p>
-            </div>
-          </MagicBentoGrid>
-        </section>
-
         {/* PRODUCTS */}
         <section id="products" className="section">
           <h2 className="section-title">Our Products</h2>

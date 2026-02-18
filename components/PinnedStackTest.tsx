@@ -195,6 +195,40 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
   }, [isDesktop, isReducedMotion, totalStages]);
 
   useEffect(() => {
+    if (!isDesktop || isReducedMotion) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'ArrowDown') return;
+
+      const sectionEl = sectionRef.current;
+      if (!sectionEl) return;
+
+      const sectionTop = sectionEl.offsetTop;
+      const sectionHeight = sectionEl.offsetHeight;
+      const viewHeight = window.innerHeight;
+      const usableDistance = Math.max(sectionHeight - viewHeight, 1);
+
+      const current = activeStage;
+      const next = Math.min(current + 1, totalStages - 1);
+
+      if (next === current) return;
+
+      event.preventDefault();
+
+      const progress = next / totalStages;
+      const targetScroll = sectionTop + progress * usableDistance;
+
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [activeStage, isDesktop, isReducedMotion, totalStages]);
+
+  useEffect(() => {
     const measureHeights = () => {
       const nextHeights: Record<string, number> = {};
 
@@ -322,7 +356,9 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                       >
                       {sectionData.cards.map((card, index) => {
                         const Icon = getCardIcon(card.title);
-                        const isShown = localStage >= cardsStart + index;
+                        const cardRevealStage = cardsStart + index;
+                        const isShown = localStage >= cardRevealStage;
+                        const isInteractive = localStage > cardRevealStage;
                         const fromClass =
                           index === 0
                             ? styles.fromLeft
@@ -334,7 +370,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                           <div
                             key={`${sectionData.id}-${card.title}`}
                             className={`card ${styles.cardAnimated} ${!isShown ? fromClass : ''} ${isShown ? styles.cardShown : ''}`}
-                            style={{ pointerEvents: isShown ? 'auto' : 'none' }}
+                            style={{ pointerEvents: isInteractive ? 'auto' : 'none' }}
                           >
                             <Icon className={styles.cardIcon} />
                             <h4 className="card-title">{card.title}</h4>
