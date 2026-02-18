@@ -208,12 +208,17 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
       const viewHeight = window.innerHeight;
       const usableDistance = Math.max(sectionHeight - viewHeight, 1);
 
+      event.preventDefault();
+
+      if (window.scrollY < sectionTop - 2) {
+        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+        return;
+      }
+
       const current = activeStage;
       const next = Math.min(current + 1, totalStages - 1);
 
       if (next === current) return;
-
-      event.preventDefault();
 
       const progress = next / totalStages;
       const targetScroll = sectionTop + progress * usableDistance;
