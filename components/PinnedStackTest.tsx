@@ -5,11 +5,99 @@ import type { CSSProperties } from 'react';
 import styles from './PinnedStackTest.module.css';
 import BlurText from '../app/components/BlurText/BlurText';
 import MagicBentoGrid from '../app/components/effects/MagicBentoGrid';
+import Particles from '../app/components/ui/Particles';
 
 type CardItem = {
   title: string;
   text: string;
-  iconPath?: string;
+};
+
+type IconProps = {
+  className?: string;
+};
+
+const IconShield = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z" />
+    <path d="M9.5 12.5l1.8 1.8 3.2-3.2" />
+  </svg>
+);
+
+const IconChecklist = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 6h11" /><path d="M9 12h11" /><path d="M9 18h11" />
+    <path d="M4 6l1.5 1.5L7.5 5.5" /><path d="M4 12l1.5 1.5L7.5 11.5" /><path d="M4 18l1.5 1.5L7.5 17.5" />
+  </svg>
+);
+
+const IconAlert = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M10.3 3.8 2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0z" />
+    <path d="M12 9v4" /><path d="M12 17h.01" />
+  </svg>
+);
+
+const IconRefresh = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 11a8 8 0 1 0-2.3 5.7" />
+    <path d="M20 4v7h-7" />
+  </svg>
+);
+
+const IconTags = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="m20 10-8 8a2 2 0 0 1-2.8 0L3 11.8V4h7.8L20 10z" />
+    <path d="M7 7h.01" />
+  </svg>
+);
+
+const IconSchema = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="7" height="5" rx="1" />
+    <rect x="14" y="4" width="7" height="5" rx="1" />
+    <rect x="8.5" y="15" width="7" height="5" rx="1" />
+    <path d="M10 6.5h4M12 9v6" />
+  </svg>
+);
+
+const IconDatabase = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <ellipse cx="12" cy="5" rx="7" ry="3" />
+    <path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5" />
+    <path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" />
+  </svg>
+);
+
+const IconRobot = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="5" y="8" width="14" height="10" rx="3" />
+    <path d="M12 4v4" />
+    <path d="M9 13h.01M15 13h.01" />
+    <path d="M9 16h6" />
+  </svg>
+);
+
+const getCardIcon = (title: string) => {
+  switch (title) {
+    case 'System Analysis':
+      return IconShield;
+    case 'Quantitative Certification':
+      return IconChecklist;
+    case 'Risk Detection':
+      return IconAlert;
+    case 'Continuous Control':
+      return IconRefresh;
+    case 'MetaData Tagging':
+      return IconTags;
+    case 'Data Model Rigorization':
+      return IconSchema;
+    case 'Ongoing Cleanliness':
+      return IconDatabase;
+    case 'Agentic AI Compatibility':
+      return IconRobot;
+    default:
+      return IconShield;
+  }
 };
 
 type PinnedStackSection = {
@@ -97,6 +185,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
     <section id="pinned-stack-test" className={`section ${styles.section}`} ref={sectionRef}>
       <div className={styles.track} style={trackStyle}>
         <div className={styles.viewport}>
+          <Particles className={styles.particlesBackground} />
           {sections.map((sectionData, sectionIndex) => {
             const base = sectionIndex * STAGES_PER_SECTION;
             const computedStage = Math.min(Math.max(activeStage - base, 0), STAGES_PER_SECTION - 1);
@@ -158,6 +247,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                       disabled={false}
                     >
                       {sectionData.cards.map((card, index) => {
+                        const Icon = getCardIcon(card.title);
                         const isShown = localStage >= 3 + index;
                         const fromClass =
                           index === 0
@@ -171,19 +261,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                             key={`${sectionData.id}-${card.title}`}
                             className={`card ${styles.cardAnimated} ${!isShown ? fromClass : ''} ${isShown ? styles.cardShown : ''}`}
                           >
-                            {card.iconPath ? (
-                              <img
-                                src={card.iconPath}
-                                alt=""
-                                className={styles.cardIcon}
-                                aria-hidden="true"
-                                width={72}
-                                height={72}
-                                onError={(event) => {
-                                  event.currentTarget.src = '/globe.svg';
-                                }}
-                              />
-                            ) : null}
+                            <Icon className={styles.cardIcon} />
                             <h4 className="card-title">{card.title}</h4>
                             <p className="card-text">{card.text}</p>
                           </div>

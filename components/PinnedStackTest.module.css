@@ -21,6 +21,13 @@
   background: #0e1414;
 }
 
+.particlesBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .step {
   position: absolute;
   inset: 0;
@@ -148,10 +155,11 @@
 
 .cardIcon {
   display: block;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-bottom: var(--space-4);
   object-fit: contain;
+  color: var(--primary);
 }
 
 @media (max-width: 1023px) {

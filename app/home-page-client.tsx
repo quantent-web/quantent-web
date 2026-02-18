@@ -19,7 +19,6 @@ type NavItem = { label: string; href: `#${string}` };
 type CardItem = {
   title: string;
   text: string;
-  iconPath?: string;
 };
 
 type ContentSection = {
@@ -36,7 +35,6 @@ const whatWeDoCards: CardItem[] = [
   {
     title: 'System Analysis',
     text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
-    iconPath: '/globe.svg',
   },
   {
     title: 'Quantitative Certification',
