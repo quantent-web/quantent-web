@@ -115,7 +115,7 @@ type PinnedStackTestProps = {
 
 const DESKTOP_QUERY = '(min-width: 1024px)';
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-const STAGES_PER_SECTION = 9;
+const STAGES_PER_SECTION = 10;
 
 export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -199,10 +199,10 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                 : activeStage >= base && activeStage < base + STAGES_PER_SECTION;
 
             const showEmptyIntro = localStage === 0;
-            const showTitle = localStage === 1 || localStage === 2;
-            const showKicker = localStage === 3;
-            const showCards = localStage >= 4 && localStage <= 7;
-            const showNote = localStage === 8;
+            const showTitle = localStage >= 1 && localStage <= 3;
+            const showKicker = localStage === 4;
+            const showCards = localStage >= 5 && localStage <= 8;
+            const showNote = localStage === 9;
 
             return (
               <article
@@ -225,10 +225,10 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                         as="h2"
                         className="section-title"
                         text={sectionData.title}
-                        delay={80}
+                        delay={100}
                         animateBy="words"
                         direction="top"
-                        stepDuration={0.28}
+                        stepDuration={0.32}
                       />
                     ) : null}
                     <p className="section-lead">{sectionData.description}</p>
@@ -249,7 +249,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                     >
                       {sectionData.cards.map((card, index) => {
                         const Icon = getCardIcon(card.title);
-                        const isShown = localStage >= 4 + index;
+                        const isShown = localStage >= 5 + index;
                         const fromClass =
                           index === 0
                             ? styles.fromLeft
