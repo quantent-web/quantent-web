@@ -12,8 +12,111 @@ import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
+import PinnedStackTest from '../components/PinnedStackTest';
 
 type NavItem = { label: string; href: `#${string}` };
+
+type CardItem = {
+  title: string;
+  text: string;
+};
+
+type ContentSection = {
+  id: string;
+  title: string;
+  description: string;
+  kicker?: string;
+  note?: string;
+  cards: CardItem[];
+  inverted?: boolean;
+};
+
+const whatWeDoCards: CardItem[] = [
+  {
+    title: 'System Analysis',
+    text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
+  },
+  {
+    title: 'Quantitative Certification',
+    text: 'Certify access and meaning with mathematical rigor.',
+  },
+  {
+    title: 'Risk Detection',
+    text: 'Detect drift, over-exposure, and structural risk early.',
+  },
+  {
+    title: 'Continuous Control',
+    text: 'Maintain control as systems, data, and organizations evolve.',
+  },
+];
+
+const dataCleaningCards: CardItem[] = [
+  {
+    title: 'MetaData Tagging',
+    text: 'Analyzing and Tagging APIs, data, applications, and resources for use by users and AI.',
+  },
+  {
+    title: 'Data Model Rigorization',
+    text: 'With software and consulting, our SMEs will help create, refine, or just critique the data models of the firm.',
+  },
+  {
+    title: 'Ongoing Cleanliness',
+    text: 'Institutional Data Cleanliness starts at the data model process',
+  },
+  {
+    title: 'Agentic AI Compatibility',
+    text: 'Our future product is designed to make Agentic AI work with the highest possible confidence level, with the safest data protection possible.',
+  },
+];
+
+const whatMakesDifferentCards: CardItem[] = [
+  {
+    title: 'Quantitative by design',
+    text: 'Exposure, drift, and structural risk are measured — not guessed.',
+  },
+  {
+    title: 'AI-native governance',
+    text: 'Built so AI can reason, opine, and alert safely on entitlements and data.',
+  },
+  {
+    title: 'Designed for complexity',
+    text: 'Proven in financial-services-grade systems with real risk and regulatory consequences.',
+  },
+  {
+    title: 'Enhances existing IAM',
+    text: 'Integrates with what you already run. We don’t replace your identity stack — we make it work better.',
+  },
+];
+
+const contentSections: ContentSection[] = [
+  {
+    id: 'what-we-do',
+    title: 'What We Do',
+    description:
+      'QuantEnt analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.',
+    kicker: 'We help organizations',
+    note:
+      'QuantEnt is built for complex, regulated environments where correctness, scale, and evolution matter.',
+    cards: whatWeDoCards,
+  },
+  {
+    id: 'what-we-do-inverted',
+    title: 'Data Cleaning, Categorizing, and Governance',
+    description:
+      'QuantEnt structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies.',
+    kicker: 'Entitlement And User Analysis',
+    note:
+      'QuantEnt provides end-to-end governance for high-volume, high-impact enterprise data ecosystems.',
+    cards: dataCleaningCards,
+    inverted: true,
+  },
+  {
+    id: 'what-makes-different',
+    title: 'What Makes QuantEnt Different',
+    description: '',
+    cards: whatMakesDifferentCards,
+  },
+];
 
 export default function Home() {
   const { scrollTo, programmaticDurationMs } = useLenis();
@@ -41,7 +144,7 @@ export default function Home() {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: 'What we do', href: '#what-we-do' },
+      { label: 'What we do', href: '#pinned-stack-test' },
       { label: 'Products', href: '#products' },
       { label: 'Capabilities', href: '#capabilities' },
       { label: 'Services', href: '#services' },
@@ -49,7 +152,7 @@ export default function Home() {
     ],
     []
   );
-  const [activeHref, setActiveHref] = useState('#what-we-do');
+  const [activeHref, setActiveHref] = useState('#pinned-stack-test');
   const isProgrammaticScroll = useRef(false);
   const pendingTargetHref = useRef<string | null>(null);
   const programmaticScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -94,7 +197,7 @@ export default function Home() {
       const windowHeight = window.innerHeight;
 
       if (scrollTop <= 8) {
-        setActiveHref('#what-we-do');
+        setActiveHref('#pinned-stack-test');
         return;
       }
 
@@ -281,44 +384,6 @@ export default function Home() {
     };
   }, [clearProgrammaticScrollState]);
 
-  const whatWeDoCards = [
-    {
-      title: 'System Analysis',
-      text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
-    },
-    {
-      title: 'Quantitative Certification',
-      text: 'Certify access and meaning with mathematical rigor.',
-    },
-    {
-      title: 'Risk Detection',
-      text: 'Detect drift, over-exposure, and structural risk early.',
-    },
-    {
-      title: 'Continuous Control',
-      text: 'Maintain control as systems, data, and organizations evolve.',
-    },
-  ];
-
-  const dataCleaningCards = [
-    {
-      title: 'MetaData Tagging',
-      text: 'Analyzing and Tagging APIs, data, applications, and resources for use by users and AI.',
-    },
-    {
-      title: 'Data Model Rigorization',
-      text: 'With software and consulting, our SMEs will help create, refine, or just critique the data models of the firm.',
-    },
-    {
-      title: 'Ongoing Cleanliness',
-      text: 'Institutional Data Cleanliness starts at the data model process',
-    },
-    {
-      title: 'Agentic AI Compatibility',
-      text: 'Our future product is designed to make Agentic AI work with the highest possible confidence level, with the safest data protection possible.',
-    },
-  ];
-
   return (
     <>
       {/* STICKY NAV + DOT GRID BACKGROUND */}
@@ -395,9 +460,10 @@ export default function Home() {
         {/* CONTENT */}
         <main
           id="top"
-          className="container"
+          className="home-main"
           data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
         >
+        <div className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
      <BlurText
@@ -427,114 +493,19 @@ export default function Home() {
             >
               Talk to Us
             </button>
-            <a className="btn btn-secondary" href="#what-we-do">
+            <a className="btn btn-secondary" href="#pinned-stack-test">
               What we do
             </a>
           </div>
         </section>
+        </div>
 
-        {/* WHAT WE DO */}
-        <section id="what-we-do" className="section">
-          <div className="what-we-do-blocks">
-            <div className="what-we-do-layout">
-            <div className="what-we-do-left">
-              <h2 className="section-title">What We Do</h2>
+        <div className="pinned-stack-shell">
+          <PinnedStackTest sections={contentSections} />
+        </div>
 
-              <p className="section-lead">
-                QuantEnt analyzes and certifies who can access what — and what that data
-                means — using quantitative models instead of static rules.
-              </p>
-            </div>
+        <div className="container">
 
-            <div className="what-we-do-right">
-              <p className="section-kicker">We help organizations:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do">
-                {whatWeDoCards.map((card) => (
-                  <div className="card" key={`what-we-do-${card.title}`}>
-                    <h4 className="card-title">{card.title}</h4>
-                    <p className="card-text">{card.text}</p>
-                  </div>
-                ))}
-              </MagicBentoGrid>
-
-              <p className="section-note">
-                QuantEnt is built for complex, regulated environments where correctness,
-                scale, and evolution matter.
-              </p>
-            </div>
-            </div>
-
-            <div className="what-we-do-layout what-we-do-layout--inverted">
-            <div className="what-we-do-left what-we-do-left--description">
-              <h2 className="section-title">Data Cleaning, Categorizing, and Governance</h2>
-
-              <p className="section-lead">
-                QuantEnt structures and governs enterprise data so every dataset is clean,
-                categorized, and controlled with transparent policies.
-              </p>
-            </div>
-
-            <div className="what-we-do-right">
-              <p className="section-kicker">Entitlement And User Analysis:</p>
-
-              <MagicBentoGrid variant="4" sectionId="what-we-do-inverted">
-                {dataCleaningCards.map((card) => (
-                  <div className="card" key={`what-we-do-inverted-${card.title}`}>
-                    <h4 className="card-title">{card.title}</h4>
-                    <p className="card-text">{card.text}</p>
-                  </div>
-                ))}
-              </MagicBentoGrid>
-
-              <p className="section-note">
-                QuantEnt provides end-to-end governance for high-volume, high-impact
-                enterprise data ecosystems.
-              </p>
-            </div>
-            </div>
-          </div>
-        </section>
-
-      
-
-
-        {/* WHAT MAKES DIFFERENT */}
-        <section id="different" className="section">
-          <h2 className="section-title">What Makes QuantEnt Different</h2>
-
-          <MagicBentoGrid variant="auto" sectionId="different">
-            <div className="card">
-              <h4 className="card-title">Quantitative by design</h4>
-              <p className="card-text">
-                Exposure, drift, and structural risk are measured — not guessed.
-              </p>
-            </div>
-
-            <div className="card">
-              <h4 className="card-title">AI-native governance</h4>
-              <p className="card-text">
-                Built so AI can reason, opine, and alert safely on entitlements and data.
-              </p>
-            </div>
-
-            <div className="card">
-              <h4 className="card-title">Designed for complexity</h4>
-              <p className="card-text">
-                Proven in financial-services-grade systems with real risk and regulatory
-                consequences.
-              </p>
-            </div>
-
-            <div className="card">
-              <h4 className="card-title">Enhances existing IAM</h4>
-              <p className="card-text">
-                Integrates with what you already run. We don’t replace your identity stack
-                — we make it work better.
-              </p>
-            </div>
-          </MagicBentoGrid>
-        </section>
 
         {/* PRODUCTS */}
         <section id="products" className="section">
@@ -921,6 +892,7 @@ export default function Home() {
         </section>
 
         <Footer />
+        </div>
         </main>
       </div>
 

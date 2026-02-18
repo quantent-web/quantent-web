@@ -1,0 +1,236 @@
+.section {
+  position: relative;
+  scroll-snap-align: none;
+  margin: 0;
+  padding-inline: 0;
+  width: 100%;
+}
+
+.track {
+  position: relative;
+  min-height: calc((var(--stage-count, 14) * 72svh) + (100svh - var(--nav-h)));
+  width: 100%;
+}
+
+.viewport {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100svh - var(--nav-h));
+  overflow: hidden;
+  width: 100%;
+  background: #0e1414;
+}
+
+.particlesBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.step {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+  background-color: transparent;
+  z-index: 1;
+}
+
+.step > * {
+  position: relative;
+  z-index: 3;
+}
+
+.defaultVisible {
+  opacity: 1;
+  pointer-events: none;
+}
+
+.active {
+  opacity: 1;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+.stageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: var(--space-8);
+  pointer-events: none;
+}
+
+.stageContainer :global(.card),
+.stageContainer :global(a),
+.stageContainer :global(button) {
+  pointer-events: auto;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  gap: var(--space-5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.copyStage {
+  align-items: center;
+}
+
+.emptyStage {
+  background: transparent;
+}
+
+.stage > :global(.section-title),
+.stage > :global(.section-lead),
+.stage > :global(.section-kicker),
+.stage > :global(.section-note) {
+  max-width: 900px;
+  text-align: center;
+}
+
+.stage > :global(.section-title) {
+  font-size: 5.625rem;
+  line-height: 5.75rem;
+}
+
+.stage > :global(.section-kicker) {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: 0.125rem;
+  margin-top: 0;
+}
+
+.stage > :global(.section-note) {
+  font-family: 'Spline Sans Mono', monospace;
+  font-size: 3rem;
+  line-height: 3.375rem;
+  font-weight: 700;
+  text-align: left;
+  color: #fff;
+}
+
+.stageActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardsGridWrap {
+  width: min(1120px, 100%);
+}
+
+.cardsGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.cardsGrid :global(.magicBentoCard) {
+  height: var(--pinned-card-height, auto);
+}
+
+.cardsGrid :global(.card) {
+  height: 100%;
+}
+
+.cardAnimated {
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 360ms ease, opacity 360ms ease;
+}
+
+.fromLeft {
+  transform: translateX(-140%);
+}
+
+.fromRight {
+  transform: translateX(140%);
+}
+
+.fromBottom {
+  transform: translateY(140%);
+}
+
+.cardShown {
+  opacity: 1;
+}
+
+.cardIcon {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: var(--space-4);
+  object-fit: contain;
+  color: var(--primary);
+}
+
+@media (max-width: 1023px) {
+  .track {
+    min-height: auto;
+  }
+
+  .viewport {
+    position: static;
+    height: auto;
+    overflow: visible;
+    display: grid;
+    gap: var(--space-10);
+  }
+
+  .step {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    background-color: transparent;
+  }
+
+  .stageContainer {
+    position: static;
+    height: auto;
+    gap: var(--space-6);
+    padding: 0;
+    pointer-events: auto;
+  }
+
+  .stage {
+    position: static;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .emptyStage {
+    display: none;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardAnimated {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step,
+  .stage,
+  .cardAnimated {
+    transition: none;
+  }
+
+}
