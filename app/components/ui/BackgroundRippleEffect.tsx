@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties, MouseEvent } from 'react';
 
 type BackgroundRippleEffectProps = {
@@ -40,6 +40,20 @@ export default function BackgroundRippleEffect({
     e.preventDefault();
     triggerRipple(index);
   };
+
+  useEffect(() => {
+    const seed = Math.floor(total / 2);
+    setActiveCell(seed);
+
+    const timer = window.setInterval(() => {
+      setActiveCell((prev) => {
+        const current = prev ?? seed;
+        return (current + Math.max(3, Math.floor(cols / 3))) % total;
+      });
+    }, 850);
+
+    return () => window.clearInterval(timer);
+  }, [cols, total]);
 
   const getDelay = (index: number) => {
     if (activeCell === null) return 0;

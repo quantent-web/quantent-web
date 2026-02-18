@@ -299,6 +299,16 @@ p {
   padding-right: 10%;
 }
 
+.home-main {
+  width: 100%;
+}
+
+.pinned-stack-shell {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 
 .section {
   padding-top: var(--space-8);

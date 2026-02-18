@@ -462,9 +462,10 @@ export default function Home() {
         {/* CONTENT */}
         <main
           id="top"
-          className="container"
+          className="home-main"
           data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
         >
+        <div className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
      <BlurText
@@ -499,8 +500,13 @@ export default function Home() {
             </a>
           </div>
         </section>
+        </div>
 
-        <PinnedStackTest sections={contentSections} />
+        <div className="pinned-stack-shell">
+          <PinnedStackTest sections={contentSections} />
+        </div>
+
+        <div className="container">
 
         {/* WHAT WE DO */}
         <section id="what-we-do" className="section">
@@ -943,6 +949,7 @@ export default function Home() {
         </section>
 
         <Footer />
+        </div>
         </main>
       </div>
 

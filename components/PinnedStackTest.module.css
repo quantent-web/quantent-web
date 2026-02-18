@@ -1,11 +1,15 @@
 .section {
   position: relative;
   scroll-snap-align: none;
+  margin: 0;
+  padding-inline: 0;
+  width: 100%;
 }
 
 .track {
   position: relative;
   min-height: calc((var(--stage-count, 14) * 72svh) + (100svh - var(--nav-h)));
+  width: 100%;
 }
 
 .viewport {
@@ -13,6 +17,8 @@
   top: var(--nav-h);
   height: calc(100svh - var(--nav-h));
   overflow: hidden;
+  width: 100%;
+  background: #0e1414;
 }
 
 .rippleBackground {
@@ -28,11 +34,11 @@
 .rippleBackground > div {
   border: 1px solid var(--ripple-border-color);
   background: transparent;
-  animation: none;
+  animation: cell-ripple var(--duration, 1200ms) ease-out infinite var(--delay, 0ms);
 }
 
 .rippleBackground > div.is-ripple-active {
-  animation: cell-ripple var(--duration, 320ms) ease-out none 1 var(--delay, 0ms);
+  animation: cell-ripple var(--duration, 520ms) ease-out none 1 var(--delay, 0ms);
   background: color-mix(in oklab, var(--ripple-fill-color) 42%, transparent);
 }
 
