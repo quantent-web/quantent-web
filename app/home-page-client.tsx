@@ -96,7 +96,7 @@ const contentSections: ContentSection[] = [
       'QuantEnt analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.',
     kicker: 'We help organizations',
     note:
-      'QuantEnt is built for complex, regulated environments where correctness, scale, and evolution matter.',
+      'QuantEnt is built for  environments where correctness, scale, and evolution matter',
     cards: whatWeDoCards,
   },
   {
