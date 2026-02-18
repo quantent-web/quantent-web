@@ -123,6 +123,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
   const [activeStage, setActiveStage] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const [sectionCardHeights, setSectionCardHeights] = useState<Record<string, number>>({});
 
   const sectionStageStarts = useMemo(() => {
     let cursor = 0;
@@ -193,6 +194,47 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
     };
   }, [isDesktop, isReducedMotion, totalStages]);
 
+  useEffect(() => {
+    const measureHeights = () => {
+      const nextHeights: Record<string, number> = {};
+
+      sections.forEach((sectionData) => {
+        const cards = Array.from(
+          document.querySelectorAll<HTMLElement>(`[data-section-cards="${sectionData.id}"] .card`)
+        );
+
+        const tallest = cards.reduce((maxHeight, card) => Math.max(maxHeight, card.offsetHeight), 0);
+
+        if (tallest > 0) {
+          nextHeights[sectionData.id] = tallest;
+        }
+      });
+
+      setSectionCardHeights((prev) => {
+        const prevKeys = Object.keys(prev);
+        const nextKeys = Object.keys(nextHeights);
+
+        if (prevKeys.length === nextKeys.length && prevKeys.every((key) => prev[key] === nextHeights[key])) {
+          return prev;
+        }
+
+        return nextHeights;
+      });
+    };
+
+    const raf = window.requestAnimationFrame(() => {
+      measureHeights();
+      window.requestAnimationFrame(measureHeights);
+    });
+
+    window.addEventListener('resize', measureHeights);
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('resize', measureHeights);
+    };
+  }, [sections]);
+
   const trackStyle = {
     '--stage-count': String(totalStages),
   } as CSSProperties;
@@ -261,14 +303,23 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                   ) : null}
 
                   <div className={`${styles.stage} ${showCards ? styles.stageActive : ''}`}>
-                    <MagicBentoGrid
-                      variant="4"
-                      sectionId={`pinned-stack-${sectionData.id}`}
-                      className={styles.cardsGrid}
-                      enableGlow
-                      enableTilt
-                      disabled={false}
+                    <div
+                      className={styles.cardsGridWrap}
+                      data-section-cards={sectionData.id}
+                      style={{
+                        '--pinned-card-height': sectionCardHeights[sectionData.id]
+                          ? `${sectionCardHeights[sectionData.id]}px`
+                          : undefined,
+                      } as CSSProperties}
                     >
+                      <MagicBentoGrid
+                        variant="4"
+                        sectionId={`pinned-stack-${sectionData.id}`}
+                        className={styles.cardsGrid}
+                        enableGlow
+                        enableTilt
+                        disabled={false}
+                      >
                       {sectionData.cards.map((card, index) => {
                         const Icon = getCardIcon(card.title);
                         const isShown = localStage >= cardsStart + index;
@@ -283,6 +334,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                           <div
                             key={`${sectionData.id}-${card.title}`}
                             className={`card ${styles.cardAnimated} ${!isShown ? fromClass : ''} ${isShown ? styles.cardShown : ''}`}
+                            style={{ pointerEvents: isShown ? 'auto' : 'none' }}
                           >
                             <Icon className={styles.cardIcon} />
                             <h4 className="card-title">{card.title}</h4>
@@ -290,7 +342,8 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                           </div>
                         );
                       })}
-                    </MagicBentoGrid>
+                      </MagicBentoGrid>
+                    </div>
                   </div>
 
                   {hasNote ? (

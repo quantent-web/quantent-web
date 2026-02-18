@@ -118,33 +118,6 @@ const contentSections: ContentSection[] = [
   },
 ];
 
-function ContentSectionLayout({ section, sectionId, keyPrefix }: { section: ContentSection; sectionId: string; keyPrefix: string }) {
-  return (
-    <div className={`what-we-do-layout ${section.inverted ? 'what-we-do-layout--inverted' : ''}`}>
-      <div className={`what-we-do-left ${section.inverted ? 'what-we-do-left--description' : ''}`}>
-        <h2 className="section-title">{section.title}</h2>
-
-        <p className="section-lead">{section.description}</p>
-      </div>
-
-      <div className="what-we-do-right">
-        <p className="section-kicker">{section.kicker}</p>
-
-        <MagicBentoGrid variant="4" sectionId={sectionId}>
-          {section.cards.map((card) => (
-            <div className="card" key={`${keyPrefix}-${card.title}`}>
-              <h4 className="card-title">{card.title}</h4>
-              <p className="card-text">{card.text}</p>
-            </div>
-          ))}
-        </MagicBentoGrid>
-
-        <p className="section-note">{section.note}</p>
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
   const { scrollTo, programmaticDurationMs } = useLenis();
   const enableSnapScroll = false;
@@ -171,7 +144,7 @@ export default function Home() {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: 'What we do', href: '#what-we-do' },
+      { label: 'What we do', href: '#pinned-stack-test' },
       { label: 'Products', href: '#products' },
       { label: 'Capabilities', href: '#capabilities' },
       { label: 'Services', href: '#services' },
@@ -179,7 +152,7 @@ export default function Home() {
     ],
     []
   );
-  const [activeHref, setActiveHref] = useState('#what-we-do');
+  const [activeHref, setActiveHref] = useState('#pinned-stack-test');
   const isProgrammaticScroll = useRef(false);
   const pendingTargetHref = useRef<string | null>(null);
   const programmaticScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -224,7 +197,7 @@ export default function Home() {
       const windowHeight = window.innerHeight;
 
       if (scrollTop <= 8) {
-        setActiveHref('#what-we-do');
+        setActiveHref('#pinned-stack-test');
         return;
       }
 
@@ -520,7 +493,7 @@ export default function Home() {
             >
               Talk to Us
             </button>
-            <a className="btn btn-secondary" href="#what-we-do">
+            <a className="btn btn-secondary" href="#pinned-stack-test">
               What we do
             </a>
           </div>
@@ -532,24 +505,6 @@ export default function Home() {
         </div>
 
         <div className="container">
-
-        {/* WHAT WE DO */}
-        <section id="what-we-do" className="section">
-          <div className="what-we-do-blocks">
-            <ContentSectionLayout
-              section={contentSections[0]}
-              sectionId="what-we-do"
-              keyPrefix="what-we-do"
-            />
-            <ContentSectionLayout
-              section={contentSections[1]}
-              sectionId="what-we-do-inverted"
-              keyPrefix="what-we-do-inverted"
-            />
-          </div>
-        </section>
-
-      
 
 
         {/* WHAT MAKES DIFFERENT */}

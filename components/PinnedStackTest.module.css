@@ -125,8 +125,12 @@
   transform: translateY(0);
 }
 
-.cardsGrid {
+.cardsGridWrap {
   width: min(1120px, 100%);
+}
+
+.cardsGrid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6);
@@ -134,11 +138,16 @@
 }
 
 .cardsGrid :global(.magicBentoCard) {
-  height: auto;
+  height: var(--pinned-card-height, auto);
+}
+
+.cardsGrid :global(.card) {
+  height: 100%;
 }
 
 .cardAnimated {
   opacity: 0;
+  pointer-events: none;
   transition: transform 360ms ease, opacity 360ms ease;
 }
 
