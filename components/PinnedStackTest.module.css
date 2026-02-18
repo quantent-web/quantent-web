@@ -73,12 +73,12 @@
 
 .defaultVisible {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .active {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
   background-color: transparent;
 }
 
