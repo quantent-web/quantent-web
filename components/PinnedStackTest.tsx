@@ -104,8 +104,8 @@ type PinnedStackSection = {
   id: string;
   title: string;
   description: string;
-  kicker: string;
-  note: string;
+  kicker?: string;
+  note?: string;
   cards: CardItem[];
 };
 
@@ -115,7 +115,8 @@ type PinnedStackTestProps = {
 
 const DESKTOP_QUERY = '(min-width: 1024px)';
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-const STAGES_PER_SECTION = 10;
+const STAGES_WITH_KICKER_AND_NOTE = 10;
+const STAGES_WITHOUT_KICKER_AND_NOTE = 8;
 
 export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -123,7 +124,22 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
 
-  const totalStages = useMemo(() => sections.length * STAGES_PER_SECTION, [sections.length]);
+  const sectionStageStarts = useMemo(() => {
+    let cursor = 0;
+    return sections.map((section) => {
+      const hasKicker = Boolean(section.kicker);
+      const hasNote = Boolean(section.note);
+      const stageCount = hasKicker && hasNote ? STAGES_WITH_KICKER_AND_NOTE : STAGES_WITHOUT_KICKER_AND_NOTE;
+      const entry = { start: cursor, count: stageCount, hasKicker, hasNote };
+      cursor += stageCount;
+      return entry;
+    });
+  }, [sections]);
+
+  const totalStages = useMemo(
+    () => sectionStageStarts.reduce((sum, section) => sum + section.count, 0),
+    [sectionStageStarts]
+  );
 
   useEffect(() => {
     const desktopMedia = window.matchMedia(DESKTOP_QUERY);
@@ -187,8 +203,8 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
         <div className={styles.viewport}>
           <Particles className={styles.particlesBackground} />
           {sections.map((sectionData, sectionIndex) => {
-            const base = sectionIndex * STAGES_PER_SECTION;
-            const computedStage = Math.min(Math.max(activeStage - base, 0), STAGES_PER_SECTION - 1);
+            const { start, count, hasKicker, hasNote } = sectionStageStarts[sectionIndex];
+            const computedStage = Math.min(Math.max(activeStage - start, 0), count - 1);
             const isStaticMobile = !isDesktop;
             const isStaticReduced = isDesktop && isReducedMotion;
             const localStage = computedStage;
@@ -196,15 +212,16 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
               ? true
               : isStaticReduced
                 ? sectionIndex === 0
-                : activeStage >= base && activeStage < base + STAGES_PER_SECTION;
+                : activeStage >= start && activeStage < start + count;
 
             const showEmptyIntro = localStage === 0;
             const showTitle = localStage >= 1 && localStage <= 3;
             const showTitleBlur = localStage === 1;
             const showTitleHold = localStage === 2 || localStage === 3;
-            const showKicker = localStage === 4;
-            const showCards = localStage >= 5 && localStage <= 8;
-            const showNote = localStage === 9;
+            const showKicker = hasKicker && localStage === 4;
+            const cardsStart = hasKicker ? 5 : 4;
+            const showCards = localStage >= cardsStart && localStage <= cardsStart + 3;
+            const showNote = hasNote && localStage === cardsStart + 4;
 
             return (
               <article
@@ -237,9 +254,11 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                     <p className="section-lead">{sectionData.description}</p>
                   </div>
 
-                  <div className={`${styles.stage} ${showKicker ? styles.stageActive : ''}`}>
-                    <p className="section-kicker">{sectionData.kicker}</p>
-                  </div>
+                  {hasKicker ? (
+                    <div className={`${styles.stage} ${showKicker ? styles.stageActive : ''}`}>
+                      <p className="section-kicker">{sectionData.kicker}</p>
+                    </div>
+                  ) : null}
 
                   <div className={`${styles.stage} ${showCards ? styles.stageActive : ''}`}>
                     <MagicBentoGrid
@@ -252,7 +271,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                     >
                       {sectionData.cards.map((card, index) => {
                         const Icon = getCardIcon(card.title);
-                        const isShown = localStage >= 5 + index;
+                        const isShown = localStage >= cardsStart + index;
                         const fromClass =
                           index === 0
                             ? styles.fromLeft
@@ -274,9 +293,11 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                     </MagicBentoGrid>
                   </div>
 
-                  <div className={`${styles.stage} ${showNote ? styles.stageActive : ''}`}>
-                    <p className="section-note">{sectionData.note}</p>
-                  </div>
+                  {hasNote ? (
+                    <div className={`${styles.stage} ${showNote ? styles.stageActive : ''}`}>
+                      <p className="section-note">{sectionData.note}</p>
+                    </div>
+                  ) : null}
                 </div>
               </article>
             );

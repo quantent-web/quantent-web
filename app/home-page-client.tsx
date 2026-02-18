@@ -25,8 +25,8 @@ type ContentSection = {
   id: string;
   title: string;
   description: string;
-  kicker: string;
-  note: string;
+  kicker?: string;
+  note?: string;
   cards: CardItem[];
   inverted?: boolean;
 };
@@ -69,6 +69,25 @@ const dataCleaningCards: CardItem[] = [
   },
 ];
 
+const whatMakesDifferentCards: CardItem[] = [
+  {
+    title: 'Quantitative by design',
+    text: 'Exposure, drift, and structural risk are measured — not guessed.',
+  },
+  {
+    title: 'AI-native governance',
+    text: 'Built so AI can reason, opine, and alert safely on entitlements and data.',
+  },
+  {
+    title: 'Designed for complexity',
+    text: 'Proven in financial-services-grade systems with real risk and regulatory consequences.',
+  },
+  {
+    title: 'Enhances existing IAM',
+    text: 'Integrates with what you already run. We don’t replace your identity stack — we make it work better.',
+  },
+];
+
 const contentSections: ContentSection[] = [
   {
     id: 'what-we-do',
@@ -90,6 +109,12 @@ const contentSections: ContentSection[] = [
       'QuantEnt provides end-to-end governance for high-volume, high-impact enterprise data ecosystems.',
     cards: dataCleaningCards,
     inverted: true,
+  },
+  {
+    id: 'what-makes-different',
+    title: 'What Makes QuantEnt Different',
+    description: '',
+    cards: whatMakesDifferentCards,
   },
 ];
 
