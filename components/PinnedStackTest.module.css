@@ -21,41 +21,6 @@
   background: #0e1414;
 }
 
-.rippleBackground {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: auto;
-  display: grid;
-  grid-template-columns: repeat(var(--ripple-cols), minmax(0, 1fr));
-  grid-template-rows: repeat(var(--ripple-rows), minmax(0, 1fr));
-}
-
-.rippleBackground::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(14, 20, 20, 0) 62%,
-    rgba(14, 20, 20, 0.18) 78%,
-    rgba(14, 20, 20, 0.44) 90%,
-    rgba(14, 20, 20, 0.82) 100%
-  );
-  z-index: 1;
-}
-
-.rippleBackground > div {
-  border: 1px solid var(--ripple-border-color);
-  background: transparent;
-  transition: background-color 180ms ease;
-}
-
-.rippleBackground > div:hover {
-  background: color-mix(in oklab, var(--ripple-fill-color) calc(var(--cell-hover-opacity, 0.08) * 100%), transparent);
-}
-
 .step {
   position: absolute;
   inset: 0;
@@ -209,11 +174,6 @@
     background-color: transparent;
   }
 
-  .rippleBackground {
-    position: absolute;
-    inset: 0;
-  }
-
   .stageContainer {
     position: static;
     height: auto;
@@ -251,7 +211,4 @@
     transition: none;
   }
 
-  .rippleBackground > div {
-    transition: none;
-  }
 }
