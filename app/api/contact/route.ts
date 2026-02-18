@@ -48,6 +48,8 @@ const MAX_LENGTHS = {
   message: 2000,
 } as const;
 
+const VALIDATION_ERROR = 'Invalid field values.';
+
 export async function POST(request: Request) {
   const jsonResponse = (
     body: { ok: true } | { error: string },
@@ -100,11 +102,11 @@ export async function POST(request: Request) {
     role.length > MAX_LENGTHS.role ||
     message.length > MAX_LENGTHS.message
   ) {
-    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
+    return jsonResponse({ error: VALIDATION_ERROR }, { status: 400 });
   }
 
   if (!isValidEmail(email)) {
-    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
+    return jsonResponse({ error: VALIDATION_ERROR }, { status: 400 });
   }
 
   const host = process.env.SMTP_HOST;
