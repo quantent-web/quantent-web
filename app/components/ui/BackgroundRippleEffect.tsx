@@ -67,6 +67,17 @@ export default function BackgroundRippleEffect({
     return distance * 18;
   };
 
+  const getDistance = (index: number) => {
+    if (activeCell === null) return 0;
+
+    const activeRow = Math.floor(activeCell / cols);
+    const activeCol = activeCell % cols;
+    const row = Math.floor(index / cols);
+    const col = index % cols;
+
+    return Math.abs(row - activeRow) + Math.abs(col - activeCol);
+  };
+
   return (
     <div
       className={className}
@@ -83,6 +94,9 @@ export default function BackgroundRippleEffect({
     >
       {cells.map((index) => {
         const isActive = activeCell === index;
+        const distance = getDistance(index);
+        const idleOpacity = Math.max(0.08, 0.2 - distance * 0.01);
+        const activeOpacity = Math.max(0.18, 0.38 - distance * 0.012);
 
         return (
           <div
@@ -90,7 +104,11 @@ export default function BackgroundRippleEffect({
             onMouseEnter={() => onCellEnter(index)}
             onClick={(e) => onCellClick(e, index)}
             className={isActive ? 'is-ripple-active' : ''}
-            style={{ '--delay': `${getDelay(index)}ms` } as CSSProperties}
+            style={{
+              '--delay': `${getDelay(index)}ms`,
+              '--idle-opacity': idleOpacity,
+              '--active-opacity': activeOpacity,
+            } as CSSProperties}
           />
         );
       })}
