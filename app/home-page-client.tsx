@@ -10,6 +10,7 @@ import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
+import ContainerScrollShowcase from './components/effects/ContainerScrollShowcase';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
 import PinnedStackTest from '../components/PinnedStackTest';
@@ -463,6 +464,7 @@ export default function Home() {
           className="home-main"
           data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
         >
+        <ContainerScrollShowcase />
         <div className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
