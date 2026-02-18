@@ -464,7 +464,6 @@ export default function Home() {
           className="home-main"
           data-snap-scroll={enableSnapScroll ? 'true' : 'false'}
         >
-        <ContainerScrollShowcase />
         <div className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
@@ -505,6 +504,8 @@ export default function Home() {
         <div className="pinned-stack-shell">
           <PinnedStackTest sections={contentSections} />
         </div>
+
+        <ContainerScrollShowcase />
 
         <div className="container">
 
