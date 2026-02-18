@@ -25,7 +25,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  pointer-events: none;
+  pointer-events: auto;
   display: grid;
   grid-template-columns: repeat(var(--ripple-cols), minmax(0, 1fr));
   grid-template-rows: repeat(var(--ripple-rows), minmax(0, 1fr));
@@ -89,6 +89,13 @@
   display: grid;
   place-items: center;
   padding: var(--space-8);
+  pointer-events: none;
+}
+
+.stageContainer :global(.card),
+.stageContainer :global(a),
+.stageContainer :global(button) {
+  pointer-events: auto;
 }
 
 .stage {
@@ -174,6 +181,14 @@
   opacity: 1;
 }
 
+.cardIcon {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: var(--space-4);
+  object-fit: contain;
+}
+
 @media (max-width: 1023px) {
   .track {
     min-height: auto;
@@ -204,6 +219,7 @@
     height: auto;
     gap: var(--space-6);
     padding: 0;
+    pointer-events: auto;
   }
 
   .stage {

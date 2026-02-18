@@ -35,6 +35,7 @@ const whatWeDoCards: CardItem[] = [
   {
     title: 'System Analysis',
     text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
+    iconPath: '/system-analysis-icon.png',
   },
   {
     title: 'Quantitative Certification',

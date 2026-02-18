@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import Image from 'next/image';
 import styles from './PinnedStackTest.module.css';
 import BlurText from '../app/components/BlurText/BlurText';
 import MagicBentoGrid from '../app/components/effects/MagicBentoGrid';
@@ -10,6 +11,7 @@ import BackgroundRippleEffect from '../app/components/ui/BackgroundRippleEffect'
 type CardItem = {
   title: string;
   text: string;
+  iconPath?: string;
 };
 
 type PinnedStackSection = {
@@ -97,7 +99,6 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
     <section id="pinned-stack-test" className={`section ${styles.section}`} ref={sectionRef}>
       <div className={styles.track} style={trackStyle}>
         <div className={styles.viewport}>
-          <BackgroundRippleEffect className={styles.rippleBackground} rows={9} cols={24} cellSize={64} />
           {sections.map((sectionData, sectionIndex) => {
             const base = sectionIndex * STAGES_PER_SECTION;
             const computedStage = Math.min(Math.max(activeStage - base, 0), STAGES_PER_SECTION - 1);
@@ -124,6 +125,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                 }`}
                 aria-hidden={!isSectionVisible && isDesktop}
               >
+                <BackgroundRippleEffect className={styles.rippleBackground} rows={9} cols={24} cellSize={64} />
                 <div className={styles.stageContainer}>
 
                   <div
@@ -172,6 +174,16 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                             key={`${sectionData.id}-${card.title}`}
                             className={`card ${styles.cardAnimated} ${!isShown ? fromClass : ''} ${isShown ? styles.cardShown : ''}`}
                           >
+                            {card.iconPath ? (
+                              <Image
+                                src={card.iconPath}
+                                alt=""
+                                className={styles.cardIcon}
+                                aria-hidden="true"
+                                width={72}
+                                height={72}
+                              />
+                            ) : null}
                             <h4 className="card-title">{card.title}</h4>
                             <p className="card-text">{card.text}</p>
                           </div>
