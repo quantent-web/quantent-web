@@ -18,7 +18,7 @@ export default function BackgroundRippleEffect({
   cols = 27,
   cellSize = 56,
   borderColor = 'rgba(255, 255, 255, 0.08)',
-  fillColor = 'rgba(5, 205, 152, 0.16)',
+  fillColor = 'rgba(5, 205, 152, 0.22)',
   className,
   interactive = true,
 }: BackgroundRippleEffectProps) {

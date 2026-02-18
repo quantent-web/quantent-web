@@ -120,7 +120,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
               <article
                 key={sectionData.id}
                 className={`${styles.step} ${isSectionVisible ? styles.active : ''} ${
-                  sectionIndex === 0 ? styles.defaultVisible : ''
+                  sectionIndex === 0 && (!isDesktop || isReducedMotion) ? styles.defaultVisible : ''
                 }`}
                 aria-hidden={!isSectionVisible && isDesktop}
               >
