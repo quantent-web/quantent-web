@@ -130,25 +130,16 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-6);
-  align-items: stretch;
+  align-items: start;
 }
 
 .cardsGrid :global(.magicBentoCard) {
-  height: 100%;
+  height: auto;
 }
 
 .cardAnimated {
   opacity: 0;
   transition: transform 360ms ease, opacity 360ms ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.cardAnimated :global(.card-title) {
-  min-height: 2.8em;
-  display: flex;
-  align-items: flex-end;
 }
 
 .fromLeft {

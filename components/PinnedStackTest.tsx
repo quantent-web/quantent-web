@@ -200,6 +200,8 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
 
             const showEmptyIntro = localStage === 0;
             const showTitle = localStage >= 1 && localStage <= 3;
+            const showTitleBlur = localStage === 1;
+            const showTitleHold = localStage === 2 || localStage === 3;
             const showKicker = localStage === 4;
             const showCards = localStage >= 5 && localStage <= 8;
             const showNote = localStage === 9;
@@ -219,9 +221,9 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                     aria-hidden="true"
                   />
                   <div className={`${styles.stage} ${styles.copyStage} ${showTitle ? styles.stageActive : ''}`}>
-                    {showTitle ? (
+                    {showTitleBlur ? (
                       <BlurText
-                        key={`${sectionData.id}-title-${activeStage}`}
+                        key={`${sectionData.id}-title`}
                         as="h2"
                         className="section-title"
                         text={sectionData.title}
@@ -231,6 +233,7 @@ export default function PinnedStackTest({ sections }: PinnedStackTestProps) {
                         stepDuration={0.32}
                       />
                     ) : null}
+                    {showTitleHold ? <h2 className="section-title">{sectionData.title}</h2> : null}
                     <p className="section-lead">{sectionData.description}</p>
                   </div>
 
