@@ -21,11 +21,22 @@
   background: #0e1414;
 }
 
+.viewport::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
 .particlesBackground {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  filter: blur(1px);
 }
 
 .step {
@@ -40,7 +51,7 @@
 
 .step > * {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .defaultVisible {
@@ -140,6 +151,15 @@
 .cardAnimated {
   opacity: 0;
   transition: transform 360ms ease, opacity 360ms ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.cardAnimated :global(.card-title) {
+  min-height: 2.8em;
+  display: flex;
+  align-items: flex-end;
 }
 
 .fromLeft {
