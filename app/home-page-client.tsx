@@ -19,6 +19,7 @@ type NavItem = { label: string; href: `#${string}` };
 type CardItem = {
   title: string;
   text: string;
+  iconPath?: string;
 };
 
 type ContentSection = {
