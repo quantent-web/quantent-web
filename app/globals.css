@@ -1085,14 +1085,19 @@ main[data-snap-scroll='true'] > .section {
 }
 
 .card {
-  border: none;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
   border-radius: var(--radius);
   padding: var(--space-8);
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  background: var(--glass-card-surface-light);
   box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.14);
   overflow: hidden;
-  -webkit-backdrop-filter: blur(var(--glass-blur-card)) saturate(112%);
-  backdrop-filter: blur(var(--glass-blur-card)) saturate(112%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-card)) saturate(135%);
+  backdrop-filter: blur(var(--glass-blur-card)) saturate(135%);
+}
+
+html[data-theme="dark"] .card {
+  background: var(--glass-card-surface-dark);
+  border-color: color-mix(in srgb, #ffffff 10%, transparent);
 }
 
 .card-title {
@@ -1149,9 +1154,11 @@ main[data-snap-scroll='true'] > .section {
 
   /* Backdrop blur system (safe defaults) */
   --glass-blur-nav: 10px;
-  --glass-blur-card: 8px;
+  --glass-blur-card: 14px;
   --glass-surface-light: rgba(255, 255, 255, 0.72);
   --glass-surface-dark: rgba(17, 26, 26, 0.72);
+  --glass-card-surface-light: rgba(255, 255, 255, 0.42);
+  --glass-card-surface-dark: rgba(24, 35, 35, 0.48);
 }
 
 html {
@@ -2074,7 +2081,7 @@ html[data-theme="dark"] body {
 .header-bg__nav {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 50;
 }
 
 
