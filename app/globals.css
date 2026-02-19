@@ -1922,7 +1922,7 @@ html[data-theme="dark"] body {
 
 
 .products-container {
-  padding: 120px 10% 190.5px 0px;
+  padding: 120px 10% 0px 10%;
   position: relative;
   overflow: hidden;
 }
