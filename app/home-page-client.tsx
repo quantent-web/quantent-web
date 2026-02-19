@@ -110,14 +110,18 @@ export default function Home() {
       }
 
       if (!nextActive) {
-        let bestMatch: { id: string; ratio: number } | null = null;
+        let bestId: string | null = null;
+        let bestRatio = -1;
+
         visibility.forEach((ratio, id) => {
           if (!navIds.has(id)) return;
-          if (!bestMatch || ratio > bestMatch.ratio) {
-            bestMatch = { id, ratio };
+          if (ratio > bestRatio) {
+            bestId = id;
+            bestRatio = ratio;
           }
         });
-        if (bestMatch) nextActive = `#${bestMatch.id}`;
+
+        if (bestId) nextActive = `#${bestId}`;
       }
 
       if (nextActive) setActiveHref(nextActive);
