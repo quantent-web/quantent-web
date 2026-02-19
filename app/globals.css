@@ -361,8 +361,9 @@ p,
 #quantcertify {
   border-radius: 24px;
   padding-top: 0;
-  padding-left: 0;
   padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
   border: 1px solid var(--border);
   margin-top: 120px;
 }
@@ -636,12 +637,14 @@ p,
 }
 
 .product-cell--statement {
+  display: grid;
+  gap: 16px;
   max-width: 80%;
 }
 
 .product-cell--statement .section-note {
-  font-size: 3rem;
-  line-height: 3.5rem;
+  font-size: 2rem;
+  line-height: 2.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -660,11 +663,8 @@ p,
     padding-right: var(--space-6);
   }
 
-  .product-cell--statement .section-note {
-    font-size: 2.25rem;
-    line-height: 2.75rem;
-  }
 }
+
 
 @media (max-width: 640px) {
   #quantvault {
@@ -693,10 +693,11 @@ p,
   }
 
   .product-cell--statement .section-note {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
+
 #capabilities {
   min-height: min(90svh, calc(100svh - var(--nav-h)));
   height: auto;
@@ -1920,8 +1921,8 @@ html[data-theme="dark"] body {
 
 
 .products-container {
+  padding: 120px 10% 190.5px 0px;
   position: relative;
-  padding: 12.5rem 10%;
   overflow: hidden;
 }
 
