@@ -527,7 +527,7 @@ export default function Home() {
           </div>
 
           <div className="cta-strip">
-            <p className="cta-text products-cta-text">Talk to Us — <span className="products-cta-highlight">Start with QuantCertify</span></p>
+            <p className="cta-text products-cta-text">Talk with us —<br /><span className="products-cta-highlight">Start with QuantCertify</span></p>
             <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
             </button>
