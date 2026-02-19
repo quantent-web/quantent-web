@@ -353,6 +353,96 @@ p,
   min-height: min(90svh, calc(100svh - var(--nav-h)));
   height: auto;
 }
+
+.different-container {
+  padding: 180px 10% 140px;
+}
+
+.different-title {
+  text-align: center;
+  margin-bottom: 96px;
+}
+
+.different-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.different-item {
+  padding: 40px 32px;
+  text-align: center;
+  border-left: 1px solid var(--border);
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+}
+
+.different-item:first-child {
+  border-left: 0;
+}
+
+.different-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.different-item .card-title {
+  max-width: 12ch;
+  margin: 0;
+}
+
+.different-item .card-text {
+  max-width: 20ch;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .different-container {
+    padding: 120px 8% 96px;
+  }
+
+  .different-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+
+  .different-item {
+    border-left: 0;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .different-item:nth-child(2n) {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .different-container {
+    padding: 80px var(--space-5);
+  }
+
+  .different-title {
+    margin-bottom: 56px;
+  }
+
+  .different-grid {
+    grid-template-columns: minmax(0, 1fr);
+    border: 0;
+    gap: 28px;
+  }
+
+  .different-item {
+    border: 0;
+    padding: 0;
+  }
+
+  .different-item .card-title,
+  .different-item .card-text {
+    max-width: 100%;
+  }
+}
 #products {
   min-height: min(90svh, calc(100svh - var(--nav-h)));
   height: auto;
@@ -774,6 +864,8 @@ p,
 
 .services-shell {
   border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .services-strip {
