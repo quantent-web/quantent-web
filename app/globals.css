@@ -756,6 +756,125 @@ p,
   min-height: min(90svh, calc(100svh - var(--nav-h)));
   height: auto;
 }
+
+.services-container {
+  padding: 160px 10% 120px;
+}
+
+.services-title {
+  text-align: left;
+  max-width: 18ch;
+}
+
+.services-lead {
+  margin-top: 24px;
+  margin-bottom: 80px;
+  color: var(--color-text);
+}
+
+.services-shell {
+  border: 1px solid var(--border);
+}
+
+.services-strip {
+  border-bottom: 1px solid var(--border);
+  background-color: var(--accent);
+  padding: 32px 48px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(230px, auto);
+}
+
+.services-cell {
+  padding: 48px 32px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  align-content: center;
+  gap: var(--space-3);
+}
+
+.services-grid .services-cell:nth-child(3n) {
+  border-right: 0;
+}
+
+.services-cell--structure {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.services-cell--cycles {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+}
+
+.services-cell--architecture {
+  border-bottom: 0;
+}
+
+.services-cell .card-title {
+  margin: 0;
+  max-width: 20ch;
+}
+
+.services-cell .card-text {
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .services-container {
+    padding: 120px 8% 96px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+  }
+
+  .services-grid .services-cell {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 220px;
+  }
+
+  .services-grid .services-cell:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .services-cell--architecture,
+  .services-cell--structure {
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 640px) {
+  .services-container {
+    padding: 80px var(--space-5);
+  }
+
+  .services-lead {
+    margin-bottom: 48px;
+  }
+
+  .services-strip {
+    padding: var(--space-5);
+  }
+
+  .services-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .services-grid .services-cell {
+    border-right: 0;
+    min-height: unset;
+    padding: 28px 24px;
+  }
+}
 #about{
   min-height: min(90svh, calc(100svh - var(--nav-h)));
   height: auto;
@@ -2171,6 +2290,12 @@ html[data-theme="dark"] body {
   max-width: none;
 }
 
+.capabilities-grid .what-we-do-card .card-title {
+  max-width: none;
+  text-wrap: nowrap;
+  white-space: nowrap;
+}
+
 .text-highlight {
   color: var(--primary);
   font-weight: 700;
@@ -2220,6 +2345,11 @@ html[data-theme="dark"] body {
     grid-template-columns: 1fr;
     gap: var(--space-4);
     margin-top: var(--space-6);
+  }
+
+  .capabilities-grid .what-we-do-card .card-title {
+    text-wrap: balance;
+    white-space: normal;
   }
 
   .what-we-do-entitlement-and-user {

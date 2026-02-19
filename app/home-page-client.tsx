@@ -849,55 +849,59 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="container">
-
         {/* SERVICES */}
-        <section id="services" className="section">
-          <h2 className="section-title">Accelerating Governance and AI Readiness</h2>
+        <section id="services" className="services-container section">
+          <h2 className="services-title">Accelerating Governance and AI Readiness</h2>
 
-          <p className="section-lead">
-            QuantEnt provides services to accelerate adoption and maximize impact.
+          <p className="services-lead">
+            <span className="text-highlight">QuantEnt</span> provides services to accelerate adoption and maximize impact.
           </p>
 
-          <p className="section-kicker">What We Offer</p>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Tech review & scorecarding</h4>
-              <p className="card-text">
-                Full stack technology review and scorecarding of data, AI, and entitlements.
-              </p>
+          <div className="services-shell">
+            <div className="services-strip">
+              <h3 className="qc-section-label">What We Offer</h3>
             </div>
-            <div className="card">
-              <h4 className="card-title">Access cleanup</h4>
-              <p className="card-text">Entitlement and access cleanup.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Semantic alignment</h4>
-              <p className="card-text">Data model and semantic alignment.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">AI readiness</h4>
-              <p className="card-text">AI and automation readiness assessments.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Architecture & operating model</h4>
-              <p className="card-text">Architecture and operating-model design.</p>
-            </div>
-          </div>
 
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Services establish structure</h4>
-              <p className="card-text">Products enforce and maintain it.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">No perpetual cleanup cycles</h4>
-              <p className="card-text">
-                We don’t just prepare organizations — we help them stay prepared.
-              </p>
+            <div className="services-grid">
+              <article className="services-cell services-cell--tech">
+                <h4 className="card-title">Tech review & scorecarding</h4>
+                <p className="card-text"><span className="text-highlight">Full stack technology review and scorecarding</span> of data, AI, and entitlements.</p>
+              </article>
+
+              <article className="services-cell services-cell--access">
+                <h4 className="card-title">Access cleanup</h4>
+                <p className="card-text"><span className="text-highlight">Entitlement and access cleanup.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--structure">
+                <h4 className="card-title">Services establish structure</h4>
+                <p className="card-text"><span className="text-highlight">Products enforce and maintain it.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--cycles">
+                <h4 className="card-title">No perpetual cleanup cycles</h4>
+                <p className="card-text"><span className="text-highlight">We don’t just prepare organizations — we help them stay prepared.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--semantic">
+                <h4 className="card-title">Semantic alignment</h4>
+                <p className="card-text"><span className="text-highlight">Data model and semantic alignment.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--ai">
+                <h4 className="card-title">AI readiness</h4>
+                <p className="card-text"><span className="text-highlight">AI and automation readiness assessments.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--architecture">
+                <h4 className="card-title">Architecture & operating model</h4>
+                <p className="card-text"><span className="text-highlight">Architecture and operating-model design.</span></p>
+              </article>
             </div>
           </div>
         </section>
+
+        <div className="container">
 
         {/* ABOUT */}
         <section id="about" className="section">
