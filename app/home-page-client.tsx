@@ -1,20 +1,29 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { MouseEvent } from 'react';
+import type { FormEvent, MouseEvent } from 'react';
 import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import DecryptedText from './components/DecryptedText/DecryptedText';
-import Switch from './components/ui/Switch';
 import { Badge } from './components/ui/badge';
 import Particles from './components/ui/Particles';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
+import { LegalDialog, type LegalType } from './components/legal/LegalDocuments';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
 
 type NavItem = { label: string; href: `#${string}` };
+
+type InlineContactForm = {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  consent: boolean;
+  website: string;
+};
 
 export default function Home() {
   const { scrollTo, programmaticDurationMs } = useLenis();
@@ -31,22 +40,27 @@ export default function Home() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
-
-  const setTheme = (next: 'light' | 'dark') => {
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    setIsDark(next === 'dark');
-  };
+  const [activeLegalModal, setActiveLegalModal] = useState<LegalType | null>(null);
+  const [contactStatus, setContactStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [contactTouched, setContactTouched] = useState(false);
+  const [contactForm, setContactForm] = useState<InlineContactForm>({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    consent: false,
+    website: '',
+  });
 
   const navItems: NavItem[] = useMemo(
     () => [
       { label: 'What we do', href: '#what-we-do' },
+      { label: 'What Makes QuantEnt Different', href: '#different' },
       { label: 'Products', href: '#products' },
       { label: 'Capabilities', href: '#capabilities' },
       { label: 'Services', href: '#services' },
-      { label: 'Contact', href: '#about' },
+      { label: 'Contact', href: '#contact' },
     ],
     []
   );
@@ -57,9 +71,6 @@ export default function Home() {
 
   // Cierra menú con ESC
   useEffect(() => {
-    const current = document.documentElement.dataset.theme === 'dark';
-    setIsDark(current);
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setMenuOpen(false);
     };
@@ -75,68 +86,67 @@ export default function Home() {
     };
   }, [menuOpen]);
 
-  // Scroll spy usando IntersectionObserver para activar links
+  // Scroll spy reactivo compatible con secciones sticky
   useEffect(() => {
-    const sectionIds = navItems
-      .map((item) => item.href.replace('#', ''))
-      .filter(Boolean);
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((section): section is HTMLElement => Boolean(section));
-
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
     if (!sections.length) return;
 
-    const ratios = new Map<string, number>();
-    const updateActive = () => {
+    const navIds = new Set(navItems.map((item) => item.href.replace('#', '')));
+    const visibility = new Map<string, number>();
+
+    const updateActiveFromScroll = () => {
       if (isProgrammaticScroll.current) return;
 
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
+      const navHeight = navRef.current?.offsetHeight ?? 0;
+      const probeY = navHeight + Math.max(window.innerHeight * 0.2, 120);
+      let nextActive: string | null = null;
 
-      if (scrollTop <= 8) {
-        setActiveHref('#what-we-do');
-        return;
-      }
-
-      if (scrollTop + windowHeight >= docHeight - 8) {
-        setActiveHref(`#${sectionIds[sectionIds.length - 1]}`);
-        return;
-      }
-
-      let bestId = sectionIds[0];
-      let bestRatio = 0;
-      for (const id of sectionIds) {
-        const ratio = ratios.get(id) ?? 0;
-        if (ratio > bestRatio) {
-          bestRatio = ratio;
-          bestId = id;
+      for (const section of sections) {
+        if (!navIds.has(section.id)) continue;
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= probeY && rect.bottom >= navHeight + 12) {
+          nextActive = `#${section.id}`;
         }
       }
 
-      if (bestRatio >= 0.4) {
-        setActiveHref(`#${bestId}`);
+      if (!nextActive) {
+        let bestId: string | null = null;
+        let bestRatio = -1;
+
+        visibility.forEach((ratio, id) => {
+          if (!navIds.has(id)) return;
+          if (ratio > bestRatio) {
+            bestId = id;
+            bestRatio = ratio;
+          }
+        });
+
+        if (bestId) nextActive = `#${bestId}`;
       }
+
+      if (nextActive) setActiveHref(nextActive);
     };
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          ratios.set(entry.target.id, entry.intersectionRatio);
+          visibility.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
         });
-        updateActive();
+        updateActiveFromScroll();
       },
       {
-        rootMargin: '0px 0px -20% 0px',
-        threshold: [0, 0.25, 0.4, 0.6, 1],
+        rootMargin: '-10% 0px -55% 0px',
+        threshold: [0, 0.15, 0.3, 0.5, 0.7, 1],
       }
     );
 
     sections.forEach((section) => observer.observe(section));
-    updateActive();
+    window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+    updateActiveFromScroll();
 
     return () => {
       observer.disconnect();
+      window.removeEventListener('scroll', updateActiveFromScroll);
     };
   }, [navItems]);
 
@@ -249,21 +259,64 @@ export default function Home() {
     setIsContactOpen(true);
   }, []);
   const closeContact = () => setIsContactOpen(false);
+  const openLegalModal = (type: LegalType) => setActiveLegalModal(type);
+  const closeLegalModal = () => setActiveLegalModal(null);
+
+  const isContactInlineValid =
+    Boolean(contactForm.name.trim()) &&
+    Boolean(contactForm.email.trim()) &&
+    Boolean(contactForm.message.trim()) &&
+    contactForm.consent;
+
+  const updateInlineContactField = <K extends keyof InlineContactForm>(
+    key: K,
+    value: InlineContactForm[K]
+  ) => {
+    setContactForm((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleInlineContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setContactTouched(true);
+
+    if (!isContactInlineValid || contactStatus === 'submitting') return;
+
+    setContactStatus('submitting');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: contactForm.name.trim(),
+          lastName: '',
+          email: contactForm.email.trim(),
+          phone: contactForm.phone.trim(),
+          company: '',
+          role: '',
+          companySize: '',
+          productInterest: 'General inquiry',
+          timeline: 'As soon as possible',
+          message: contactForm.message.trim(),
+          consent: contactForm.consent,
+          website: contactForm.website,
+        }),
+      });
+
+      setContactStatus(response.ok ? 'success' : 'error');
+    } catch (error) {
+      void error;
+      setContactStatus('error');
+    }
+  };
 
   useEffect(() => {
     const hash = window.location.hash as `#${string}` | '';
 
     if (!hash) return;
 
-    if (hash === '#contact') {
-      setActiveHref('#contact');
-      openContactStepper();
-      history.replaceState(null, '', window.location.pathname);
-      return;
-    }
-
     runProgrammaticScroll(hash);
-  }, [openContactStepper, runProgrammaticScroll]);
+  }, [runProgrammaticScroll]);
 
   useEffect(() => {
     const onUserScrollIntent = () => {
@@ -332,13 +385,6 @@ export default function Home() {
                 ))}
               </div>
             </nav>
-
-            {/* Toggle tema */}
-            <Switch
-              checked={isDark}
-              onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-              ariaLabel="Toggle theme"
-            />
 
             {/* Botón hamburguesa */}
             <button
@@ -410,8 +456,10 @@ export default function Home() {
           <div id="what-we-do-capabilities" className="what-we-do-capabilities">
             <section className="what-we-do-entitlement-and-user">
               <div className="header-subsection">
-                <h3>Entitlement and User analytics</h3>
-                <p><span className="text-highlight">QuantEnt</span> is built for environments where correctness, scale, and evolution matter.</p>
+                <div className="header-subsection-copy">
+                  <h3>Entitlement and User analytics</h3>
+                  <p><span className="text-highlight">QuantEnt</span> is built for environments where correctness, scale, and evolution matter.</p>
+                </div>
               </div>
               <div className="what-we-do-grid what-we-do-grid--four">
                 <article className="card what-we-do-card">
@@ -447,8 +495,10 @@ export default function Home() {
 
             <section className="what-we-do-data-cleaning">
               <div className="header-subsection">
-                <h3>Data Cleaning, Categorizing, and Governance</h3>
-                <p><span className="text-highlight">QuantEnt</span> structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies</p>
+                <div className="header-subsection-copy">
+                  <h3>Data Cleaning, Categorizing, and Governance</h3>
+                  <p><span className="text-highlight">QuantEnt</span> structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies</p>
+                </div>
               </div>
               <div className="what-we-do-grid what-we-do-grid--two">
                 <article className="card what-we-do-card">
@@ -953,18 +1003,49 @@ export default function Home() {
               <div className="leadership-card-header">
                 <div className="leadership-photo" role="img" aria-label="Trent Walker profile photo">TW</div>
                 <div className="leadership-heading-block">
-                  <h4 className="card-title">Trent Walker</h4>
+                  <div className="leadership-heading-row">
+                    <h2 className="leadership-name">Trent Walker</h2>
+                    <a
+                      className="profile-social-link leadership-social-link"
+                      href="https://www.linkedin.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Trent Walker on LinkedIn"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.5 8.5h3v9h-3v-9Zm1.5-4.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm5.5 4.5h2.9v1.2h.1c.4-.7 1.4-1.4 2.9-1.4 3.1 0 3.6 2 3.6 4.6v4.6h-3V13.5c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7v4.1h-3v-9Z" />
+                      </svg>
+                    </a>
+                  </div>
                   <h5 className="leadership-role">Founder &amp; CEO</h5>
                 </div>
               </div>
 
               <div className="leadership-card-body">
-                <p className="card-text"><strong>Executive profile:</strong> Senior technology executive and former hedge fund CTO with nearly three decades building and leading mission-critical platforms for trading, risk, finance, and control functions across buy-side and sell-side organizations.</p>
-                <p className="card-text"><strong>Recent mandate (Point72):</strong> As Head of Risk &amp; Controllers Technology, he modernized core systems, strengthened data and process coherence, reinforced robust P&amp;L foundations, and advanced frameworks for equity factor analytics and risk calculation.</p>
-                <p className="card-text"><strong>Previous leadership:</strong> Head of Technology Strategy at Nasdaq; Managing Director at MSCI leading application development for Barra and RiskMetrics; CTO at BlueCrest Capital Management; and senior technology roles at Credit Suisse driving the transition from spreadsheet-based workflows to scalable front-to-back systems and disciplined new-product onboarding.</p>
-                <p className="card-text"><strong>Prime services and risk:</strong> At Barclays Capital, he served as Global Head of Risk and Margin for Prime Services, leading global netting and risk teams across financing products and building a coherent, legally accurate view of counterparty exposure and set-off.</p>
-                <p className="card-text"><strong>Academic foundation:</strong> Assistant Professor of Mathematics at UC Santa Barbara after earning a PhD from UC Berkeley, specializing in operator algebras and control theory.</p>
-                <p className="card-text"><strong>Innovation:</strong> Inventor of the patented Induction Press coffee machine, planned for launch in Q2 2026.</p>
+                <section>
+                  <h5 className="leadership-block-title">Executive Profile</h5>
+                  <p className="card-text">Senior technology executive and former hedge fund CTO with nearly three decades building and leading mission-critical platforms for trading, risk, finance, and control functions across buy-side and sell-side organizations.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Current Mandate (Shapelets)</h5>
+                  <p className="card-text">As Head of Risk &amp; Controllers Technology at Point72, he modernized core systems, strengthened data and process coherence, reinforced robust P&amp;L foundations, and advanced frameworks for equity factor analytics and risk calculation.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Previous Leadership</h5>
+                  <p className="card-text">Head of Technology Strategy at Nasdaq; Managing Director at MSCI leading application development for Barra and RiskMetrics; CTO at BlueCrest Capital Management; and senior technology roles at Credit Suisse driving the transition from spreadsheet-based workflows to scalable front-to-back systems and disciplined new-product onboarding.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Front-office Technology</h5>
+                  <p className="card-text">At Barclays Capital, he served as Global Head of Risk and Margin for Prime Services, leading global netting and risk teams across financing products and building a coherent, legally accurate view of counterparty exposure and set-off.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Quantitative Foundation</h5>
+                  <p className="card-text">Assistant Professor of Mathematics at UC Santa Barbara after earning a PhD from UC Berkeley, specializing in operator algebras and control theory.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Technical Focus</h5>
+                  <p className="card-text">Inventor of the patented Induction Press coffee machine, planned for launch in Q2 2026.</p>
+                </section>
               </div>
             </article>
 
@@ -972,9 +1053,49 @@ export default function Home() {
               <div className="leadership-card-header">
                 <div className="leadership-photo" role="img" aria-label="Justo Ruiz profile photo">JR</div>
                 <div className="leadership-heading-block">
-                  <h4 className="card-title">Justo Ruiz</h4>
-                  <h5 className="leadership-role">Co-Founder &amp; CTO</h5>
+                  <div className="leadership-heading-row">
+                    <h2 className="leadership-name">Justo Ruiz</h2>
+                    <a
+                      className="profile-social-link leadership-social-link"
+                      href="https://www.linkedin.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Justo Ruiz on LinkedIn"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.5 8.5h3v9h-3v-9Zm1.5-4.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm5.5 4.5h2.9v1.2h.1c.4-.7 1.4-1.4 2.9-1.4 3.1 0 3.6 2 3.6 4.6v4.6h-3V13.5c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7v4.1h-3v-9Z" />
+                      </svg>
+                    </a>
+                  </div>
+                  <h5 className="leadership-role">CTO</h5>
                 </div>
+              </div>
+
+              <div className="leadership-card-body">
+                <section>
+                  <h5 className="leadership-block-title">Executive Profile</h5>
+                  <p className="card-text">Justo Ruiz es fundador de IA y científico informático práctico especializado en sistemas distribuidos, computación de alto rendimiento e infraestructura de IA generativa, con un historial de lanzar plataformas de producción para cargas de trabajo intensivas en datos a través de startups y fondos de cobertura de primer nivel.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Current Mandate (Shapelets)</h5>
+                  <p className="card-text">Como fundador y CEO de Shapelets, Justo construyó una plataforma de procesamiento y visualización de datos de alto rendimiento y diseñó una base de datos vectorial capaz de absorber más de 100.000 incrustaciones por segundo para búsquedas semánticas en tiempo real y casos de uso de IA generativa.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Previous Leadership</h5>
+                  <p className="card-text">Anteriormente, como CTO de una empresa respaldada por capital privado, Justo reajustó la estrategia de producto, estableció centros de desarrollo en España, modernizó la plataforma y contribuyó a una salida exitosa.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Front-office Technology</h5>
+                  <p className="card-text">En roles tecnológicos de front-office, incluyendo como Principal en BlueCrest Capital Management, Justo unificó sistemas de datos de mercado y referencia y entregó una plataforma consolidada de alto rendimiento para decisiones de trading y cartera.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Quantitative Foundation</h5>
+                  <p className="card-text">Como Senior Quant Developer en la mesa de Bonos Convertibles de Barclays Capital, Justo construyó infraestructura de precios y negociación crítica para el rendimiento de valores híbridos complejos.</p>
+                </section>
+                <section>
+                  <h5 className="leadership-block-title">Technical Focus</h5>
+                  <p className="card-text">Su foco actual combina IA aplicada, sistemas distribuidos y ejecución pragmática para convertir investigación cuantitativa en plataformas de producción robustas y auditables.</p>
+                </section>
               </div>
             </article>
           </div>
@@ -982,19 +1103,103 @@ export default function Home() {
 
         {/* CONTACT */}
         <section id="contact" className="section">
-          <h2 className="section-title">Talk to Us</h2>
-          <p className="section-lead muted">Email addresses and Contact Phone Numbers</p>
-
-          <div className="cta-strip">
-            <p className="cta-text">Start with QuantCertify</p>
-            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
-              Contact
-            </button>
+          <form className="contact-inline-form" onSubmit={handleInlineContactSubmit} noValidate>
+            <div className="talk-form-header">
+              <h2 className="section-title">Talk with us</h2>
+              <p className="section-lead muted">Share your priorities and we will route your request to the right team.</p>
             </div>
+            <input
+              className="hp-field"
+              type="text"
+              name="website"
+              value={contactForm.website}
+              onChange={(event) => updateInlineContactField('website', event.target.value)}
+              autoComplete="off"
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+
+            <div className="contact-form-grid">
+              <div className="field">
+                <label htmlFor="contact-inline-name">Name</label>
+                <input
+                  id="contact-inline-name"
+                  type="text"
+                  required
+                  value={contactForm.name}
+                  onChange={(event) => updateInlineContactField('name', event.target.value)}
+                  placeholder="Jordan Lee"
+                />
+                {contactTouched && !contactForm.name.trim() ? <span className="field-error">Required</span> : null}
+              </div>
+
+              <div className="field">
+                <label htmlFor="contact-inline-email">Email</label>
+                <input
+                  id="contact-inline-email"
+                  type="email"
+                  required
+                  value={contactForm.email}
+                  onChange={(event) => updateInlineContactField('email', event.target.value)}
+                  placeholder="jordan@company.com"
+                />
+                {contactTouched && !contactForm.email.trim() ? <span className="field-error">Required</span> : null}
+              </div>
+
+              <div className="field field-full">
+                <label htmlFor="contact-inline-phone">Phone (optional)</label>
+                <input
+                  id="contact-inline-phone"
+                  type="tel"
+                  value={contactForm.phone}
+                  onChange={(event) => updateInlineContactField('phone', event.target.value)}
+                  placeholder="+1 (555) 000-0000"
+                />
+              </div>
+
+              <div className="field field-full">
+                <label htmlFor="contact-inline-message">Message</label>
+                <textarea
+                  id="contact-inline-message"
+                  required
+                  value={contactForm.message}
+                  onChange={(event) => updateInlineContactField('message', event.target.value)}
+                  placeholder="Tell us about your governance goals."
+                />
+                {contactTouched && !contactForm.message.trim() ? <span className="field-error">Required</span> : null}
+              </div>
+            </div>
+
+            <label className="consent">
+              <input
+                type="checkbox"
+                checked={contactForm.consent}
+                onChange={(event) => updateInlineContactField('consent', event.target.checked)}
+                required
+              />
+              <span>
+                I agree with QuantEnt <button type="button" className="footer-legal-trigger consent-legal-link" onClick={() => openLegalModal('privacy')}>Privacy</button>, <button type="button" className="footer-legal-trigger consent-legal-link" onClick={() => openLegalModal('terms')}>Terms</button>, and <button type="button" className="footer-legal-trigger consent-legal-link" onClick={() => openLegalModal('cookies')}>Cookies</button>.
+              </span>
+            </label>
+
+            {contactTouched && !contactForm.consent ? <span className="field-error">Consent is required</span> : null}
+
+            <div className="contact-inline-actions">
+              <button className="btn btn-primary contact-inline-btn" type="submit" disabled={contactStatus === 'submitting'}>
+                {contactStatus === 'submitting' ? 'Sending...' : 'Send message'}
+              </button>
+              <button className="btn btn-secondary contact-inline-btn" type="button" onClick={openContactStepper}>
+                Open advanced form
+              </button>
+            </div>
+
+            {contactStatus === 'success' ? <p className="contact-success">Request sent. We will be in touch shortly.</p> : null}
+            {contactStatus === 'error' ? <p className="contact-error">Something went wrong. Please try again.</p> : null}
+          </form>
         </section>
 
-        <Footer />
         </div>
+        <Footer onOpenLegal={openLegalModal} />
         </main>
       </div>
 
@@ -1033,6 +1238,7 @@ export default function Home() {
       </aside>
 
       <ContactStepperModal open={isContactOpen} onClose={closeContact} />
+      <LegalDialog activeLegalModal={activeLegalModal} onClose={closeLegalModal} />
     </>
   );
 }

@@ -43,21 +43,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-(function () {
-  try {
-    var saved = localStorage.getItem('theme');
-    var theme = saved ? saved : 'dark';
-    document.documentElement.dataset.theme = theme;
-  } catch (e) {}
-})();
-`,
-          }}
-        />
-      </head>
       <body className={`${splineSansMono.variable} ${poppins.variable}`}>
         <a href="#main-content" className="skip-link">
           Skip to content
