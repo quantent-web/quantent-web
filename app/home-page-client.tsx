@@ -6,117 +6,14 @@ import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import DecryptedText from './components/DecryptedText/DecryptedText';
-import MagicBentoGrid from './components/effects/MagicBentoGrid';
 import Switch from './components/ui/Switch';
+import Particles from './components/ui/Particles';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
 import { useLenis } from './home/useLenis';
 import { useAnchorScroll } from './home/useAnchorScroll';
-import PinnedStackTest from '../components/PinnedStackTest';
 
 type NavItem = { label: string; href: `#${string}` };
-
-type CardItem = {
-  title: string;
-  text: string;
-};
-
-type ContentSection = {
-  id: string;
-  title: string;
-  description: string;
-  kicker?: string;
-  note?: string;
-  cards: CardItem[];
-  inverted?: boolean;
-};
-
-const whatWeDoCards: CardItem[] = [
-  {
-    title: 'System Analysis',
-    text: 'Analyze users, roles, entitlements, and data as interconnected systems.',
-  },
-  {
-    title: 'Quantitative Certification',
-    text: 'Certify access and meaning with mathematical rigor.',
-  },
-  {
-    title: 'Risk Detection',
-    text: 'Detect drift, over-exposure, and structural risk early.',
-  },
-  {
-    title: 'Continuous Control',
-    text: 'Maintain control as systems, data, and organizations evolve.',
-  },
-];
-
-const dataCleaningCards: CardItem[] = [
-  {
-    title: 'MetaData Tagging',
-    text: 'Analyzing and Tagging APIs, data, applications, and resources for use by users and AI.',
-  },
-  {
-    title: 'Data Model Rigorization',
-    text: 'With software and consulting, our SMEs will help create, refine, or just critique the data models of the firm.',
-  },
-  {
-    title: 'Ongoing Cleanliness',
-    text: 'Institutional Data Cleanliness starts at the data model process',
-  },
-  {
-    title: 'Agentic AI Compatibility',
-    text: 'Our future product is designed to make Agentic AI work with the highest possible confidence level, with the safest data protection possible.',
-  },
-];
-
-const whatMakesDifferentCards: CardItem[] = [
-  {
-    title: 'Quantitative by design',
-    text: 'Exposure, drift, and structural risk are measured — not guessed.',
-  },
-  {
-    title: 'AI-native governance',
-    text: 'Built so AI can reason, opine, and alert safely on entitlements and data.',
-  },
-  {
-    title: 'Designed for complexity',
-    text: 'Proven in financial-services-grade systems with real risk and regulatory consequences.',
-  },
-  {
-    title: 'Enhances existing IAM',
-    text: 'Integrates with what you already run. We don’t replace your identity stack — we make it work better.',
-  },
-];
-
-const contentSections: ContentSection[] = [
-  {
-    id: 'what-we-do',
-    title: 'What We Do',
-    description:
-      'QuantEnt analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.',
-    kicker: 'We help organizations',
-    note:
-      'QuantEnt is built for  environments where correctness, scale, and evolution matter',
-    cards: whatWeDoCards,
-  },
-  {
-    id: 'what-we-do-inverted',
-    title: 'Data Cleaning, Categorizing, and Governance',
-    description:
-      'QuantEnt structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies.',
-    kicker: 'Entitlement And User Analysis',
-    note:
-      'QuantEnt provides end-to-end governance for high-volume, high-impact enterprise data ecosystems.',
-    cards: dataCleaningCards,
-    inverted: true,
-  },
-  {
-    id: 'what-makes-different',
-    title: 'What Makes QuantEnt Different',
-    description: '',
-    cards: whatMakesDifferentCards,
-  },
-];
 
 export default function Home() {
   const { scrollTo, programmaticDurationMs } = useLenis();
@@ -144,7 +41,7 @@ export default function Home() {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: 'What we do', href: '#pinned-stack-test' },
+      { label: 'What we do', href: '#what-we-do' },
       { label: 'Products', href: '#products' },
       { label: 'Capabilities', href: '#capabilities' },
       { label: 'Services', href: '#services' },
@@ -152,7 +49,7 @@ export default function Home() {
     ],
     []
   );
-  const [activeHref, setActiveHref] = useState('#pinned-stack-test');
+  const [activeHref, setActiveHref] = useState('#what-we-do');
   const isProgrammaticScroll = useRef(false);
   const pendingTargetHref = useRef<string | null>(null);
   const programmaticScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -197,7 +94,7 @@ export default function Home() {
       const windowHeight = window.innerHeight;
 
       if (scrollTop <= 8) {
-        setActiveHref('#pinned-stack-test');
+        setActiveHref('#what-we-do');
         return;
       }
 
@@ -493,63 +390,150 @@ export default function Home() {
             >
               Talk to Us
             </button>
-            <a className="btn btn-secondary" href="#pinned-stack-test">
+            <a className="btn btn-secondary" href="#what-we-do">
               What we do
             </a>
           </div>
         </section>
         </div>
 
-        <div className="pinned-stack-shell">
-          <PinnedStackTest sections={contentSections} />
-        </div>
+        <section id="what-we-do" className="what-we-do-container section">
+          <Particles className="what-we-do-background" particleCount={260} particleBaseSize={110} particleColors={['#ffffff', '#f1f5f9', '#dbeafe']} />
+          <div className="header-section">
+            <h2>What We Do</h2>
+            <p>
+              <span className="text-highlight">QuantEnt</span> analyzes and certifies who can access what — and what that data means — using quantitative models instead of static rules.
+            </p>
+          </div>
 
-        <div className="container">
+          <div id="what-we-do-capabilities" className="what-we-do-capabilities">
+            <section className="what-we-do-entitlement-and-user">
+              <div className="header-subsection">
+                <h3>Entitlement and User analytics</h3>
+                <p><span className="text-highlight">QuantEnt</span> is built for environments where correctness, scale, and evolution matter.</p>
+              </div>
+              <div className="what-we-do-grid what-we-do-grid--four">
+                <article className="card what-we-do-card">
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">System Analysis</h4>
+                    <p className="card-text"><span className="text-highlight">QuantEnt</span> analyzes users, roles, entitlements, and data as interconnected systems</p>
+                  </div>
+                </article>
+                <article className="card what-we-do-card">
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">Quantitative Certification</h4>
+                    <p className="card-text"><span className="text-highlight">Certify access</span> and meaning with mathematical rigor</p>
+                  </div>
+                </article>
+                <article className="card what-we-do-card">
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">Risk Detection</h4>
+                    <p className="card-text"><span className="text-highlight">Detect drift</span>, over-exposure, and structural risk early</p>
+                  </div>
+                </article>
+                <article className="card what-we-do-card">
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">Continuous Control</h4>
+                    <p className="card-text"><span className="text-highlight">Maintain control</span> as systems, data, and organizations evolve</p>
+                  </div>
+                </article>
+              </div>
+            </section>
 
+            <section className="what-we-do-data-cleaning">
+              <div className="header-subsection">
+                <h3>Data Cleaning, Categorizing, and Governance</h3>
+                <p><span className="text-highlight">QuantEnt</span> structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies</p>
+              </div>
+              <div className="what-we-do-grid what-we-do-grid--two">
+                <article className="card what-we-do-card">
+                  <h2 className="numbers-section" aria-hidden="true">01</h2>
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">MetaData Tagging</h4>
+                    <p className="card-text card-text-secondary">Analyzing and <span className="text-highlight">Tagging APIs</span>, data, applications, and resources for use by users and AI</p>
+                  </div>
+                </article>
+                <article className="card what-we-do-card">
+                  <h2 className="numbers-section" aria-hidden="true">02</h2>
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">Data Model Rigorization</h4>
+                    <p className="card-text card-text-secondary">With software and consulting, our <span className="text-highlight">SMEs</span> will help create, refine, or just critique the data models of the firm</p>
+                  </div>
+                </article>
+                <article className="card what-we-do-card">
+                  <h2 className="numbers-section" aria-hidden="true">03</h2>
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">Ongoing Cleanliness Certification</h4>
+                    <p className="card-text card-text-secondary"><span className="text-highlight">Institutional Data Cleanliness</span> starts at the data model process</p>
+                  </div>
+                </article>
+                <article className="card what-we-do-card">
+                  <h2 className="numbers-section" aria-hidden="true">04</h2>
+                  <div className="what-we-do-card-copy">
+                    <h4 className="card-title">Agentic AI Compatibility</h4>
+                    <p className="card-text card-text-secondary">Our future product is designed to make <span className="text-highlight">Agentic AI</span> work with the highest possible confidence level, with the safest data protection possible</p>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
 
-        {/* PRODUCTS */}
-        <section id="products" className="section">
+        <section id="products" className="products-container section">
+          <Particles className="products-background" particleCount={260} particleBaseSize={110} particleColors={['#ffffff', '#f1f5f9', '#dbeafe']} />
           <h2 className="section-title">Our Products</h2>
 
-          <MagicBentoGrid variant="auto" sectionId="products">
-            <div className="card">
-              <h4 className="card-title">QuantCertify</h4>
-              <p className="card-text">Certification with quantitative control.</p>
-              <div className="card-actions">
-                <a className="btn btn-secondary" href="#quantcertify">
-                  Learn more
+          <div className="cards-grid cards-grid--auto products-grid">
+            <div className="card product-card">
+              <div className="product-card-copy">
+                <h3 className="product-card-title">QuantCertify</h3>
+                <p className="card-text">Certification with quantitative control.</p>
+              </div>
+              <div className="card-actions product-card-actions">
+                <a className="btn btn-secondary product-card-icon-btn" href="#quantcertify" aria-label="Learn more about QuantCertify">
+                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
                 </a>
               </div>
             </div>
 
-            <div className="card">
-              <h4 className="card-title">QuantVault</h4>
-              <p className="card-text">Enterprise entitlement intelligence.</p>
-              <div className="card-actions">
-                <a className="btn btn-secondary" href="#quantvault">
-                  Learn more
+            <div className="card product-card">
+              <div className="product-card-copy">
+                <h3 className="product-card-title">QuantVault</h3>
+                <p className="card-text">Enterprise entitlement intelligence.</p>
+              </div>
+              <div className="card-actions product-card-actions">
+                <a className="btn btn-secondary product-card-icon-btn" href="#quantvault" aria-label="Learn more about QuantVault">
+                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
                 </a>
               </div>
             </div>
 
-            <div className="card">
-              <h4 className="card-title">QuantData</h4>
-              <p className="card-text">Semantic governance for enterprise data.</p>
-              <div className="card-actions">
-                <a className="btn btn-secondary" href="#quantdata">
-                  Learn more
+            <div className="card product-card">
+              <div className="product-card-copy">
+                <h3 className="product-card-title">QuantData</h3>
+                <p className="card-text">Semantic governance for enterprise data.</p>
+              </div>
+              <div className="card-actions product-card-actions">
+                <a className="btn btn-secondary product-card-icon-btn" href="#quantdata" aria-label="Learn more about QuantData">
+                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
                 </a>
               </div>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <div className="cta-strip">
-            <p className="cta-text">Talk to Us — Start with QuantCertify</p>
+            <p className="cta-text products-cta-text">Talk to Us — <span className="products-cta-highlight">Start with QuantCertify</span></p>
             <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
             </button>
-            </div>
+          </div>
         </section>
+
+        <div className="container">
 
         {/* QUANTCERTIFY */}
         <section id="quantcertify" className="section">
@@ -562,7 +546,7 @@ export default function Home() {
           </p>
 
           <h3 className="subhead">What It Does</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantcertify-what-it-does">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Quantifies exposure</h4>
               <p className="card-text">
@@ -599,10 +583,10 @@ export default function Home() {
                 Focuses attention on material risk, not noise.
               </p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <h3 className="subhead">Why It’s Different</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantcertify-why-different">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Quantifies entitlements</h4>
               <p className="card-text">The only certification system that quantifies entitlements.</p>
@@ -625,7 +609,7 @@ export default function Home() {
                 Grounded in quantitative risk thinking, not static policy engines.
               </p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <h3 className="subhead">How It Fits Your Environment</h3>
           <p className="section-note">
@@ -639,7 +623,7 @@ export default function Home() {
           </p>
 
           <h3 className="subhead">Outcomes</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantcertify-outcomes">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Cleaner roles</h4>
               <p className="card-text">Cleaner roles and access structures.</p>
@@ -652,7 +636,7 @@ export default function Home() {
               <h4 className="card-title">Reduced drift</h4>
               <p className="card-text">Reduced over-entitlement and drift.</p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <div className="cta-strip">
             <p className="cta-text">Talk to Us About QuantCertify</p>
@@ -672,7 +656,7 @@ export default function Home() {
           </p>
 
           <h3 className="subhead">What It Does</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantvault-what-it-does">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Aggregates entitlements</h4>
               <p className="card-text">Aggregates entitlements across IAM platforms and systems.</p>
@@ -693,10 +677,10 @@ export default function Home() {
                 Foundation for quantitative entitlement governance at scale.
               </p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <h3 className="subhead">Relationship to QuantCertify</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantvault-relationship">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Runs on top</h4>
               <p className="card-text">QuantCertify runs on top of QuantVault.</p>
@@ -705,7 +689,7 @@ export default function Home() {
               <h4 className="card-title">System context</h4>
               <p className="card-text">QuantVault provides the system-wide context.</p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <h3 className="subhead">Integration Philosophy</h3>
           <p className="section-note">
@@ -723,7 +707,7 @@ export default function Home() {
           </p>
 
           <h3 className="subhead">What It Does</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantdata-what-it-does">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Canonical models</h4>
               <p className="card-text">Establishes canonical data models and nomenclature.</p>
@@ -746,10 +730,10 @@ export default function Home() {
                 Ensures data is fit for reporting, automation, and AI.
               </p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <h3 className="subhead">Why It Matters</h3>
-          <MagicBentoGrid variant="auto" sectionId="quantdata-why-it-matters">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Access + meaning</h4>
               <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
@@ -758,7 +742,7 @@ export default function Home() {
               <h4 className="card-title">Meaning + access</h4>
               <p className="card-text">Data governance fails if access governance is broken.</p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
           <p className="section-note">
             QuantData and QuantCertify are designed to work together so data meaning and permissions evolve in lockstep.
@@ -769,7 +753,7 @@ export default function Home() {
         <section id="capabilities" className="section">
           <h2 className="section-title">What We’re Exceptional At</h2>
 
-          <MagicBentoGrid variant="auto" sectionId="capabilities">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Quantitative Governance</h4>
               <p className="card-text">
@@ -798,7 +782,7 @@ export default function Home() {
                 Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.
               </p>
             </div>
-          </MagicBentoGrid>
+          </div>
         </section>
 
         {/* SERVICES */}
@@ -810,7 +794,7 @@ export default function Home() {
           </p>
 
           <p className="section-kicker">What We Offer</p>
-          <MagicBentoGrid variant="auto" sectionId="services-offer">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Tech review & scorecarding</h4>
               <p className="card-text">
@@ -833,9 +817,9 @@ export default function Home() {
               <h4 className="card-title">Architecture & operating model</h4>
               <p className="card-text">Architecture and operating-model design.</p>
             </div>
-          </MagicBentoGrid>
+          </div>
 
-          <MagicBentoGrid variant="auto" sectionId="services-structure">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Services establish structure</h4>
               <p className="card-text">Products enforce and maintain it.</p>
@@ -846,7 +830,7 @@ export default function Home() {
                 We don’t just prepare organizations — we help them stay prepared.
               </p>
             </div>
-          </MagicBentoGrid>
+          </div>
         </section>
 
         {/* ABOUT */}
@@ -862,7 +846,7 @@ export default function Home() {
           </p>
 
           <h3 className="subhead">Leadership</h3>
-          <MagicBentoGrid variant="auto" sectionId="about-leadership">
+          <div className="cards-grid cards-grid--auto">
             <div className="card">
               <h4 className="card-title">Trent Walker — Founder & CEO</h4>
               <p className="card-text">
@@ -875,7 +859,7 @@ export default function Home() {
                 Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
               </p>
             </div>
-          </MagicBentoGrid>
+          </div>
         </section>
 
         {/* CONTACT */}
