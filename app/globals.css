@@ -391,6 +391,10 @@ p,
   margin: 0;
 }
 
+.different-card-title {
+  text-align: center;
+}
+
 .different-item .card-text {
   max-width: 20ch;
   margin: 0;
@@ -848,7 +852,7 @@ p,
 }
 
 .services-container {
-  padding: 160px 10% 120px;
+  padding: 0px 10% 120px 10%;
 }
 
 .services-title {

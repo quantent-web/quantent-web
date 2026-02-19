@@ -490,25 +490,25 @@ export default function Home() {
           <div className="different-grid">
             <article className="different-item">
               <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
-              <h4 className="card-title">Quantitative by<br />design</h4>
+              <h4 className="card-title different-card-title">Quantitative by<br />design</h4>
               <p className="card-text"><span className="text-highlight">Exposure, drift, and structural risk are</span> measured — not guessed.</p>
             </article>
 
             <article className="different-item">
               <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
-              <h4 className="card-title">AI-native governance</h4>
+              <h4 className="card-title different-card-title">AI-native governance</h4>
               <p className="card-text">Built so AI can reason, opine, and alert safely on <span className="text-highlight">entitlements and data.</span></p>
             </article>
 
             <article className="different-item">
               <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
-              <h4 className="card-title">Designed for<br />complexity</h4>
+              <h4 className="card-title different-card-title">Designed for<br />complexity</h4>
               <p className="card-text">Proven in financial-services-grade systems with <span className="text-highlight">real risk and regulatory consequences.</span></p>
             </article>
 
             <article className="different-item">
               <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
-              <h4 className="card-title">Enhances existing IAM</h4>
+              <h4 className="card-title different-card-title">Enhances existing IAM</h4>
               <p className="card-text">Integrates with what you already run. <span className="text-highlight">We don’t replace your identity stack — we make it work better.</span></p>
             </article>
           </div>
