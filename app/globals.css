@@ -720,6 +720,8 @@ p,
 
 .capabilities-grid .card-title {
   max-width: none;
+  text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .capabilities-grid .what-we-do-icon {
@@ -743,6 +745,11 @@ p,
 
   .capabilities-shell {
     padding: 24px;
+  }
+
+  .capabilities-grid .card-title {
+    text-wrap: balance;
+    white-space: normal;
   }
 }
 #services {
