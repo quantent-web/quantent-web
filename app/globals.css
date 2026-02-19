@@ -498,8 +498,8 @@ main[data-snap-scroll='true'] > .section {
   color: var(--text-primary);
   font-family: var(--font-poppins), system-ui, -apple-system, Segoe UI, Roboto,
     Arial, sans-serif;
-  font-weight: 600;
-  font-size: 1.5rem;
+  font-weight: 500;
+  font-size: 1.375rem;
   line-height: 1.75rem;
   letter-spacing: 0.0625rem;
 }
@@ -1635,6 +1635,15 @@ html[data-theme="dark"] body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.what-we-do-entitlement-and-user {
+  padding-bottom: var(--space-8);
+}
+
+.what-we-do-data-cleaning {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-8);
+}
+
 .what-we-do-card {
   padding: var(--space-6) var(--space-6) var(--space-8);
   display: flex;
@@ -1712,6 +1721,14 @@ html[data-theme="dark"] body {
     grid-template-columns: 1fr;
     gap: var(--space-4);
     margin-top: var(--space-6);
+  }
+
+  .what-we-do-entitlement-and-user {
+    padding-bottom: var(--space-6);
+  }
+
+  .what-we-do-data-cleaning {
+    padding-top: var(--space-6);
   }
 
   .what-we-do-card {
