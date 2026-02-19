@@ -7,6 +7,7 @@ import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import DecryptedText from './components/DecryptedText/DecryptedText';
 import Switch from './components/ui/Switch';
+import { Badge } from './components/ui/badge';
 import Particles from './components/ui/Particles';
 import Footer from './components/footer/Footer';
 import ContactStepperModal from './components/contact/ContactStepperModal';
@@ -531,120 +532,127 @@ export default function Home() {
               Start
             </button>
           </div>
+
+        {/* QUANTCERTIFY */}
+        <section id="quantcertify" className="section container quantcertify-section">
+          <div className="quantcertify-grid">
+            <div className="qc-row qc-row--hero">
+              <div className="qc-cell qc-cell--hero-main">
+                <Badge className="qc-badge">Products</Badge>
+                <h2>QuantCertify</h2>
+                <h3>Certification with Quantitative Control</h3>
+              </div>
+              <div className="qc-cell qc-cell--hero-note">
+                <p>
+                  <span className="text-highlight">QuantCertify</span> transforms certification from a
+                  periodic compliance exercise into a quantitative control mechanism.
+                </p>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--title">
+              <div className="qc-cell">
+                <h4 className="qc-section-label">What It Does</h4>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--three-col">
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Quantifies exposure</h4>
+                <p className="card-text">Quantifies entitlement exposure, drift, and role integrity using mathematics — not rules.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">System-level analysis</h4>
+                <p className="card-text">Analyzes users and entitlements as a system, not isolated records.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">AI opinions & alerts</h4>
+                <p className="card-text">Enables AI to opine and alert on access patterns, anomalies, and emerging risk.</p>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--three-col">
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Forces clarity</h4>
+                <p className="card-text">Forces clarity and ownership during certification.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Prevents rubber-stamping</h4>
+                <p className="card-text">Prevents rubber-stamp reviews by surfacing what actually matters.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Focus on material risk</h4>
+                <p className="card-text">Institutional Data Cleanliness starts at the data model process</p>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--title">
+              <div className="qc-cell">
+                <h4 className="qc-section-label">Why It’s Different</h4>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--two-col">
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Quantifies entitlements</h4>
+                <p className="card-text">Quantifies entitlement exposure, drift, and role integrity using mathematics — not rules.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">AI-first architecture</h4>
+                <p className="card-text">Built from the ground up with AI in mind, not bolted on later.</p>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--two-col">
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Improves over time</h4>
+                <p className="card-text">Designed to improve governance quality over time, not degrade.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Risk thinking</h4>
+                <p className="card-text">Grounded in quantitative risk thinking, not static policy engines.</p>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--title">
+              <div className="qc-cell">
+                <h4 className="qc-section-label">How It Fits Your Environment</h4>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--single">
+              <div className="qc-cell qc-cell--note">
+                <p className="section-note">QuantCertify does not replace your IAM stack. <span className="text-highlight">It makes it measurably better</span></p>
+                <p className="card-text"><span className="text-highlight">QuantCertify</span> integrates with and enhances your existing IAM solutions. It works alongside SailPoint, Okta, Active Directory, and other IAM platforms, adding quantitative insight to existing certification workflows — without disrupting current systems.</p>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--title">
+              <div className="qc-cell">
+                <h4 className="qc-section-label">Outcomes</h4>
+              </div>
+            </div>
+
+            <div className="qc-row qc-row--three-col">
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">Quantifies exposure</h4>
+                <p className="card-text">Quantifies entitlement exposure, drift, and role integrity using mathematics — not rules.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">System-level analysis</h4>
+                <p className="card-text">Analyzes users and entitlements as a system, not isolated records.</p>
+              </div>
+              <div className="qc-cell qc-cell--card">
+                <h4 className="card-title">AI opinions & alerts</h4>
+                <p className="card-text">Enables AI to opine and alert on access patterns, anomalies, and emerging risk.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         </section>
 
         <div className="container">
-
-        {/* QUANTCERTIFY */}
-        <section id="quantcertify" className="section">
-          <h2 className="section-title">QuantCertify</h2>
-          <p className="section-lead">Certification with Quantitative Control</p>
-
-          <p className="section-note">
-            QuantCertify transforms certification from a periodic compliance exercise
-            into a quantitative control mechanism.
-          </p>
-
-          <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Quantifies exposure</h4>
-              <p className="card-text">
-                Quantifies entitlement exposure, drift, and role integrity using
-                mathematics — not rules.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">System-level analysis</h4>
-              <p className="card-text">
-                Analyzes users and entitlements as a system, not isolated records.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">AI opinions & alerts</h4>
-              <p className="card-text">
-                Enables AI to opine and alert on access patterns, anomalies, and
-                emerging risk.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Forces clarity</h4>
-              <p className="card-text">Forces clarity and ownership during certification.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Prevents rubber-stamping</h4>
-              <p className="card-text">
-                Prevents rubber-stamp reviews by surfacing what actually matters.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Focus on material risk</h4>
-              <p className="card-text">
-                Focuses attention on material risk, not noise.
-              </p>
-            </div>
-          </div>
-
-          <h3 className="subhead">Why It’s Different</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Quantifies entitlements</h4>
-              <p className="card-text">The only certification system that quantifies entitlements.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">AI-first architecture</h4>
-              <p className="card-text">
-                Built from the ground up with AI in mind, not bolted on later.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Improves over time</h4>
-              <p className="card-text">
-                Designed to improve governance quality over time, not degrade.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Risk thinking</h4>
-              <p className="card-text">
-                Grounded in quantitative risk thinking, not static policy engines.
-              </p>
-            </div>
-          </div>
-
-          <h3 className="subhead">How It Fits Your Environment</h3>
-          <p className="section-note">
-            QuantCertify integrates with and enhances your existing IAM solutions.
-            It works alongside SailPoint, Okta, Active Directory, and other IAM
-            platforms, adding quantitative insight to existing certification workflows
-            — without disrupting current systems.
-          </p>
-          <p className="section-note strong">
-            QuantCertify does not replace your IAM stack. It makes it measurably better.
-          </p>
-
-          <h3 className="subhead">Outcomes</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Cleaner roles</h4>
-              <p className="card-text">Cleaner roles and access structures.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Faster certifications</h4>
-              <p className="card-text">Faster, defensible certifications.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Reduced drift</h4>
-              <p className="card-text">Reduced over-entitlement and drift.</p>
-            </div>
-          </div>
-
-          <div className="cta-strip">
-            <p className="cta-text">Talk to Us About QuantCertify</p>
-            <button className="btn btn-primary" type="button" onClick={openContactStepper}>
-              Contact
-            </button>
-            </div>
-        </section>
 
         {/* QUANTVAULT */}
         <section id="quantvault" className="section">
