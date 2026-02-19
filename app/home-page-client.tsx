@@ -297,7 +297,7 @@ export default function Home() {
 
         {/* STICKY NAV */}
         <header className="nav header-bg__nav" ref={navRef}>
-          <div className="nav-inner nav-container" ref={navInnerRef}>
+          <div className="nav-inner nav-container liquid-glass-nav" ref={navInnerRef}>
             <a
               className="nav-brand"
               href="#top"
@@ -451,28 +451,28 @@ export default function Home() {
               </div>
               <div className="what-we-do-grid what-we-do-grid--two">
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <h2 className="card-number" aria-hidden="true">01</h2>
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">MetaData Tagging</h4>
                     <p className="card-text card-text-secondary">Analyzing and <span className="text-highlight">Tagging APIs</span>, data, applications, and resources for use by users and AI</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <h2 className="card-number" aria-hidden="true">02</h2>
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Data Model Rigorization</h4>
                     <p className="card-text card-text-secondary">With software and consulting, our <span className="text-highlight">SMEs</span> will help create, refine, or just critique the data models of the firm</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <h2 className="card-number" aria-hidden="true">03</h2>
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Ongoing Cleanliness Certification</h4>
                     <p className="card-text card-text-secondary"><span className="text-highlight">Institutional Data Cleanliness</span> starts at the data model process</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
+                  <h2 className="card-number" aria-hidden="true">04</h2>
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Agentic AI Compatibility</h4>
                     <p className="card-text card-text-secondary">Our future product is designed to make <span className="text-highlight">Agentic AI</span> work with the highest possible confidence level, with the safest data protection possible</p>
