@@ -305,8 +305,10 @@ p,
 }
 
 .different-grid {
-  display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: grid;
+  border: 1px solid var(--border);
+  border-radius: 16px;
 }
 
 .different-item {
@@ -672,6 +674,10 @@ p,
   margin-bottom: 0;
 }
 
+#quantdata .product-cell--card .card-title {
+  color: var(--primary);
+}
+
 .product-cell--statement {
   display: grid;
   gap: 16px;
@@ -972,8 +978,8 @@ main[data-snap-scroll='true'] > .section {
   max-width: 70ch;
   text-align: center;
   margin-top: var(--space-2);
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
   color: var(--color-text);
 }
 
@@ -1128,8 +1134,8 @@ section[id] {
 }
 
 .nav-brand img {
-  height: 24px;
   width: auto;
+  height: 32px;
 }
 
 /* Links: una sola línea, si no cabe -> hamburguesa */
@@ -1638,6 +1644,15 @@ section[id] {
   align-items: center;
   justify-content: flex-end;
   margin-top: 48px;
+}
+
+.contact-inline-btn {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 12px 20px;
 }
 
 #contact .field textarea {
@@ -2236,6 +2251,12 @@ section[id] {
   gap: var(--space-4);
 }
 
+.header-subsection-copy {
+  display: grid;
+  gap: 16px;
+  margin-bottom: var(--space-6);
+}
+
 .header-section {
   margin-bottom: var(--space-7);
 }
@@ -2521,6 +2542,24 @@ section[id] {
   margin-left: 0;
 }
 
+.profile-social-link {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0e1414;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-social-link svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
 .leadership-block-title {
   margin: 0 0 6px;
   font-size: 0.85rem;
@@ -2543,8 +2582,8 @@ section[id] {
 ========================= */
 .site-footer {
   width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
   padding-left: 0;
   padding-right: 0;
 }

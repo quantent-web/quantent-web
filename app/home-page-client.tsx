@@ -456,8 +456,10 @@ export default function Home() {
           <div id="what-we-do-capabilities" className="what-we-do-capabilities">
             <section className="what-we-do-entitlement-and-user">
               <div className="header-subsection">
-                <h3>Entitlement and User analytics</h3>
-                <p><span className="text-highlight">QuantEnt</span> is built for environments where correctness, scale, and evolution matter.</p>
+                <div className="header-subsection-copy">
+                  <h3>Entitlement and User analytics</h3>
+                  <p><span className="text-highlight">QuantEnt</span> is built for environments where correctness, scale, and evolution matter.</p>
+                </div>
               </div>
               <div className="what-we-do-grid what-we-do-grid--four">
                 <article className="card what-we-do-card">
@@ -493,8 +495,10 @@ export default function Home() {
 
             <section className="what-we-do-data-cleaning">
               <div className="header-subsection">
-                <h3>Data Cleaning, Categorizing, and Governance</h3>
-                <p><span className="text-highlight">QuantEnt</span> structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies</p>
+                <div className="header-subsection-copy">
+                  <h3>Data Cleaning, Categorizing, and Governance</h3>
+                  <p><span className="text-highlight">QuantEnt</span> structures and governs enterprise data so every dataset is clean, categorized, and controlled with transparent policies</p>
+                </div>
               </div>
               <div className="what-we-do-grid what-we-do-grid--two">
                 <article className="card what-we-do-card">
@@ -1002,7 +1006,7 @@ export default function Home() {
                   <div className="leadership-heading-row">
                     <h2 className="leadership-name">Trent Walker</h2>
                     <a
-                      className="footer-socials__link leadership-social-link"
+                      className="profile-social-link leadership-social-link"
                       href="https://www.linkedin.com"
                       target="_blank"
                       rel="noreferrer"
@@ -1052,7 +1056,7 @@ export default function Home() {
                   <div className="leadership-heading-row">
                     <h2 className="leadership-name">Justo Ruiz</h2>
                     <a
-                      className="footer-socials__link leadership-social-link"
+                      className="profile-social-link leadership-social-link"
                       href="https://www.linkedin.com"
                       target="_blank"
                       rel="noreferrer"
@@ -1063,34 +1067,34 @@ export default function Home() {
                       </svg>
                     </a>
                   </div>
-                  <h5 className="leadership-role">Co-Founder &amp; CTO</h5>
+                  <h5 className="leadership-role">CTO</h5>
                 </div>
               </div>
 
               <div className="leadership-card-body">
                 <section>
                   <h5 className="leadership-block-title">Executive Profile</h5>
-                  <p className="card-text">Technology leader focused on enterprise software delivery, data governance foundations, and platform reliability across regulated environments.</p>
+                  <p className="card-text">Justo Ruiz es fundador de IA y científico informático práctico especializado en sistemas distribuidos, computación de alto rendimiento e infraestructura de IA generativa, con un historial de lanzar plataformas de producción para cargas de trabajo intensivas en datos a través de startups y fondos de cobertura de primer nivel.</p>
                 </section>
                 <section>
                   <h5 className="leadership-block-title">Current Mandate (Shapelets)</h5>
-                  <p className="card-text">Driving QuantEnt product engineering, ensuring domain rigor, delivery velocity, and consistent architecture across QuantCertify, QuantVault, and QuantData.</p>
+                  <p className="card-text">Como fundador y CEO de Shapelets, Justo construyó una plataforma de procesamiento y visualización de datos de alto rendimiento y diseñó una base de datos vectorial capaz de absorber más de 100.000 incrustaciones por segundo para búsquedas semánticas en tiempo real y casos de uso de IA generativa.</p>
                 </section>
                 <section>
                   <h5 className="leadership-block-title">Previous Leadership</h5>
-                  <p className="card-text">Led multidisciplinary software teams spanning architecture, integration, and execution programs for large-scale business-critical initiatives.</p>
+                  <p className="card-text">Anteriormente, como CTO de una empresa respaldada por capital privado, Justo reajustó la estrategia de producto, estableció centros de desarrollo en España, modernizó la plataforma y contribuyó a una salida exitosa.</p>
                 </section>
                 <section>
                   <h5 className="leadership-block-title">Front-office Technology</h5>
-                  <p className="card-text">Applied front-office platform practices to improve operational reliability, observability, and controls in high-precision workflows.</p>
+                  <p className="card-text">En roles tecnológicos de front-office, incluyendo como Principal en BlueCrest Capital Management, Justo unificó sistemas de datos de mercado y referencia y entregó una plataforma consolidada de alto rendimiento para decisiones de trading y cartera.</p>
                 </section>
                 <section>
                   <h5 className="leadership-block-title">Quantitative Foundation</h5>
-                  <p className="card-text">Combines systems engineering with quantitative reasoning to align implementation quality, governance outcomes, and measurable risk controls.</p>
+                  <p className="card-text">Como Senior Quant Developer en la mesa de Bonos Convertibles de Barclays Capital, Justo construyó infraestructura de precios y negociación crítica para el rendimiento de valores híbridos complejos.</p>
                 </section>
                 <section>
                   <h5 className="leadership-block-title">Technical Focus</h5>
-                  <p className="card-text">Focused on scalable APIs, clean domain models, and resilient product infrastructure that supports secure AI-native governance.</p>
+                  <p className="card-text">Su foco actual combina IA aplicada, sistemas distribuidos y ejecución pragmática para convertir investigación cuantitativa en plataformas de producción robustas y auditables.</p>
                 </section>
               </div>
             </article>
@@ -1181,10 +1185,10 @@ export default function Home() {
             {contactTouched && !contactForm.consent ? <span className="field-error">Consent is required</span> : null}
 
             <div className="contact-inline-actions">
-              <button className="btn btn-primary btn--sm" type="submit" disabled={contactStatus === 'submitting'}>
+              <button className="btn btn-primary contact-inline-btn" type="submit" disabled={contactStatus === 'submitting'}>
                 {contactStatus === 'submitting' ? 'Sending...' : 'Send message'}
               </button>
-              <button className="btn btn-secondary btn--sm" type="button" onClick={openContactStepper}>
+              <button className="btn btn-secondary contact-inline-btn" type="button" onClick={openContactStepper}>
                 Open advanced form
               </button>
             </div>
