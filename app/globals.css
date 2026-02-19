@@ -402,7 +402,8 @@ p,
   padding-right: 0;
   padding-bottom: 0;
   padding-left: 0;
-  border: 1px solid var(--border);
+  border: 0px solid var(--border);
+  background-color: #090c0c45;
   margin-top: 120px;
 }
 
@@ -443,8 +444,8 @@ p,
 }
 
 .qc-cell {
-  border-top: 1px solid var(--border);
-  border-left: 1px solid var(--border);
+  border-top: 1px solid #182323;
+  border-left: 1px solid #182323;
   padding: var(--space-8);
   min-width: 0;
 }
@@ -580,9 +581,13 @@ p,
 }
 #quantvault {
   margin-top: 96px;
+  border: 0px solid var(--border);
+  background-color: #090c0c45;
 }
 #quantdata {
   margin-top: 56px;
+  border: 0px solid var(--border);
+  background-color: #090c0c45;
 }
 
 .product-detail-section {
@@ -1036,7 +1041,7 @@ main[data-snap-scroll='true'] > .section {
   border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
   border-radius: var(--radius);
   padding: var(--space-8);
-  background: var(--glass-card-surface-light);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
   box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.14);
   overflow: hidden;
   -webkit-backdrop-filter: none;
@@ -1044,7 +1049,7 @@ main[data-snap-scroll='true'] > .section {
 }
 
 html[data-theme="dark"] .card {
-  background: var(--glass-card-surface-dark);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
   border-color: color-mix(in srgb, #ffffff 10%, transparent);
 }
 
@@ -1100,13 +1105,6 @@ html[data-theme="dark"] .card {
   /* Drawer */
   --drawer-w: 360px;
 
-  /* Backdrop blur system (safe defaults) */
-  --glass-blur-nav: 10px;
-  --glass-blur-card: 14px;
-  --glass-surface-light: rgba(255, 255, 255, 0.72);
-  --glass-surface-dark: rgba(17, 26, 26, 0.72);
-  --glass-card-surface-light: rgba(255, 255, 255, 0.28);
-  --glass-card-surface-dark: rgba(24, 35, 35, 0.34);
 }
 
 html {
@@ -1124,7 +1122,7 @@ section[id] {
   z-index: 50;
   height: var(--nav-h);
   background: rgba(14, 20, 20, 0.7);
-  background: var(--glass-surface-light);
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   -webkit-backdrop-filter: none;
@@ -1132,7 +1130,7 @@ section[id] {
 }
 
 html[data-theme="dark"] .nav {
-  background: var(--glass-surface-dark);
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }

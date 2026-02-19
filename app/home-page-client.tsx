@@ -1022,11 +1022,13 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds.</p>
-                <p className="card-text">As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases.</p>
-                <p className="card-text">Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit.</p>
-                <p className="card-text">In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions.</p>
-                <p className="card-text">Earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
+                <p className="card-text">Trent Walker is a senior technology executive and former hedge fund CTO with nearly three decades of experience building and leading mission-critical platforms for trading, risk, finance, and control functions across buy-side, sell-side, and market infrastructure. Most recently at Point72, he served as Head of Risk &amp; Controllers Technology, modernizing core systems, strengthening data and process coherence, ensuring robust P&amp;L foundations, and advancing frameworks for equity factor analytics and risk calculation.</p>
+
+                <p className="card-text">Previously, Trent was Head of Technology Strategy at Nasdaq and a Managing Director at MSCI, where he led application development for the Barra and RiskMetrics platforms. He also served as CTO at BlueCrest Capital Management and held senior technology leadership roles at Credit Suisse, helping drive the shift from spreadsheet-driven workflows to scalable front-to-back systems and disciplined new-product onboarding.</p>
+
+                <p className="card-text">Trent has also led in the front office. At Barclays Capital he was Global Head of Risk and Margin for Prime Services, leading global netting and risk teams overseeing over $1 trillion in financing products and building a coherent, legally accurate view of counterparty exposure and set-off. This blend of front-office accountability, deep engineering experience, and still being a hands on developer gives Trent a rare perspective on how desk-level decisions propagate into data, models, controls, and firmwide outcomes.</p>
+
+                <p className="card-text">Trent began his career as an Assistant Professor of Mathematics at UC Santa Barbara after earning his PhD from UC Berkeley, specializing in operator algebras and control theory. In his spare time, Trent invented the patented Induction Press coffee machine, launching in Q2 2026.</p>
               </div>
             </article>
 
@@ -1053,11 +1055,7 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds.</p>
-                <p className="card-text">As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases.</p>
-                <p className="card-text">Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit.</p>
-                <p className="card-text">In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions.</p>
-                <p className="card-text">Earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
+                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds. As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases. Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit. In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions; earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
               </div>
             </article>
           </div>
