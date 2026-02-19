@@ -1648,6 +1648,9 @@ html[data-theme="dark"] body {
   margin-left: 0;
   margin-right: 0;
   color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
 .products-cta-highlight {
