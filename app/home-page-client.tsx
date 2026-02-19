@@ -999,20 +999,22 @@ export default function Home() {
               <div className="leadership-card-header">
                 <div className="leadership-photo" role="img" aria-label="Trent Walker profile photo">TW</div>
                 <div className="leadership-heading-block">
-                  <h4 className="card-title">Trent Walker</h4>
+                  <div className="leadership-heading-row">
+                    <h2 className="leadership-name">Trent Walker</h2>
+                    <a
+                      className="footer-socials__link leadership-social-link"
+                      href="https://www.linkedin.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Trent Walker on LinkedIn"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.5 8.5h3v9h-3v-9Zm1.5-4.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm5.5 4.5h2.9v1.2h.1c.4-.7 1.4-1.4 2.9-1.4 3.1 0 3.6 2 3.6 4.6v4.6h-3V13.5c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7v4.1h-3v-9Z" />
+                      </svg>
+                    </a>
+                  </div>
                   <h5 className="leadership-role">Founder &amp; CEO</h5>
                 </div>
-                <a
-                  className="footer-socials__link leadership-social-link"
-                  href="https://www.linkedin.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Trent Walker on LinkedIn"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M6.5 8.5h3v9h-3v-9Zm1.5-4.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm5.5 4.5h2.9v1.2h.1c.4-.7 1.4-1.4 2.9-1.4 3.1 0 3.6 2 3.6 4.6v4.6h-3V13.5c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7v4.1h-3v-9Z" />
-                  </svg>
-                </a>
               </div>
 
               <div className="leadership-card-body">
@@ -1047,20 +1049,22 @@ export default function Home() {
               <div className="leadership-card-header">
                 <div className="leadership-photo" role="img" aria-label="Justo Ruiz profile photo">JR</div>
                 <div className="leadership-heading-block">
-                  <h4 className="card-title">Justo Ruiz</h4>
+                  <div className="leadership-heading-row">
+                    <h2 className="leadership-name">Justo Ruiz</h2>
+                    <a
+                      className="footer-socials__link leadership-social-link"
+                      href="https://www.linkedin.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Justo Ruiz on LinkedIn"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.5 8.5h3v9h-3v-9Zm1.5-4.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm5.5 4.5h2.9v1.2h.1c.4-.7 1.4-1.4 2.9-1.4 3.1 0 3.6 2 3.6 4.6v4.6h-3V13.5c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7v4.1h-3v-9Z" />
+                      </svg>
+                    </a>
+                  </div>
                   <h5 className="leadership-role">Co-Founder &amp; CTO</h5>
                 </div>
-                <a
-                  className="footer-socials__link leadership-social-link"
-                  href="https://www.linkedin.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Justo Ruiz on LinkedIn"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M6.5 8.5h3v9h-3v-9Zm1.5-4.5a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm5.5 4.5h2.9v1.2h.1c.4-.7 1.4-1.4 2.9-1.4 3.1 0 3.6 2 3.6 4.6v4.6h-3V13.5c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7v4.1h-3v-9Z" />
-                  </svg>
-                </a>
               </div>
 
               <div className="leadership-card-body">
@@ -1095,10 +1099,11 @@ export default function Home() {
 
         {/* CONTACT */}
         <section id="contact" className="section">
-          <h2 className="section-title">Talk to Us</h2>
-          <p className="section-lead muted">Share your priorities and we will route your request to the right team.</p>
-
           <form className="contact-inline-form" onSubmit={handleInlineContactSubmit} noValidate>
+            <div className="talk-form-header">
+              <h2 className="section-title">Talk with us</h2>
+              <p className="section-lead muted">Share your priorities and we will route your request to the right team.</p>
+            </div>
             <input
               className="hp-field"
               type="text"
@@ -1169,17 +1174,17 @@ export default function Home() {
                 required
               />
               <span>
-                I agree with QuantEnt <button type="button" className="footer-legal-trigger" onClick={() => openLegalModal('privacy')}>Privacy</button>, <button type="button" className="footer-legal-trigger" onClick={() => openLegalModal('terms')}>Terms</button>, and <button type="button" className="footer-legal-trigger" onClick={() => openLegalModal('cookies')}>Cookies</button>.
+                I agree with QuantEnt <button type="button" className="footer-legal-trigger consent-legal-link" onClick={() => openLegalModal('privacy')}>Privacy</button>, <button type="button" className="footer-legal-trigger consent-legal-link" onClick={() => openLegalModal('terms')}>Terms</button>, and <button type="button" className="footer-legal-trigger consent-legal-link" onClick={() => openLegalModal('cookies')}>Cookies</button>.
               </span>
             </label>
 
             {contactTouched && !contactForm.consent ? <span className="field-error">Consent is required</span> : null}
 
             <div className="contact-inline-actions">
-              <button className="btn btn-primary" type="submit" disabled={contactStatus === 'submitting'}>
+              <button className="btn btn-primary btn--sm" type="submit" disabled={contactStatus === 'submitting'}>
                 {contactStatus === 'submitting' ? 'Sending...' : 'Send message'}
               </button>
-              <button className="btn btn-secondary" type="button" onClick={openContactStepper}>
+              <button className="btn btn-secondary btn--sm" type="button" onClick={openContactStepper}>
                 Open advanced form
               </button>
             </div>

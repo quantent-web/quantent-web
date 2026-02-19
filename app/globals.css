@@ -226,6 +226,19 @@ p,
   letter-spacing: 0.04em;
 }
 
+.btn--sm {
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1;
+  font-size: 12px;
+  border: 1px solid #0000;
+  border-radius: 999px;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  display: inline-flex;
+}
+
 @media (max-width: 640px) {
   h1 { font-size: 3rem; line-height: 3.5rem; }
   h2 { font-size: 2.25rem; line-height: 2.75rem; }
@@ -1496,6 +1509,14 @@ section[id] {
 }
 
 @media (max-width: 720px) {
+  #contact .contact-inline-actions {
+    justify-content: flex-end;
+  }
+
+  .talk-form-header {
+    margin-bottom: 40px;
+  }
+
   .contact-modal-card {
     width: 100%;
     max-height: 86vh;
@@ -1586,9 +1607,17 @@ section[id] {
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(9, 12, 12, 0.92);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   display: grid;
   gap: var(--space-4);
+}
+
+#contact .contact-inline-form {
+  box-shadow: none;
+}
+
+.talk-form-header {
+  text-align: left;
+  margin-bottom: 64px;
 }
 
 .contact-inline-actions {
@@ -1596,6 +1625,8 @@ section[id] {
   flex-wrap: wrap;
   gap: var(--space-3);
   align-items: center;
+  justify-content: flex-end;
+  margin-top: 48px;
 }
 
 #contact .field textarea {
@@ -1747,17 +1778,21 @@ section[id] {
 }
 
 .footer-socials__link {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
+  width: 50px;
+  height: 50px;
+  color: var(--text-primary);
+  border: 1px solid #0000;
+  border-radius: 8px;
+  background-color: var(--border);
+}
+
+.footer-socials__link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid transparent;
-  color: var(--text-primary);
-  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease,
-    background 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
 }
+
 
 .footer-socials__link svg {
   width: 18px;
@@ -1928,6 +1963,19 @@ section[id] {
 .footer-legal-trigger:hover,
 .footer-legal-trigger:focus-visible {
   color: var(--primary);
+}
+
+
+.consent-legal-link {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.consent-legal-link:hover,
+.consent-legal-link:focus-visible {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .legal-dialog {
@@ -2395,7 +2443,7 @@ section[id] {
   display: grid;
   grid-template-columns: 120px minmax(0, 1fr);
   gap: var(--space-5);
-  align-items: center;
+  align-items: flex-start;
 }
 
 .leadership-photo {
@@ -2414,11 +2462,17 @@ section[id] {
 .leadership-heading-block {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
-.leadership-heading-block .card-title {
-  margin-bottom: 0;
+.leadership-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.leadership-name {
+  margin: 0 0 16px;
 }
 
 .leadership-role {
@@ -2438,7 +2492,7 @@ section[id] {
 
 
 .leadership-social-link {
-  margin-left: auto;
+  margin-left: 0;
 }
 
 .leadership-block-title {
