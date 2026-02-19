@@ -934,31 +934,52 @@ export default function Home() {
         <div className="container">
 
         {/* ABOUT */}
-        <section id="about" className="section">
-          <h2 className="section-title">About QuantEnt</h2>
+        <section id="about" className="section about-section">
+          <div className="about-intro-grid">
+            <h2 className="about-title">About QuantEnt</h2>
+            <p className="about-intro-copy">
+              <span className="text-highlight">QuantEnt</span> was founded to solve a problem we’ve repeatedly seen inside large, complex organizations: systems scale faster than shared understanding.
+            </p>
+          </div>
 
-          <p className="section-lead">
-            QuantEnt was founded to solve a problem we’ve repeatedly seen inside large, complex organizations: systems scale faster than shared understanding.
+          <p className="about-statement">
+            When meaning decays, governance fails — quietly. <span className="text-highlight">We build systems that prevent semantic decay, even as organizations evolve.</span>
           </p>
 
-          <p className="section-note">
-            When meaning decays, governance fails — quietly. We build systems that prevent semantic decay, even as organizations evolve.
-          </p>
+          <h3 className="about-subhead">Leadership</h3>
 
-          <h3 className="subhead">Leadership</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Trent Walker — Founder & CEO</h4>
-              <p className="card-text">
-                Former Head of Enterprise Architecture and Risk Technology at Point72; Managing Director at MSCI and Barclays; CTO roles across global financial institutions.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Justo Ruiz — Co-Founder & CTO</h4>
-              <p className="card-text">
-                Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
-              </p>
-            </div>
+          <div className="leadership-grid" role="list">
+            <article className="leadership-card" role="listitem">
+              <div className="leadership-avatar" aria-hidden="true">TW</div>
+              <div className="leadership-content">
+                <h4 className="card-title">Trent Walker — Founder & CEO</h4>
+                <p className="card-text">
+                  Senior technology executive and former hedge fund CTO with nearly three decades building mission-critical trading, risk, finance, and control platforms.
+                </p>
+                <p className="card-text">
+                  Trent led Risk &amp; Controllers Technology at Point72, modernizing core systems, strengthening P&amp;L foundations, and advancing frameworks for equity factor analytics and risk calculation. Earlier, he held senior leadership positions at Nasdaq, MSCI, BlueCrest, Credit Suisse, and Barclays Capital across both front-office and enterprise technology.
+                </p>
+                <p className="card-text">
+                  He began his career as Assistant Professor of Mathematics at UC Santa Barbara after earning a PhD at UC Berkeley in operator algebras and control theory. Outside of work, Trent is the inventor of the patented Induction Press coffee machine, scheduled for launch in Q2 2026.
+                </p>
+              </div>
+            </article>
+
+            <article className="leadership-card" role="listitem">
+              <div className="leadership-avatar" aria-hidden="true">JR</div>
+              <div className="leadership-content">
+                <h4 className="card-title">Justo Ruiz — Co-Founder & CTO</h4>
+                <p className="card-text">
+                  Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
+                </p>
+                <p className="card-text">
+                  Justo has led architecture and engineering initiatives across complex financial environments, aligning platform design with governance, operational resilience, and measurable business outcomes.
+                </p>
+                <p className="card-text">
+                  At QuantEnt, he focuses on product architecture, semantic consistency, and scalable delivery patterns that help organizations build durable AI and data capabilities.
+                </p>
+              </div>
+            </article>
           </div>
         </section>
 

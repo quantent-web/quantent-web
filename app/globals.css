@@ -2481,3 +2481,147 @@ html[data-theme="dark"] body {
   font-weight: 900;
   font-size: 2.5rem;
 }
+
+/* =========================
+   About section refresh
+========================= */
+.about-section {
+  padding-top: clamp(5rem, 9vw, 7rem);
+  padding-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-title {
+  text-align: left;
+  padding: 0 0 var(--space-7);
+  border-right: 1px solid var(--border);
+}
+
+.about-intro-copy {
+  margin: 0;
+  padding: 0 0 var(--space-7) var(--space-7);
+  max-width: 34ch;
+}
+
+.about-statement {
+  margin-top: var(--space-7);
+  margin-bottom: var(--space-7);
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid var(--border);
+  font-family: "Spline Sans Mono", monospace;
+  font-weight: 700;
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+.about-subhead {
+  margin-top: 0;
+  margin-bottom: var(--space-6);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 400;
+  text-align: left;
+}
+
+.leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.leadership-card {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: clamp(1.5rem, 2.2vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
+.leadership-avatar {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  display: grid;
+  place-items: center;
+  font-family: "Spline Sans Mono", monospace;
+  font-size: 2rem;
+  color: var(--primary);
+  background: linear-gradient(145deg, rgba(5, 205, 152, 0.22), rgba(5, 205, 152, 0.06));
+  border: 1px solid rgba(5, 205, 152, 0.4);
+}
+
+.leadership-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.leadership-content .card-title {
+  margin-bottom: 0;
+}
+
+.leadership-content .card-text {
+  color: var(--text-secondary);
+}
+
+/* =========================
+   Footer width fix
+========================= */
+.site-footer {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.footer-card {
+  width: 100%;
+  max-width: none;
+}
+
+@media (max-width: 1080px) {
+  .about-intro-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-title {
+    border-right: 0;
+    padding-bottom: var(--space-5);
+  }
+
+  .about-intro-copy {
+    padding: 0 0 var(--space-6);
+  }
+
+  .leadership-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-statement {
+    font-size: 1.75rem;
+  }
+
+  .leadership-card {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .leadership-avatar {
+    width: 88px;
+  }
+
+  .site-footer {
+    width: calc(100% - 2rem);
+  }
+}
