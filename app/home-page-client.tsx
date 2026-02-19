@@ -398,7 +398,7 @@ export default function Home() {
         </div>
 
         <section id="what-we-do" className="what-we-do-container section">
-          <Particles className="what-we-do-background" />
+          <Particles className="what-we-do-background" particleCount={260} particleBaseSize={110} particleColors={['#ffffff', '#f1f5f9', '#dbeafe']} />
           <div className="header-section">
             <h2>What We Do</h2>
             <p>
@@ -414,28 +414,28 @@ export default function Home() {
               </div>
               <div className="what-we-do-grid what-we-do-grid--four">
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">System Analysis</h4>
                     <p className="card-text"><span className="text-highlight">QuantEnt</span> analyzes users, roles, entitlements, and data as interconnected systems</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Quantitative Certification</h4>
                     <p className="card-text"><span className="text-highlight">Certify access</span> and meaning with mathematical rigor</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Risk Detection</h4>
                     <p className="card-text"><span className="text-highlight">Detect drift</span>, over-exposure, and structural risk early</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Continuous Control</h4>
                     <p className="card-text"><span className="text-highlight">Maintain control</span> as systems, data, and organizations evolve</p>
@@ -451,28 +451,28 @@ export default function Home() {
               </div>
               <div className="what-we-do-grid what-we-do-grid--two">
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">MetaData Tagging</h4>
                     <p className="card-text card-text-secondary">Analyzing and <span className="text-highlight">Tagging APIs</span>, data, applications, and resources for use by users and AI</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Data Model Rigorization</h4>
                     <p className="card-text card-text-secondary">With software and consulting, our <span className="text-highlight">SMEs</span> will help create, refine, or just critique the data models of the firm</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Ongoing Cleanliness Certification</h4>
                     <p className="card-text card-text-secondary"><span className="text-highlight">Institutional Data Cleanliness</span> starts at the data model process</p>
                   </div>
                 </article>
                 <article className="card what-we-do-card">
-                  <img src="/images/card-icon-quantent.svg" alt="" width="50" height="50" className="what-we-do-icon" />
+                  <img src="/images/card-icon-quantent.svg" alt="" width="40" height="40" className="what-we-do-icon" />
                   <div className="what-we-do-card-copy">
                     <h4 className="card-title">Agentic AI Compatibility</h4>
                     <p className="card-text card-text-secondary">Our future product is designed to make <span className="text-highlight">Agentic AI</span> work with the highest possible confidence level, with the safest data protection possible</p>

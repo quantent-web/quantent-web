@@ -258,7 +258,7 @@ p,
 
 h1 { font-size: 4.5rem; line-height: 6.25rem; }
 h2 { font-size: 3rem; line-height: 4rem; }
-h3 { font-size: 2.5rem; line-height: 3.5rem; }
+h3 { font-size: 2rem; line-height: 2.625rem; }
 h4 { font-size: 1.5rem; line-height: 2.125rem; }
 h5 { font-size: 1.25rem; line-height: 1.875rem; }
 h6 { font-size: 1.125rem; line-height: 1.75rem; }
@@ -496,6 +496,12 @@ main[data-snap-scroll='true'] > .section {
   text-align: left;
   margin-bottom: var(--space-2);
   color: var(--text-primary);
+  font-family: var(--font-poppins), system-ui, -apple-system, Segoe UI, Roboto,
+    Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.0625rem;
 }
 
 
@@ -1589,7 +1595,7 @@ html[data-theme="dark"] body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.8;
 }
 
 .what-we-do-container > *:not(.what-we-do-background) {
@@ -1638,8 +1644,8 @@ html[data-theme="dark"] body {
 }
 
 .what-we-do-icon {
-  width: 3.125rem;
-  height: 3.125rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .what-we-do-card-copy {
@@ -1653,6 +1659,10 @@ html[data-theme="dark"] body {
   text-wrap: balance;
 }
 
+.what-we-do-data-cleaning .card-title {
+  max-width: none;
+}
+
 .text-highlight {
   color: var(--primary);
   font-weight: 700;
@@ -1660,6 +1670,10 @@ html[data-theme="dark"] body {
 
 .header-section p,
 .header-subsection p {
+  max-width: 50%;
+}
+
+.what-we-do-data-cleaning .header-subsection h3 {
   max-width: 50%;
 }
 
@@ -1674,7 +1688,8 @@ html[data-theme="dark"] body {
   }
 
   .header-section p,
-  .header-subsection p {
+  .header-subsection p,
+  .what-we-do-data-cleaning .header-subsection h3 {
     max-width: 100%;
   }
 }
@@ -1710,7 +1725,8 @@ html[data-theme="dark"] body {
 
   .header-section p,
   .header-subsection p,
-  .what-we-do-card .card-title {
+  .what-we-do-card .card-title,
+  .what-we-do-data-cleaning .header-subsection h3 {
     max-width: 100%;
   }
 }
