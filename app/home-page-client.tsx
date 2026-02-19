@@ -495,7 +495,7 @@ export default function Home() {
               </div>
               <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary product-card-icon-btn" href="#quantcertify" aria-label="Learn more about QuantCertify">
-                  <span aria-hidden="true">↘</span>
+                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -507,7 +507,7 @@ export default function Home() {
               </div>
               <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary product-card-icon-btn" href="#quantvault" aria-label="Learn more about QuantVault">
-                  <span aria-hidden="true">↘</span>
+                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -519,14 +519,14 @@ export default function Home() {
               </div>
               <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary product-card-icon-btn" href="#quantdata" aria-label="Learn more about QuantData">
-                  <span aria-hidden="true">↘</span>
+                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" />
                 </a>
               </div>
             </div>
           </div>
 
           <div className="cta-strip">
-            <p className="section-note products-cta-text">Talk to Us — Start with QuantCertify</p>
+            <p className="section-note products-cta-text">Talk to Us — <span className="products-cta-highlight">Start with QuantCertify</span></p>
             <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
             </button>

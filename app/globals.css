@@ -1647,6 +1647,11 @@ html[data-theme="dark"] body {
   text-align: left;
   margin-left: 0;
   margin-right: 0;
+  color: white;
+}
+
+.products-cta-highlight {
+  color: var(--primary);
 }
 
 .product-card-icon-btn {
