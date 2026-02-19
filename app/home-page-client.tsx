@@ -806,41 +806,42 @@ export default function Home() {
           </div>
         </section>
 
+        </div>
+
         {/* CAPABILITIES */}
-        <section id="capabilities" className="section">
-          <h2 className="section-title">What We’re Exceptional At</h2>
+        <section id="capabilities" className="capabilities-container section">
+          <h2 className="capabilities-title">What We’re Exceptional At</h2>
 
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Quantitative Governance</h4>
-              <p className="card-text">
-                Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact.
-                Governance focused on material risk.
-              </p>
-            </div>
+          <div className="capabilities-shell">
+            <div className="capabilities-grid">
+              <article className="capability-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
+                <h4 className="card-title">Quantitative Governance</h4>
+                <p className="card-text">Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact. Governance focused on material risk.</p>
+              </article>
 
-            <div className="card">
-              <h4 className="card-title">Semantic Data Modeling</h4>
-              <p className="card-text">
-                Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.
-              </p>
-            </div>
+              <article className="capability-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
+                <h4 className="card-title">Semantic Data Modeling</h4>
+                <p className="card-text">Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.</p>
+              </article>
 
-            <div className="card">
-              <h4 className="card-title">Safe Model Evolution</h4>
-              <p className="card-text">
-                Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.
-              </p>
-            </div>
+              <article className="capability-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
+                <h4 className="card-title">Safe Model Evolution</h4>
+                <p className="card-text">Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.</p>
+              </article>
 
-            <div className="card">
-              <h4 className="card-title">Financial Services Depth</h4>
-              <p className="card-text">
-                Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.
-              </p>
+              <article className="capability-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
+                <h4 className="card-title">Financial Services Depth</h4>
+                <p className="card-text">Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.</p>
+              </article>
             </div>
           </div>
         </section>
+
+        <div className="container">
 
         {/* SERVICES */}
         <section id="services" className="section">
