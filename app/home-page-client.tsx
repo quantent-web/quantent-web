@@ -810,32 +810,40 @@ export default function Home() {
 
         {/* CAPABILITIES */}
         <section id="capabilities" className="capabilities-container section">
-          <h2 className="capabilities-title">What We’re Exceptional At</h2>
+          <h2 className="section-title">What We’re Exceptional At</h2>
 
           <div className="capabilities-shell">
-            <div className="capabilities-grid">
-              <article className="capability-card">
-                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
-                <h4 className="card-title">Quantitative Governance</h4>
-                <p className="card-text">Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact. Governance focused on material risk.</p>
+            <div className="what-we-do-grid what-we-do-grid--two capabilities-grid">
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Quantitative Governance</h4>
+                  <p className="card-text card-text-secondary">Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact. Governance focused on material risk.</p>
+                </div>
               </article>
 
-              <article className="capability-card">
-                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
-                <h4 className="card-title">Semantic Data Modeling</h4>
-                <p className="card-text">Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.</p>
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Semantic Data Modeling</h4>
+                  <p className="card-text card-text-secondary">Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.</p>
+                </div>
               </article>
 
-              <article className="capability-card">
-                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
-                <h4 className="card-title">Safe Model Evolution</h4>
-                <p className="card-text">Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.</p>
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Safe Model Evolution</h4>
+                  <p className="card-text card-text-secondary">Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.</p>
+                </div>
               </article>
 
-              <article className="capability-card">
-                <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="capability-icon" />
-                <h4 className="card-title">Financial Services Depth</h4>
-                <p className="card-text">Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.</p>
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Financial Services Depth</h4>
+                  <p className="card-text card-text-secondary">Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.</p>
+                </div>
               </article>
             </div>
           </div>
