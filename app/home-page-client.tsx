@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent, MouseEvent } from 'react';
 import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
+import BlurText from './components/BlurText/BlurText';
 import DecryptedText from './components/DecryptedText/DecryptedText';
 import { Badge } from './components/ui/badge';
 import Particles from './components/ui/Particles';
@@ -409,7 +410,14 @@ export default function Home() {
         <div className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
-          <h1 className="hero-title">Creating Institutional Control over Entitlements and Data</h1>
+          <BlurText
+            as="h1"
+            className="hero-title"
+            text="Creating Institutional Control over Entitlements and Data"
+            delay={120}
+            animateBy="words"
+            direction="top"
+          />
 
 
 
