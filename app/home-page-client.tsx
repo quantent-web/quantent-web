@@ -410,14 +410,14 @@ export default function Home() {
         <div className="container">
         {/* HOME / HERO */}
         <section id="home" className="section">
-     <BlurText
-  as="h1"
-  className="hero-title"
-  text="Creating Institutional Control over Entitlements and Data"
-  delay={120}
-  animateBy="words"
-  direction="top"
-/>
+          <BlurText
+            as="h1"
+            className="hero-title"
+            text="Creating Institutional Control over Entitlements and Data"
+            delay={120}
+            animateBy="words"
+            direction="top"
+          />
 
 
 
@@ -1007,7 +1007,7 @@ export default function Home() {
                     <h2 className="leadership-name">Trent Walker</h2>
                     <a
                       className="profile-social-link leadership-social-link"
-                      href="https://www.linkedin.com"
+                      href="https://www.linkedin.com/in/trentewalker"
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Trent Walker on LinkedIn"
@@ -1022,30 +1022,13 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <section>
-                  <h5 className="leadership-block-title">Executive Profile</h5>
-                  <p className="card-text">Senior technology executive and former hedge fund CTO with nearly three decades building and leading mission-critical platforms for trading, risk, finance, and control functions across buy-side and sell-side organizations.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Current Mandate (Shapelets)</h5>
-                  <p className="card-text">As Head of Risk &amp; Controllers Technology at Point72, he modernized core systems, strengthened data and process coherence, reinforced robust P&amp;L foundations, and advanced frameworks for equity factor analytics and risk calculation.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Previous Leadership</h5>
-                  <p className="card-text">Head of Technology Strategy at Nasdaq; Managing Director at MSCI leading application development for Barra and RiskMetrics; CTO at BlueCrest Capital Management; and senior technology roles at Credit Suisse driving the transition from spreadsheet-based workflows to scalable front-to-back systems and disciplined new-product onboarding.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Front-office Technology</h5>
-                  <p className="card-text">At Barclays Capital, he served as Global Head of Risk and Margin for Prime Services, leading global netting and risk teams across financing products and building a coherent, legally accurate view of counterparty exposure and set-off.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Quantitative Foundation</h5>
-                  <p className="card-text">Assistant Professor of Mathematics at UC Santa Barbara after earning a PhD from UC Berkeley, specializing in operator algebras and control theory.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Technical Focus</h5>
-                  <p className="card-text">Inventor of the patented Induction Press coffee machine, planned for launch in Q2 2026.</p>
-                </section>
+                <p className="card-text">Trent Walker is a senior technology executive and former hedge fund CTO with nearly three decades of experience building and leading mission-critical platforms for trading, risk, finance, and control functions across buy-side, sell-side, and market infrastructure. Most recently at Point72, he served as Head of Risk &amp; Controllers Technology, modernizing core systems, strengthening data and process coherence, ensuring robust P&amp;L foundations, and advancing frameworks for equity factor analytics and risk calculation.</p>
+
+                <p className="card-text">Previously, Trent was Head of Technology Strategy at Nasdaq and a Managing Director at MSCI, where he led application development for the Barra and RiskMetrics platforms. He also served as CTO at BlueCrest Capital Management and held senior technology leadership roles at Credit Suisse, helping drive the shift from spreadsheet-driven workflows to scalable front-to-back systems and disciplined new-product onboarding.</p>
+
+                <p className="card-text">Trent has also led in the front office. At Barclays Capital he was Global Head of Risk and Margin for Prime Services, leading global netting and risk teams overseeing over $1 trillion in financing products and building a coherent, legally accurate view of counterparty exposure and set-off. This blend of front-office accountability, deep engineering experience, and still being a hands on developer gives Trent a rare perspective on how desk-level decisions propagate into data, models, controls, and firmwide outcomes.</p>
+
+                <p className="card-text">Trent began his career as an Assistant Professor of Mathematics at UC Santa Barbara after earning his PhD from UC Berkeley, specializing in operator algebras and control theory. In his spare time, Trent invented the patented Induction Press coffee machine, launching in Q2 2026.</p>
               </div>
             </article>
 
@@ -1057,7 +1040,7 @@ export default function Home() {
                     <h2 className="leadership-name">Justo Ruiz</h2>
                     <a
                       className="profile-social-link leadership-social-link"
-                      href="https://www.linkedin.com"
+                      href="https://www.linkedin.com/in/justoruiz"
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Justo Ruiz on LinkedIn"
@@ -1072,30 +1055,15 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <section>
-                  <h5 className="leadership-block-title">Executive Profile</h5>
-                  <p className="card-text">Justo Ruiz es fundador de IA y científico informático práctico especializado en sistemas distribuidos, computación de alto rendimiento e infraestructura de IA generativa, con un historial de lanzar plataformas de producción para cargas de trabajo intensivas en datos a través de startups y fondos de cobertura de primer nivel.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Current Mandate (Shapelets)</h5>
-                  <p className="card-text">Como fundador y CEO de Shapelets, Justo construyó una plataforma de procesamiento y visualización de datos de alto rendimiento y diseñó una base de datos vectorial capaz de absorber más de 100.000 incrustaciones por segundo para búsquedas semánticas en tiempo real y casos de uso de IA generativa.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Previous Leadership</h5>
-                  <p className="card-text">Anteriormente, como CTO de una empresa respaldada por capital privado, Justo reajustó la estrategia de producto, estableció centros de desarrollo en España, modernizó la plataforma y contribuyó a una salida exitosa.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Front-office Technology</h5>
-                  <p className="card-text">En roles tecnológicos de front-office, incluyendo como Principal en BlueCrest Capital Management, Justo unificó sistemas de datos de mercado y referencia y entregó una plataforma consolidada de alto rendimiento para decisiones de trading y cartera.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Quantitative Foundation</h5>
-                  <p className="card-text">Como Senior Quant Developer en la mesa de Bonos Convertibles de Barclays Capital, Justo construyó infraestructura de precios y negociación crítica para el rendimiento de valores híbridos complejos.</p>
-                </section>
-                <section>
-                  <h5 className="leadership-block-title">Technical Focus</h5>
-                  <p className="card-text">Su foco actual combina IA aplicada, sistemas distribuidos y ejecución pragmática para convertir investigación cuantitativa en plataformas de producción robustas y auditables.</p>
-                </section>
+                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds.</p>
+
+                <p className="card-text">As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases.</p>
+
+                <p className="card-text">Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit.</p>
+
+                <p className="card-text">In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions.</p>
+
+                <p className="card-text">Earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
               </div>
             </article>
           </div>
