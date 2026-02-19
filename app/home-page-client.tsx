@@ -655,106 +655,155 @@ export default function Home() {
         <div className="container">
 
         {/* QUANTVAULT */}
-        <section id="quantvault" className="section">
-          <h2 className="section-title">QuantVault</h2>
-          <p className="section-lead">Enterprise Entitlement Intelligence</p>
+        <section id="quantvault" className="section product-detail-section">
+          <div className="product-detail-grid product-detail-grid--vault">
+            <div className="product-row product-row--hero">
+              <div className="product-cell product-cell--hero-main">
+                <Badge className="qc-badge">Products</Badge>
+                <h2>QuantVault</h2>
+                <h3>Enterprise Entitlement Intelligence</h3>
+              </div>
+              <div className="product-cell product-cell--hero-note">
+                <p>
+                  <span className="text-highlight">QuantVault</span> provides a system-level view of
+                  entitlements across your organization.
+                </p>
+              </div>
+            </div>
 
-          <p className="section-note">
-            QuantVault provides a system-level view of entitlements across your organization.
-          </p>
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">What It Does</h4>
+              </div>
+            </div>
 
-          <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Aggregates entitlements</h4>
-              <p className="card-text">Aggregates entitlements across IAM platforms and systems.</p>
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Aggregates entitlements</h4>
+                <p className="card-text">Quantifies entitlement exposure, drift, and role integrity using mathematics — not rules.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Unified view</h4>
+                <p className="card-text">Analyzes users and entitlements as a system, not isolated records.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Unified view</h4>
-              <p className="card-text">Creates a unified view of users, resources, roles, and access.</p>
+
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Cross-system analysis</h4>
+                <p className="card-text">Enables cross-system analysis of entitlement structure and risk.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Governance foundation</h4>
+                <p className="card-text">Foundation for quantitative entitlement governance at scale.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Cross-system analysis</h4>
-              <p className="card-text">
-                Enables cross-system analysis of entitlement structure and risk.
-              </p>
+
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">Relationship to QuantCertify</h4>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Governance foundation</h4>
-              <p className="card-text">
-                Foundation for quantitative entitlement governance at scale.
-              </p>
+
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Runs on top</h4>
+                <p className="card-text">QuantCertify runs on top of QuantVault.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">System context</h4>
+                <p className="card-text">QuantVault provides the system-wide context.</p>
+              </div>
+            </div>
+
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">Integration Philosophy</h4>
+              </div>
+            </div>
+
+            <div className="product-row product-row--single">
+              <div className="product-cell product-cell--statement">
+                <p className="section-note">QuantVault plugs into and enhances your existing IAM solutions. <span className="text-highlight">It does not replace them.</span></p>
+              </div>
             </div>
           </div>
-
-          <h3 className="subhead">Relationship to QuantCertify</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Runs on top</h4>
-              <p className="card-text">QuantCertify runs on top of QuantVault.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">System context</h4>
-              <p className="card-text">QuantVault provides the system-wide context.</p>
-            </div>
-          </div>
-
-          <h3 className="subhead">Integration Philosophy</h3>
-          <p className="section-note">
-            QuantVault plugs into and enhances your existing IAM solutions. It does not replace them.
-          </p>
         </section>
 
         {/* QUANTDATA */}
-        <section id="quantdata" className="section">
-          <h2 className="section-title">QuantData</h2>
-          <p className="section-lead">Semantic Governance for Enterprise Data</p>
+        <section id="quantdata" className="section product-detail-section">
+          <div className="product-detail-grid product-detail-grid--data">
+            <div className="product-row product-row--hero">
+              <div className="product-cell product-cell--hero-main">
+                <Badge className="qc-badge">Products</Badge>
+                <h2>QuantData</h2>
+                <h3>Semantic Governance for Enterprise Data</h3>
+              </div>
+              <div className="product-cell product-cell--hero-note">
+                <p>
+                  <span className="text-highlight">QuantData</span> governs what enterprise data means and
+                  how it evolves safely over time.
+                </p>
+              </div>
+            </div>
 
-          <p className="section-note">
-            QuantData governs what enterprise data means and how it evolves safely over time.
-          </p>
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">What It Does</h4>
+              </div>
+            </div>
 
-          <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Canonical models</h4>
-              <p className="card-text">Establishes canonical data models and nomenclature.</p>
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Canonical models</h4>
+                <p className="card-text">Establishes canonical data models and nomenclature.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Controlled evolution</h4>
-              <p className="card-text">
-                Governs evolution without breaking reporting or workflows.
-              </p>
+
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Controlled evolution</h4>
+                <p className="card-text">Governs evolution without breaking reporting or workflows.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Detects semantic drift</h4>
-              <p className="card-text">
-                Detects semantic drift, ambiguity, and incompatibility.
-              </p>
+
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Detects semantic drift</h4>
+                <p className="card-text">Detects semantic drift, ambiguity, and incompatibility.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">AI readiness</h4>
-              <p className="card-text">
-                Ensures data is fit for reporting, automation, and AI.
-              </p>
+
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">AI readiness</h4>
+                <p className="card-text">Ensures data is fit for reporting, automation, and AI.</p>
+              </div>
+            </div>
+
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">Why It Matters</h4>
+              </div>
+            </div>
+
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Access + meaning</h4>
+                <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Meaning + access</h4>
+                <p className="card-text">Data governance fails if access governance is broken.</p>
+              </div>
+            </div>
+
+            <div className="product-row product-row--single">
+              <div className="product-cell product-cell--statement">
+                <p className="section-note">QuantData and QuantCertify are designed to work together so <span className="text-highlight">data meaning and permissions evolve in lockstep.</span></p>
+              </div>
             </div>
           </div>
-
-          <h3 className="subhead">Why It Matters</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Access + meaning</h4>
-              <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Meaning + access</h4>
-              <p className="card-text">Data governance fails if access governance is broken.</p>
-            </div>
-          </div>
-
-          <p className="section-note">
-            QuantData and QuantCertify are designed to work together so data meaning and permissions evolve in lockstep.
-          </p>
         </section>
 
         {/* CAPABILITIES */}
