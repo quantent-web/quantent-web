@@ -494,8 +494,8 @@ export default function Home() {
                 <p className="card-text">Certification with quantitative control.</p>
               </div>
               <div className="card-actions product-card-actions">
-                <a className="btn btn-secondary" href="#quantcertify">
-                  Learn more
+                <a className="btn btn-secondary product-card-icon-btn" href="#quantcertify" aria-label="Learn more about QuantCertify">
+                  <span aria-hidden="true">↘</span>
                 </a>
               </div>
             </div>
@@ -506,8 +506,8 @@ export default function Home() {
                 <p className="card-text">Enterprise entitlement intelligence.</p>
               </div>
               <div className="card-actions product-card-actions">
-                <a className="btn btn-secondary" href="#quantvault">
-                  Learn more
+                <a className="btn btn-secondary product-card-icon-btn" href="#quantvault" aria-label="Learn more about QuantVault">
+                  <span aria-hidden="true">↘</span>
                 </a>
               </div>
             </div>
@@ -518,15 +518,15 @@ export default function Home() {
                 <p className="card-text">Semantic governance for enterprise data.</p>
               </div>
               <div className="card-actions product-card-actions">
-                <a className="btn btn-secondary" href="#quantdata">
-                  Learn more
+                <a className="btn btn-secondary product-card-icon-btn" href="#quantdata" aria-label="Learn more about QuantData">
+                  <span aria-hidden="true">↘</span>
                 </a>
               </div>
             </div>
           </div>
 
           <div className="cta-strip">
-            <p className="cta-text">Talk to Us — Start with QuantCertify</p>
+            <p className="section-note products-cta-text">Talk to Us — Start with QuantCertify</p>
             <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
             </button>
