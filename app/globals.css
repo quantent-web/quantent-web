@@ -1670,6 +1670,12 @@ html[data-theme="dark"] body {
   line-height: 1;
 }
 
+.product-card-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: brightness(0) invert(1);
+}
+
 @media (max-width: 640px) {
   .product-card-actions {
     width: 100%;
