@@ -1212,10 +1212,10 @@ html[data-theme="dark"] .nav {
 
 .section-note {
   margin-top: var(--space-5);
+  text-align: left;
   max-width: 42ch;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .section-note.strong {
@@ -2051,4 +2051,3 @@ html[data-theme="dark"] body {
   font-weight: 900;
   font-size: 2.5rem;
 }
-
