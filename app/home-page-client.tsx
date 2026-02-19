@@ -999,7 +999,7 @@ export default function Home() {
                     <h2 className="leadership-name">Trent Walker</h2>
                     <a
                       className="profile-social-link leadership-social-link"
-                      href="https://www.linkedin.com"
+                      href="https://www.linkedin.com/in/trentewalker"
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Trent Walker on LinkedIn"
@@ -1014,7 +1014,11 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <p className="card-text">Trent Walker is a senior technology executive and former hedge fund CTO with nearly three decades of experience building and leading mission-critical platforms for trading, risk, finance, and control functions. He has held senior leadership roles across both technology and the front office—spanning derivatives, prime brokerage, buy-side and sell-side—along with experience in market infrastructure and vendor technology. Most recently at Point72, he served as Head of Risk &amp; Controllers Technology, modernizing core systems, strengthening data and process coherence, ensuring robust P&amp;L foundations, and advancing frameworks for equity factor analytics and risk calculation. Previously, Trent was Head of Technology Strategy at Nasdaq and a Managing Director at MSCI, where he led all application development, in particular for the Barra and RiskMetrics platforms. He also served as CTO at BlueCrest Capital Management and held senior technology leadership roles at Credit Suisse, helping drive the evolution from spreadsheet-driven workflows to scalable front-to-back systems and disciplined new-product onboarding. Earlier, at Barclays Capital he was Global Head of Risk and Margin for Prime Services, leading the global netting and risk teams across financing products and building a coherent, legally accurate view of counterparty exposure and set-off. Trent began his career as an Assistant Professor of Mathematics at UC Santa Barbara after acquiring his PhD from UC Berkeley, specializing in operator algebras and control theory. In his spare time, Trent has invented a new patented coffee machine, the Induction Press, which will launch in Q2 of 2026.</p>
+                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds.</p>
+                <p className="card-text">As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases.</p>
+                <p className="card-text">Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit.</p>
+                <p className="card-text">In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions.</p>
+                <p className="card-text">Earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
               </div>
             </article>
 
@@ -1026,7 +1030,7 @@ export default function Home() {
                     <h2 className="leadership-name">Justo Ruiz</h2>
                     <a
                       className="profile-social-link leadership-social-link"
-                      href="https://www.linkedin.com"
+                      href="https://www.linkedin.com/in/justoruiz"
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Justo Ruiz on LinkedIn"
@@ -1041,7 +1045,11 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds. As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases. Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit. In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions; earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
+                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds.</p>
+                <p className="card-text">As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases.</p>
+                <p className="card-text">Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit.</p>
+                <p className="card-text">In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions.</p>
+                <p className="card-text">Earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
               </div>
             </article>
           </div>

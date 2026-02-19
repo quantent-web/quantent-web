@@ -79,14 +79,10 @@ const BlurText = ({
     () =>
       direction === 'top'
         ? {
-            filter: 'blur(10px)',
-            WebkitFilter: 'blur(10px)',
             opacity: 0,
             y: -50,
           }
         : {
-            filter: 'blur(10px)',
-            WebkitFilter: 'blur(10px)',
             opacity: 0,
             y: 50,
           },
@@ -96,12 +92,10 @@ const BlurText = ({
   const defaultTo = useMemo(
     () => [
       {
-        filter: 'blur(5px)',
-        WebkitFilter: 'blur(5px)',
         opacity: 0.5,
         y: direction === 'top' ? 5 : -5,
       },
-      { filter: 'blur(0px)', WebkitFilter: 'blur(0px)', opacity: 1, y: 0 },
+      { opacity: 1, y: 0 },
     ],
     [direction]
   );
