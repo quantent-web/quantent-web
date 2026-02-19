@@ -1091,8 +1091,6 @@ html[data-theme="dark"] .card {
 /* =========================
    Sticky nav + anchors
 ========================= */
-<<<<<<< codex/refactor-theme-system-for-performance
-=======
 :root {
   --nav-h: 64px;
 
@@ -1110,7 +1108,6 @@ html[data-theme="dark"] .card {
   --glass-card-surface-light: rgba(255, 255, 255, 0.42);
   --glass-card-surface-dark: rgba(24, 35, 35, 0.48);
 }
->>>>>>> main
 
 html {
   scroll-behavior: smooth;
@@ -1126,9 +1123,7 @@ section[id] {
   top: 0;
   z-index: 50;
   height: var(--nav-h);
-<<<<<<< codex/refactor-theme-system-for-performance
   background: rgba(14, 20, 20, 0.7);
-=======
   background: var(--glass-surface-light);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -1138,7 +1133,6 @@ section[id] {
 
 html[data-theme="dark"] .nav {
   background: var(--glass-surface-dark);
->>>>>>> main
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
