@@ -1055,7 +1055,15 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds. As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases. Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit. In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions; earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
+                <p className="card-text">Justo Ruiz is an AI founder and hands-on computer scientist specializing in distributed systems, high-performance computing, and generative-AI infrastructure, with a track record of shipping production platforms for data-intensive workloads across startups and top hedge funds.</p>
+
+                <p className="card-text">As Founder and CEO of Shapelets, Justo built a high-performance data processing and visualization platform and architected a vector database capable of ingesting 100,000+ embeddings per second for real-time semantic search and generative-AI use cases.</p>
+
+                <p className="card-text">Previously, as CTO of a private equity–backed company, Justo reset product strategy, established development centers in Spain, modernized the platform, and contributed to a successful exit.</p>
+
+                <p className="card-text">In front-office technology roles, including as Principal at BlueCrest Capital Management, Justo unified market and reference data systems and delivered a consolidated high-performance risk platform for trading and portfolio decisions.</p>
+
+                <p className="card-text">Earlier at Barclays Capital as a Senior Quant Developer on the Convertible Bonds desk, Justo built performance-critical pricing and trading infrastructure for complex hybrid securities.</p>
               </div>
             </article>
           </div>

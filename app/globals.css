@@ -628,8 +628,8 @@ p,
 }
 
 .product-cell {
-  border-top: 1px solid var(--border);
-  border-left: 1px solid var(--border);
+  border-top: 1px solid #182323;
+  border-left: 1px solid #182323;
   padding: var(--space-8);
   min-width: 0;
 }
@@ -1668,6 +1668,7 @@ html[data-theme="dark"] .nav {
 
 #contact .contact-inline-form {
   box-shadow: none;
+  border: 0;
 }
 
 .talk-form-header {
@@ -2685,4 +2686,15 @@ html[data-theme="dark"] .nav {
   .site-footer {
     width: calc(100% - 2rem);
   }
+}
+
+#contact .field input,
+#contact .field select,
+#contact .field textarea {
+  border: 0;
+}
+
+#contact .talk-form-header .section-lead {
+  margin-left: 0;
+  margin-right: 0;
 }
