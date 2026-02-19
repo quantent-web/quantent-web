@@ -942,42 +942,36 @@ export default function Home() {
             </p>
           </div>
 
-          <p className="about-statement">
+          <p className="section-note">
             When meaning decays, governance fails — quietly. <span className="text-highlight">We build systems that prevent semantic decay, even as organizations evolve.</span>
           </p>
 
-          <h3 className="about-subhead">Leadership</h3>
+          <h3 className="subhead leadership-heading">Leadership</h3>
 
           <div className="leadership-grid" role="list">
             <article className="leadership-card" role="listitem">
-              <div className="leadership-avatar" aria-hidden="true">TW</div>
-              <div className="leadership-content">
-                <h4 className="card-title">Trent Walker — Founder & CEO</h4>
-                <p className="card-text">
-                  Senior technology executive and former hedge fund CTO with nearly three decades building mission-critical trading, risk, finance, and control platforms.
-                </p>
-                <p className="card-text">
-                  Trent led Risk &amp; Controllers Technology at Point72, modernizing core systems, strengthening P&amp;L foundations, and advancing frameworks for equity factor analytics and risk calculation. Earlier, he held senior leadership positions at Nasdaq, MSCI, BlueCrest, Credit Suisse, and Barclays Capital across both front-office and enterprise technology.
-                </p>
-                <p className="card-text">
-                  He began his career as Assistant Professor of Mathematics at UC Santa Barbara after earning a PhD at UC Berkeley in operator algebras and control theory. Outside of work, Trent is the inventor of the patented Induction Press coffee machine, scheduled for launch in Q2 2026.
-                </p>
+              <div className="leadership-card-header">
+                <div className="leadership-photo" role="img" aria-label="Trent Walker profile photo">TW</div>
+                <div className="leadership-heading-block">
+                  <h4 className="card-title">Trent Walker</h4>
+                  <h5 className="leadership-role">Founder &amp; CEO</h5>
+                </div>
+              </div>
+
+              <div className="leadership-card-body">
+                <p className="card-text"><strong>Scope:</strong> Senior technology executive and former hedge fund CTO with nearly three decades building mission-critical platforms for trading, risk, finance, and control functions.</p>
+                <p className="card-text"><strong>Leadership:</strong> Head of Risk &amp; Controllers Technology at Point72; previously Head of Technology Strategy at Nasdaq; Managing Director at MSCI; CTO at BlueCrest; senior technology leadership at Credit Suisse and Barclays Capital.</p>
+                <p className="card-text"><strong>Academic foundation:</strong> PhD in Mathematics (UC Berkeley), specializing in operator algebras and control theory; former Assistant Professor of Mathematics at UC Santa Barbara.</p>
               </div>
             </article>
 
             <article className="leadership-card" role="listitem">
-              <div className="leadership-avatar" aria-hidden="true">JR</div>
-              <div className="leadership-content">
-                <h4 className="card-title">Justo Ruiz — Co-Founder & CTO</h4>
-                <p className="card-text">
-                  Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
-                </p>
-                <p className="card-text">
-                  Justo has led architecture and engineering initiatives across complex financial environments, aligning platform design with governance, operational resilience, and measurable business outcomes.
-                </p>
-                <p className="card-text">
-                  At QuantEnt, he focuses on product architecture, semantic consistency, and scalable delivery patterns that help organizations build durable AI and data capabilities.
-                </p>
+              <div className="leadership-card-header">
+                <div className="leadership-photo" role="img" aria-label="Justo Ruiz profile photo">JR</div>
+                <div className="leadership-heading-block">
+                  <h4 className="card-title">Justo Ruiz</h4>
+                  <h5 className="leadership-role">Co-Founder &amp; CTO</h5>
+                </div>
               </div>
             </article>
           </div>
