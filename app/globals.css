@@ -1631,7 +1631,7 @@ html[data-theme="dark"] .nav {
 .section-note {
   margin-top: var(--space-5);
   text-align: left;
-  max-width: 42ch;
+  max-width: 100%;
   margin-left: 0;
   margin-right: 0;
 }
@@ -2336,9 +2336,9 @@ html[data-theme="dark"] body {
 }
 
 .what-we-do-grid {
-  display: grid;
   gap: var(--space-5);
-  margin-top: var(--space-7);
+  margin-top: 0;
+  display: grid;
 }
 
 .what-we-do-grid--four {
@@ -2506,7 +2506,7 @@ html[data-theme="dark"] body {
 .about-intro-copy {
   margin: 0;
   padding: 0 0 var(--space-7) var(--space-7);
-  max-width: 34ch;
+  max-width: 100%;
 }
 
 #about .section-note {
@@ -2587,6 +2587,10 @@ html[data-theme="dark"] body {
   color: var(--text-secondary);
 }
 
+.exceptional-title {
+  padding-bottom: 90px;
+}
+
 /* =========================
    Footer width fix
 ========================= */
@@ -2604,6 +2608,10 @@ html[data-theme="dark"] body {
 }
 
 @media (max-width: 1080px) {
+  .exceptional-title {
+    padding-bottom: 64px;
+  }
+
   .about-intro-grid {
     grid-template-columns: 1fr;
   }
@@ -2627,6 +2635,10 @@ html[data-theme="dark"] body {
 }
 
 @media (max-width: 640px) {
+  .exceptional-title {
+    padding-bottom: 40px;
+  }
+
   .leadership-card-header {
     grid-template-columns: 1fr;
     gap: var(--space-4);

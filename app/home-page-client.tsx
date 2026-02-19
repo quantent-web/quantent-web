@@ -840,7 +840,7 @@ export default function Home() {
 
         {/* CAPABILITIES */}
         <section id="capabilities" className="capabilities-container section">
-          <h2 className="section-title">What We’re Exceptional At</h2>
+          <h2 className="section-title exceptional-title">What We’re Exceptional At</h2>
 
           <div className="capabilities-shell">
             <div className="what-we-do-grid what-we-do-grid--two capabilities-grid">
@@ -959,9 +959,12 @@ export default function Home() {
               </div>
 
               <div className="leadership-card-body">
-                <p className="card-text"><strong>Scope:</strong> Senior technology executive and former hedge fund CTO with nearly three decades building mission-critical platforms for trading, risk, finance, and control functions.</p>
-                <p className="card-text"><strong>Leadership:</strong> Head of Risk &amp; Controllers Technology at Point72; previously Head of Technology Strategy at Nasdaq; Managing Director at MSCI; CTO at BlueCrest; senior technology leadership at Credit Suisse and Barclays Capital.</p>
-                <p className="card-text"><strong>Academic foundation:</strong> PhD in Mathematics (UC Berkeley), specializing in operator algebras and control theory; former Assistant Professor of Mathematics at UC Santa Barbara.</p>
+                <p className="card-text"><strong>Executive profile:</strong> Senior technology executive and former hedge fund CTO with nearly three decades building and leading mission-critical platforms for trading, risk, finance, and control functions across buy-side and sell-side organizations.</p>
+                <p className="card-text"><strong>Recent mandate (Point72):</strong> As Head of Risk &amp; Controllers Technology, he modernized core systems, strengthened data and process coherence, reinforced robust P&amp;L foundations, and advanced frameworks for equity factor analytics and risk calculation.</p>
+                <p className="card-text"><strong>Previous leadership:</strong> Head of Technology Strategy at Nasdaq; Managing Director at MSCI leading application development for Barra and RiskMetrics; CTO at BlueCrest Capital Management; and senior technology roles at Credit Suisse driving the transition from spreadsheet-based workflows to scalable front-to-back systems and disciplined new-product onboarding.</p>
+                <p className="card-text"><strong>Prime services and risk:</strong> At Barclays Capital, he served as Global Head of Risk and Margin for Prime Services, leading global netting and risk teams across financing products and building a coherent, legally accurate view of counterparty exposure and set-off.</p>
+                <p className="card-text"><strong>Academic foundation:</strong> Assistant Professor of Mathematics at UC Santa Barbara after earning a PhD from UC Berkeley, specializing in operator algebras and control theory.</p>
+                <p className="card-text"><strong>Innovation:</strong> Inventor of the patented Induction Press coffee machine, planned for launch in Q2 2026.</p>
               </div>
             </article>
 
