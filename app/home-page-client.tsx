@@ -576,7 +576,7 @@ export default function Home() {
               </div>
               <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary product-card-icon-btn" href="#quantcertify" aria-label="Learn more about QuantCertify">
-                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
+                  <Image src="/images/product-card-arrow.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
                 </a>
               </div>
             </div>
@@ -588,7 +588,7 @@ export default function Home() {
               </div>
               <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary product-card-icon-btn" href="#quantvault" aria-label="Learn more about QuantVault">
-                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
+                  <Image src="/images/product-card-arrow.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
                 </a>
               </div>
             </div>
@@ -600,7 +600,7 @@ export default function Home() {
               </div>
               <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary product-card-icon-btn" href="#quantdata" aria-label="Learn more about QuantData">
-                  <Image src="/images/arrow-down-right.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
+                  <Image src="/images/product-card-arrow.svg" alt="" width={24} height={24} aria-hidden="true" className="product-card-icon" />
                 </a>
               </div>
             </div>
