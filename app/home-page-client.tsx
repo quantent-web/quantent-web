@@ -410,7 +410,7 @@ export default function Home() {
             <section className="what-we-do-entitlement-and-user">
               <div className="header-subsection">
                 <h3>Entitlement and User analytics</h3>
-                <p><span className="text-highlight">QuantEnt</span> is built for environments where correctness, scale, and <span className="text-highlight">evolution</span> matter.</p>
+                <p><span className="text-highlight">QuantEnt</span> is built for environments where correctness, scale, and evolution matter.</p>
               </div>
               <div className="what-we-do-grid what-we-do-grid--four">
                 <article className="card what-we-do-card">
@@ -483,38 +483,41 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="container">
-
-
-        {/* PRODUCTS */}
-        <section id="products" className="section">
+        <section id="products" className="products-container section">
+          <Particles className="products-background" particleCount={260} particleBaseSize={110} particleColors={['#ffffff', '#f1f5f9', '#dbeafe']} />
           <h2 className="section-title">Our Products</h2>
 
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">QuantCertify</h4>
-              <p className="card-text">Certification with quantitative control.</p>
-              <div className="card-actions">
+          <div className="cards-grid cards-grid--auto products-grid">
+            <div className="card product-card">
+              <div className="product-card-copy">
+                <h3 className="product-card-title">QuantCertify</h3>
+                <p className="card-text">Certification with quantitative control.</p>
+              </div>
+              <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary" href="#quantcertify">
                   Learn more
                 </a>
               </div>
             </div>
 
-            <div className="card">
-              <h4 className="card-title">QuantVault</h4>
-              <p className="card-text">Enterprise entitlement intelligence.</p>
-              <div className="card-actions">
+            <div className="card product-card">
+              <div className="product-card-copy">
+                <h3 className="product-card-title">QuantVault</h3>
+                <p className="card-text">Enterprise entitlement intelligence.</p>
+              </div>
+              <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary" href="#quantvault">
                   Learn more
                 </a>
               </div>
             </div>
 
-            <div className="card">
-              <h4 className="card-title">QuantData</h4>
-              <p className="card-text">Semantic governance for enterprise data.</p>
-              <div className="card-actions">
+            <div className="card product-card">
+              <div className="product-card-copy">
+                <h3 className="product-card-title">QuantData</h3>
+                <p className="card-text">Semantic governance for enterprise data.</p>
+              </div>
+              <div className="card-actions product-card-actions">
                 <a className="btn btn-secondary" href="#quantdata">
                   Learn more
                 </a>
@@ -527,8 +530,10 @@ export default function Home() {
             <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
             </button>
-            </div>
+          </div>
         </section>
+
+        <div className="container">
 
         {/* QUANTCERTIFY */}
         <section id="quantcertify" className="section">
