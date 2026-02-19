@@ -840,7 +840,7 @@ export default function Home() {
 
         {/* CAPABILITIES */}
         <section id="capabilities" className="capabilities-container section">
-          <h2 className="section-title">What We’re Exceptional At</h2>
+          <h2 className="section-title exceptional-title">What We’re Exceptional At</h2>
 
           <div className="capabilities-shell">
             <div className="what-we-do-grid what-we-do-grid--two capabilities-grid">
@@ -934,31 +934,49 @@ export default function Home() {
         <div className="container">
 
         {/* ABOUT */}
-        <section id="about" className="section">
-          <h2 className="section-title">About QuantEnt</h2>
-
-          <p className="section-lead">
-            QuantEnt was founded to solve a problem we’ve repeatedly seen inside large, complex organizations: systems scale faster than shared understanding.
-          </p>
+        <section id="about" className="section about-section">
+          <div className="about-intro-grid">
+            <h2 className="about-title">About QuantEnt</h2>
+            <p className="about-intro-copy">
+              <span className="text-highlight">QuantEnt</span> was founded to solve a problem we’ve repeatedly seen inside large, complex organizations: systems scale faster than shared understanding.
+            </p>
+          </div>
 
           <p className="section-note">
-            When meaning decays, governance fails — quietly. We build systems that prevent semantic decay, even as organizations evolve.
+            When meaning decays, governance fails — quietly. <span className="text-highlight">We build systems that prevent semantic decay, even as organizations evolve.</span>
           </p>
 
-          <h3 className="subhead">Leadership</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Trent Walker — Founder & CEO</h4>
-              <p className="card-text">
-                Former Head of Enterprise Architecture and Risk Technology at Point72; Managing Director at MSCI and Barclays; CTO roles across global financial institutions.
-              </p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Justo Ruiz — Co-Founder & CTO</h4>
-              <p className="card-text">
-                Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
-              </p>
-            </div>
+          <h3 className="subhead leadership-heading">Leadership</h3>
+
+          <div className="leadership-grid" role="list">
+            <article className="leadership-card" role="listitem">
+              <div className="leadership-card-header">
+                <div className="leadership-photo" role="img" aria-label="Trent Walker profile photo">TW</div>
+                <div className="leadership-heading-block">
+                  <h4 className="card-title">Trent Walker</h4>
+                  <h5 className="leadership-role">Founder &amp; CEO</h5>
+                </div>
+              </div>
+
+              <div className="leadership-card-body">
+                <p className="card-text"><strong>Executive profile:</strong> Senior technology executive and former hedge fund CTO with nearly three decades building and leading mission-critical platforms for trading, risk, finance, and control functions across buy-side and sell-side organizations.</p>
+                <p className="card-text"><strong>Recent mandate (Point72):</strong> As Head of Risk &amp; Controllers Technology, he modernized core systems, strengthened data and process coherence, reinforced robust P&amp;L foundations, and advanced frameworks for equity factor analytics and risk calculation.</p>
+                <p className="card-text"><strong>Previous leadership:</strong> Head of Technology Strategy at Nasdaq; Managing Director at MSCI leading application development for Barra and RiskMetrics; CTO at BlueCrest Capital Management; and senior technology roles at Credit Suisse driving the transition from spreadsheet-based workflows to scalable front-to-back systems and disciplined new-product onboarding.</p>
+                <p className="card-text"><strong>Prime services and risk:</strong> At Barclays Capital, he served as Global Head of Risk and Margin for Prime Services, leading global netting and risk teams across financing products and building a coherent, legally accurate view of counterparty exposure and set-off.</p>
+                <p className="card-text"><strong>Academic foundation:</strong> Assistant Professor of Mathematics at UC Santa Barbara after earning a PhD from UC Berkeley, specializing in operator algebras and control theory.</p>
+                <p className="card-text"><strong>Innovation:</strong> Inventor of the patented Induction Press coffee machine, planned for launch in Q2 2026.</p>
+              </div>
+            </article>
+
+            <article className="leadership-card" role="listitem">
+              <div className="leadership-card-header">
+                <div className="leadership-photo" role="img" aria-label="Justo Ruiz profile photo">JR</div>
+                <div className="leadership-heading-block">
+                  <h4 className="card-title">Justo Ruiz</h4>
+                  <h5 className="leadership-role">Co-Founder &amp; CTO</h5>
+                </div>
+              </div>
+            </article>
           </div>
         </section>
 
