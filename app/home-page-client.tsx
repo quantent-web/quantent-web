@@ -484,6 +484,36 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="different" className="different-container section">
+          <h2 className="different-title">What Makes<br />QuantEnt Different</h2>
+
+          <div className="different-grid">
+            <article className="different-item">
+              <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
+              <h4 className="card-title different-card-title">Quantitative by<br />design</h4>
+              <p className="card-text"><span className="text-highlight">Exposure, drift, and structural risk are</span> measured — not guessed.</p>
+            </article>
+
+            <article className="different-item">
+              <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
+              <h4 className="card-title different-card-title">AI-native governance</h4>
+              <p className="card-text">Built so AI can reason, opine, and alert safely on <span className="text-highlight">entitlements and data.</span></p>
+            </article>
+
+            <article className="different-item">
+              <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
+              <h4 className="card-title different-card-title">Designed for<br />complexity</h4>
+              <p className="card-text">Proven in financial-services-grade systems with <span className="text-highlight">real risk and regulatory consequences.</span></p>
+            </article>
+
+            <article className="different-item">
+              <Image src="/images/card-icon-quantent.svg" alt="" width={56} height={56} aria-hidden="true" className="different-icon" />
+              <h4 className="card-title different-card-title">Enhances existing IAM</h4>
+              <p className="card-text">Integrates with what you already run. <span className="text-highlight">We don’t replace your identity stack — we make it work better.</span></p>
+            </article>
+          </div>
+        </section>
+
         <section id="products" className="products-container section">
           <Particles className="products-background" particleCount={260} particleBaseSize={110} particleColors={['#ffffff', '#f1f5f9', '#dbeafe']} />
           <h2 className="section-title">Our Products</h2>
@@ -527,7 +557,7 @@ export default function Home() {
           </div>
 
           <div className="cta-strip">
-            <p className="cta-text products-cta-text">Talk to Us — <span className="products-cta-highlight">Start with QuantCertify</span></p>
+            <p className="cta-text products-cta-text">Talk with us —<br /><span className="products-cta-highlight">Start with QuantCertify</span></p>
             <button className="btn btn-primary" type="button" onClick={openContactStepper}>
               Start
             </button>
@@ -655,220 +685,299 @@ export default function Home() {
         <div className="container">
 
         {/* QUANTVAULT */}
-        <section id="quantvault" className="section">
-          <h2 className="section-title">QuantVault</h2>
-          <p className="section-lead">Enterprise Entitlement Intelligence</p>
+        <section id="quantvault" className="section product-detail-section">
+          <div className="product-detail-grid product-detail-grid--vault">
+            <div className="product-row product-row--hero">
+              <div className="product-cell product-cell--hero-main">
+                <Badge className="qc-badge">Products</Badge>
+                <h2>QuantVault</h2>
+                <h3>Enterprise Entitlement Intelligence</h3>
+              </div>
+              <div className="product-cell product-cell--hero-note">
+                <p>
+                  <span className="text-highlight">QuantVault</span> provides a system-level view of
+                  entitlements across your organization.
+                </p>
+              </div>
+            </div>
 
-          <p className="section-note">
-            QuantVault provides a system-level view of entitlements across your organization.
-          </p>
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">What It Does</h4>
+              </div>
+            </div>
 
-          <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Aggregates entitlements</h4>
-              <p className="card-text">Aggregates entitlements across IAM platforms and systems.</p>
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Aggregates entitlements</h4>
+                <p className="card-text">Quantifies entitlement exposure, drift, and role integrity using mathematics — not rules.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Unified view</h4>
+                <p className="card-text">Analyzes users and entitlements as a system, not isolated records.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Unified view</h4>
-              <p className="card-text">Creates a unified view of users, resources, roles, and access.</p>
+
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Cross-system analysis</h4>
+                <p className="card-text">Enables cross-system analysis of entitlement structure and risk.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Governance foundation</h4>
+                <p className="card-text">Foundation for quantitative entitlement governance at scale.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Cross-system analysis</h4>
-              <p className="card-text">
-                Enables cross-system analysis of entitlement structure and risk.
-              </p>
+
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">Relationship to QuantCertify</h4>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Governance foundation</h4>
-              <p className="card-text">
-                Foundation for quantitative entitlement governance at scale.
-              </p>
+
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Runs on top</h4>
+                <p className="card-text">QuantCertify runs on top of QuantVault.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">System context</h4>
+                <p className="card-text">QuantVault provides the system-wide context.</p>
+              </div>
+            </div>
+
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">Integration Philosophy</h4>
+              </div>
+            </div>
+
+            <div className="product-row product-row--single">
+              <div className="product-cell product-cell--statement">
+                <p className="section-note">QuantVault plugs into and enhances your existing IAM solutions. <span className="text-highlight">It does not replace them.</span></p>
+              </div>
             </div>
           </div>
-
-          <h3 className="subhead">Relationship to QuantCertify</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Runs on top</h4>
-              <p className="card-text">QuantCertify runs on top of QuantVault.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">System context</h4>
-              <p className="card-text">QuantVault provides the system-wide context.</p>
-            </div>
-          </div>
-
-          <h3 className="subhead">Integration Philosophy</h3>
-          <p className="section-note">
-            QuantVault plugs into and enhances your existing IAM solutions. It does not replace them.
-          </p>
         </section>
 
         {/* QUANTDATA */}
-        <section id="quantdata" className="section">
-          <h2 className="section-title">QuantData</h2>
-          <p className="section-lead">Semantic Governance for Enterprise Data</p>
+        <section id="quantdata" className="section product-detail-section">
+          <div className="product-detail-grid product-detail-grid--data">
+            <div className="product-row product-row--hero">
+              <div className="product-cell product-cell--hero-main">
+                <Badge className="qc-badge">Products</Badge>
+                <h2>QuantData</h2>
+                <h3>Semantic Governance for Enterprise Data</h3>
+              </div>
+              <div className="product-cell product-cell--hero-note">
+                <p>
+                  <span className="text-highlight">QuantData</span> governs what enterprise data means and
+                  how it evolves safely over time.
+                </p>
+              </div>
+            </div>
 
-          <p className="section-note">
-            QuantData governs what enterprise data means and how it evolves safely over time.
-          </p>
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">What It Does</h4>
+              </div>
+            </div>
 
-          <h3 className="subhead">What It Does</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Canonical models</h4>
-              <p className="card-text">Establishes canonical data models and nomenclature.</p>
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Canonical models</h4>
+                <p className="card-text">Establishes canonical data models and nomenclature.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Controlled evolution</h4>
-              <p className="card-text">
-                Governs evolution without breaking reporting or workflows.
-              </p>
+
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Controlled evolution</h4>
+                <p className="card-text">Governs evolution without breaking reporting or workflows.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">Detects semantic drift</h4>
-              <p className="card-text">
-                Detects semantic drift, ambiguity, and incompatibility.
-              </p>
+
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Detects semantic drift</h4>
+                <p className="card-text">Detects semantic drift, ambiguity, and incompatibility.</p>
+              </div>
             </div>
-            <div className="card">
-              <h4 className="card-title">AI readiness</h4>
-              <p className="card-text">
-                Ensures data is fit for reporting, automation, and AI.
-              </p>
+
+            <div className="product-row product-row--single-card">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">AI readiness</h4>
+                <p className="card-text">Ensures data is fit for reporting, automation, and AI.</p>
+              </div>
+            </div>
+
+            <div className="product-row product-row--title">
+              <div className="product-cell">
+                <h4 className="qc-section-label">Why It Matters</h4>
+              </div>
+            </div>
+
+            <div className="product-row product-row--two-col">
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Access + meaning</h4>
+                <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
+              </div>
+              <div className="product-cell product-cell--card">
+                <h4 className="card-title">Meaning + access</h4>
+                <p className="card-text">Data governance fails if access governance is broken.</p>
+              </div>
+            </div>
+
+            <div className="product-row product-row--single">
+              <div className="product-cell product-cell--statement">
+                <p className="section-note">QuantData and QuantCertify are designed to work together so <span className="text-highlight">data meaning and permissions evolve in lockstep.</span></p>
+              </div>
             </div>
           </div>
-
-          <h3 className="subhead">Why It Matters</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Access + meaning</h4>
-              <p className="card-text">Entitlement governance fails if data meaning is broken.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Meaning + access</h4>
-              <p className="card-text">Data governance fails if access governance is broken.</p>
-            </div>
-          </div>
-
-          <p className="section-note">
-            QuantData and QuantCertify are designed to work together so data meaning and permissions evolve in lockstep.
-          </p>
         </section>
 
+        </div>
+
         {/* CAPABILITIES */}
-        <section id="capabilities" className="section">
+        <section id="capabilities" className="capabilities-container section">
           <h2 className="section-title">What We’re Exceptional At</h2>
 
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Quantitative Governance</h4>
-              <p className="card-text">
-                Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact.
-                Governance focused on material risk.
-              </p>
-            </div>
+          <div className="capabilities-shell">
+            <div className="what-we-do-grid what-we-do-grid--two capabilities-grid">
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Quantitative Governance</h4>
+                  <p className="card-text card-text-secondary">Mathematical modeling of exposure, drift, and structure. Prioritization of ambiguity by business impact. Governance focused on material risk.</p>
+                </div>
+              </article>
 
-            <div className="card">
-              <h4 className="card-title">Semantic Data Modeling</h4>
-              <p className="card-text">
-                Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.
-              </p>
-            </div>
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Semantic Data Modeling</h4>
+                  <p className="card-text card-text-secondary">Canonical models for complex enterprises. Consistent nomenclature and meaning. Financial-grade rigor.</p>
+                </div>
+              </article>
 
-            <div className="card">
-              <h4 className="card-title">Safe Model Evolution</h4>
-              <p className="card-text">
-                Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.
-              </p>
-            </div>
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Safe Model Evolution</h4>
+                  <p className="card-text card-text-secondary">Controlled, governed change instead of ad-hoc drift. Explicit compatibility and upgrade paths. Early warnings before breakage.</p>
+                </div>
+              </article>
 
-            <div className="card">
-              <h4 className="card-title">Financial Services Depth</h4>
-              <p className="card-text">
-                Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.
-              </p>
+              <article className="card what-we-do-card">
+                <Image src="/images/card-icon-quantent.svg" alt="" width={40} height={40} aria-hidden="true" className="what-we-do-icon" />
+                <div className="what-we-do-card-copy">
+                  <h4 className="card-title">Financial Services Depth</h4>
+                  <p className="card-text card-text-secondary">Trading systems. Risk and margin. Regulatory reporting. Counterparty exposure. Built by people who’ve operated these systems at scale.</p>
+                </div>
+              </article>
             </div>
           </div>
         </section>
 
         {/* SERVICES */}
-        <section id="services" className="section">
-          <h2 className="section-title">Accelerating Governance and AI Readiness</h2>
+        <section id="services" className="services-container section">
+          <h2 className="services-title">Accelerating Governance and AI Readiness</h2>
 
-          <p className="section-lead">
-            QuantEnt provides services to accelerate adoption and maximize impact.
+          <p className="services-lead">
+            <span className="text-highlight">QuantEnt</span> provides services to accelerate adoption and maximize impact.
           </p>
 
-          <p className="section-kicker">What We Offer</p>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Tech review & scorecarding</h4>
-              <p className="card-text">
-                Full stack technology review and scorecarding of data, AI, and entitlements.
-              </p>
+          <div className="services-shell">
+            <div className="services-strip">
+              <h3 className="qc-section-label">What We Offer</h3>
             </div>
-            <div className="card">
-              <h4 className="card-title">Access cleanup</h4>
-              <p className="card-text">Entitlement and access cleanup.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Semantic alignment</h4>
-              <p className="card-text">Data model and semantic alignment.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">AI readiness</h4>
-              <p className="card-text">AI and automation readiness assessments.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">Architecture & operating model</h4>
-              <p className="card-text">Architecture and operating-model design.</p>
-            </div>
-          </div>
 
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Services establish structure</h4>
-              <p className="card-text">Products enforce and maintain it.</p>
-            </div>
-            <div className="card">
-              <h4 className="card-title">No perpetual cleanup cycles</h4>
-              <p className="card-text">
-                We don’t just prepare organizations — we help them stay prepared.
-              </p>
+            <div className="services-grid">
+              <article className="services-cell services-cell--tech">
+                <h4 className="card-title">Tech review & scorecarding</h4>
+                <p className="card-text"><span className="text-highlight">Full stack technology review and scorecarding</span> of data, AI, and entitlements.</p>
+              </article>
+
+              <article className="services-cell services-cell--access">
+                <h4 className="card-title">Access cleanup</h4>
+                <p className="card-text"><span className="text-highlight">Entitlement and access cleanup.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--structure">
+                <h4 className="card-title">Services establish structure</h4>
+                <p className="card-text"><span className="text-highlight">Products enforce and maintain it.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--cycles">
+                <h4 className="card-title">No perpetual cleanup cycles</h4>
+                <p className="card-text"><span className="text-highlight">We don’t just prepare organizations — we help them stay prepared.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--semantic">
+                <h4 className="card-title">Semantic alignment</h4>
+                <p className="card-text"><span className="text-highlight">Data model and semantic alignment.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--ai">
+                <h4 className="card-title">AI readiness</h4>
+                <p className="card-text"><span className="text-highlight">AI and automation readiness assessments.</span></p>
+              </article>
+
+              <article className="services-cell services-cell--architecture">
+                <h4 className="card-title">Architecture & operating model</h4>
+                <p className="card-text"><span className="text-highlight">Architecture and operating-model design.</span></p>
+              </article>
             </div>
           </div>
         </section>
+
+        </div>
 
         {/* ABOUT */}
-        <section id="about" className="section">
-          <h2 className="section-title">About QuantEnt</h2>
-
-          <p className="section-lead">
-            QuantEnt was founded to solve a problem we’ve repeatedly seen inside large, complex organizations: systems scale faster than shared understanding.
-          </p>
-
-          <p className="section-note">
-            When meaning decays, governance fails — quietly. We build systems that prevent semantic decay, even as organizations evolve.
-          </p>
-
-          <h3 className="subhead">Leadership</h3>
-          <div className="cards-grid cards-grid--auto">
-            <div className="card">
-              <h4 className="card-title">Trent Walker — Founder & CEO</h4>
-              <p className="card-text">
-                Former Head of Enterprise Architecture and Risk Technology at Point72; Managing Director at MSCI and Barclays; CTO roles across global financial institutions.
-              </p>
+        <section id="about" className="about-container section">
+          <div className="about-grid">
+            <div className="about-cell about-cell--hero-main">
+              <h2>About QuantEnt</h2>
             </div>
-            <div className="card">
-              <h4 className="card-title">Justo Ruiz — Co-Founder & CTO</h4>
-              <p className="card-text">
-                Enterprise architect and technologist with deep experience in data modeling, trading systems, and evolvable platforms.
-              </p>
+            <div className="about-cell about-cell--hero-note">
+              <p><span className="text-highlight">QuantEnt</span> was founded to solve a problem we’ve repeatedly seen inside large, complex organizations: systems scale faster than shared understanding.</p>
             </div>
           </div>
+
+          <div className="about-grid">
+            <div className="about-cell about-cell--statement">
+              <p className="section-note">When meaning decays, governance fails — quietly. <span className="text-highlight">We build systems that prevent semantic decay, even as organizations evolve.</span></p>
+            </div>
+          </div>
+
+          <div className="about-grid">
+            <div className="about-cell about-cell--leadership-title">
+              <h3>Leadership</h3>
+            </div>
+          </div>
+
+          <div className="about-leadership-grid">
+            <article className="about-profile-card">
+              <div className="about-profile-media" aria-hidden="true">TW</div>
+              <div className="about-profile-copy">
+                <h4 className="card-title">Trent Walker — Founder & CEO</h4>
+                <p className="card-text">Senior technology executive and former hedge fund CTO with nearly 30 years building mission-critical platforms across trading, risk, finance, and controls. Former leader at Point72, Nasdaq, MSCI, BlueCrest, Credit Suisse, and Barclays, where he drove front-to-back platform modernization, P&L integrity, risk analytics, and counterparty exposure rigor.</p>
+                <p className="card-text">Holds a PhD in Mathematics from UC Berkeley and was an Assistant Professor at UC Santa Barbara, specializing in control theory and operator algebras. Also inventor of the patented Induction Press coffee machine launching in 2026.</p>
+              </div>
+            </article>
+
+            <article className="about-profile-card">
+              <div className="about-profile-media" aria-hidden="true">JR</div>
+              <div className="about-profile-copy">
+                <h4 className="card-title">Justo Ruiz — Co-Founder & CTO</h4>
+                <p className="card-text">Enterprise architect and technologist with deep expertise in data modeling, trading systems, and evolvable platform design. He leads product architecture and engineering strategy, focusing on semantic rigor, system coherence, and safe evolution across complex enterprise landscapes.</p>
+                <p className="card-text">At QuantEnt, Justo connects platform design to practical execution—turning governance and data principles into scalable, production-ready systems aligned with AI-era operating models.</p>
+              </div>
+            </article>
+          </div>
         </section>
+
+        <div className="container">
 
         {/* CONTACT */}
         <section id="contact" className="section">
