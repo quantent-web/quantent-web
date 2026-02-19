@@ -237,6 +237,8 @@ p,
   align-items: center;
   padding: 12px 20px;
   display: inline-flex;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 @media (max-width: 640px) {
@@ -1517,6 +1519,10 @@ section[id] {
     margin-bottom: 40px;
   }
 
+  .contact-inline-form {
+    padding: 32px 24px;
+  }
+
   .contact-modal-card {
     width: 100%;
     max-height: 86vh;
@@ -1603,12 +1609,12 @@ section[id] {
 
 .contact-inline-form {
   margin-top: var(--space-7);
-  padding: clamp(20px, 3vw, 32px);
+  padding: 64px;
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(9, 12, 12, 0.92);
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-6);
 }
 
 #contact .contact-inline-form {
@@ -1618,6 +1624,11 @@ section[id] {
 .talk-form-header {
   text-align: left;
   margin-bottom: 64px;
+}
+
+#contact .talk-form-header .section-title,
+#contact .talk-form-header .section-lead {
+  text-align: left;
 }
 
 .contact-inline-actions {
@@ -1783,7 +1794,8 @@ section[id] {
   color: var(--text-primary);
   border: 1px solid #0000;
   border-radius: 8px;
-  background-color: var(--border);
+  background-color: #0e1414;
+  border: none;
 }
 
 .footer-socials__link {
@@ -1795,8 +1807,8 @@ section[id] {
 
 
 .footer-socials__link svg {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   fill: currentColor;
 }
 
@@ -2436,13 +2448,13 @@ section[id] {
   padding: clamp(1.5rem, 2.2vw, 2.5rem);
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-8);
 }
 
 .leadership-card-header {
   display: grid;
   grid-template-columns: 120px minmax(0, 1fr);
-  gap: var(--space-5);
+  gap: var(--space-7);
   align-items: flex-start;
 }
 
@@ -2450,7 +2462,7 @@ section[id] {
   width: 120px;
   height: 120px;
   border-radius: 1rem;
-  border: 1px solid rgba(5, 205, 152, 0.4);
+  border: none;
   background: linear-gradient(145deg, rgba(5, 205, 152, 0.22), rgba(5, 205, 152, 0.06));
   color: var(--primary);
   display: grid;
@@ -2487,7 +2499,21 @@ section[id] {
 .leadership-card-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 0;
+}
+
+.leadership-card-body section {
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+
+.leadership-card-body section:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.leadership-card-body section:last-child {
+  padding-bottom: 0;
 }
 
 
