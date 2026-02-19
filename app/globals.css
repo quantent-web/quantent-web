@@ -214,8 +214,8 @@ p,
   color: var(--text-primary);
   text-align: left;
   max-width: 100%;
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .btn {
@@ -978,8 +978,8 @@ main[data-snap-scroll='true'] > .section {
   max-width: 70ch;
   text-align: center;
   margin-top: var(--space-2);
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: auto;
+  margin-right: auto;
   color: var(--color-text);
 }
 
@@ -1577,8 +1577,8 @@ section[id] {
   margin-top: var(--space-5);
   text-align: left;
   max-width: 100%;
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section-note.strong {
@@ -2171,8 +2171,8 @@ section[id] {
 
 .products-cta-text {
   text-align: left;
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: auto;
+  margin-right: auto;
   color: white;
   font-size: 2rem;
   font-weight: 700;
@@ -2578,8 +2578,8 @@ section[id] {
 ========================= */
 .site-footer {
   width: 90%;
-  margin-left: 0;
-  margin-right: 0;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 0;
   padding-right: 0;
 }
