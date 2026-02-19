@@ -60,7 +60,7 @@ textarea:focus-visible,
    QuantEnt — Design Tokens
    ========================= */
 
-/* Light theme (por defecto) */
+/* Unified theme (dark) */
 :root {
   /* Brand */
   --primary: #05cd98;
@@ -69,20 +69,20 @@ textarea:focus-visible,
 
   /* Decorative tokens (DotGrid) */
   --dotgrid-base: #182323;
-  --dotgrid-active: #05CD98;
+  --dotgrid-active: #05cd98;
 
   /* Backgrounds */
-  --bg: #f5f5f5;
-  --surface: #ffffff;
+  --bg: #0e1414;
+  --surface: #182323;
 
   /* Text */
-  --text-primary: #242424;
-  --text-secondary: #a2a2a2;
-  --text-disabled: #757575;
+  --text-primary: #ffffff;
+  --text-secondary: #9bd3bb;
+  --text-disabled: #9bd3bb;
 
   /* UI */
-  --border: #a2a2a2;
-  --divider: #a2a2a2;
+  --border: #1e3d36;
+  --divider: #1e3d36;
 
   /* States */
   --error: #ec2149;
@@ -92,6 +92,9 @@ textarea:focus-visible,
 
   /* Layout */
   --container: 1120px;
+  --nav-h: 64px;
+  --nav-container: 1440px;
+  --drawer-w: 360px;
 
   /* Spacing */
   --space-1: 4px;
@@ -117,100 +120,23 @@ textarea:focus-visible,
   /* shadcn/ui compatible aliases */
   --background: var(--bg);
   --foreground: var(--text-primary);
-
   --card: var(--surface);
   --card-foreground: var(--text-primary);
-
   --popover: var(--surface);
   --popover-foreground: var(--text-primary);
-
   --primary-foreground: var(--primary-contrast);
-
   --secondary: var(--surface);
   --secondary-foreground: var(--text-primary);
-
   --muted: var(--surface);
   --muted-foreground: var(--text-secondary);
-
   --accent: var(--surface);
   --accent-foreground: var(--text-primary);
-
   --destructive: var(--error);
   --destructive-foreground: #ffffff;
-
   --input: var(--border);
   --ring: var(--primary);
 }
 
-/* =========================
-   Dark theme — QuantEnt
-========================= */
-html[data-theme="dark"] {
-  /* Backgrounds */
-  --bg: #0e1414;          /* Fondo principal */
-  --surface: #182323;     /* Cards, nav, CTAs */
-
-  /* Text */
-  --text-primary: #ffffff;
-  --text-secondary: #9bd3bb;
-  --text-disabled: #9bd3bb;
-
-  /* UI */
-  --border: #1E3D36;
-  --divider: #1E3D36;
-
-  /* Brand (constante) */
-  --primary: #05cd98;
-  --primary-contrast: #ffffff;
-  --primary-rgb: 5, 205, 152;
-
-  /* Decorative tokens (DotGrid) */
-  --dotgrid-base: #182323;
-  --dotgrid-active: #05CD98;
-
-  /* States */
-  --error: #ec2149;
-  --warning: #ffd700;
-  --success: #05cd34;
-  --info: #059ecd;
-
-  /* Compatibility aliases (semantic) */
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-text: var(--text-primary);
-  --color-muted: var(--text-secondary);
-  --color-border: var(--border);
-  --color-divider: var(--divider);
-
-  /* shadcn/ui compatible aliases */
-  --background: var(--bg);
-  --foreground: var(--text-primary);
-
-  --card: var(--surface);
-  --card-foreground: var(--text-primary);
-
-  --popover: var(--surface);
-  --popover-foreground: var(--text-primary);
-
-  --primary-foreground: var(--primary-contrast);
-
-  --secondary: var(--surface);
-  --secondary-foreground: var(--text-primary);
-
-  --muted: var(--surface);
-  --muted-foreground: var(--text-secondary);
-
-  --accent: var(--surface);
-  --accent-foreground: var(--text-primary);
-
-  --destructive: var(--error);
-  --destructive-foreground: #ffffff;
-
-  --input: var(--border);
-  --ring: var(--primary);
-
-  --radius: 14px;
-}
 
 /* =========================
    Tipografía base
@@ -1136,15 +1062,6 @@ main[data-snap-scroll='true'] > .section {
 /* =========================
    Sticky nav + anchors
 ========================= */
-:root {
-  --nav-h: 64px;
-
-  /* NAV más ancho que el contenido, para que no salte de línea tan pronto */
-  --nav-container: 1440px;
-
-  /* Drawer */
-  --drawer-w: 360px;
-}
 
 html {
   scroll-behavior: smooth;
@@ -1160,12 +1077,6 @@ section[id] {
   top: 0;
   z-index: 50;
   height: var(--nav-h);
-  background: rgba(255, 255, 255, 0.7);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-html[data-theme="dark"] .nav {
   background: rgba(14, 20, 20, 0.7);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
@@ -1949,93 +1860,7 @@ html[data-theme="dark"] .nav {
   top: 6px;
 }
 
-html[data-theme="dark"] body {
-  background-color: var(--bg) !important;
-  color: var(--text-primary) !important;
-}
 
-
-/* =========================
-   Theme toggle (switch)
-========================= */
-.theme-switch {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border);
-  background: var(--card);
-  border-radius: 999px;
-  padding: 4px;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
-}
-
-.theme-switch:focus-visible {
-  outline: 2px solid var(--border);
-  outline-offset: 2px;
-}
-
-.theme-switch__track {
-  width: 44px;
-  height: 24px;
-  border-radius: 999px;
-  background: var(--border);
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  transition: background 0.2s ease, border-color 0.2s ease;
-  border: 1px solid transparent;
-}
-
-.theme-switch__thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: var(--card);
-  transform: translateX(3px);
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.theme-switch:hover .theme-switch__track {
-  border-color: var(--ring);
-}
-
-.theme-switch:active {
-  opacity: 0.9;
-}
-
-.theme-switch[aria-checked="true"] .theme-switch__track {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-.theme-switch[aria-checked="true"] .theme-switch__thumb {
-  transform: translateX(23px);
-  background: var(--primary-foreground);
-}
-
-.theme-switch:disabled,
-.theme-switch[aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-@media (max-width: 768px) {
-  .theme-switch__track {
-    width: 38px;
-    height: 22px;
-  }
-
-  .theme-switch__thumb {
-    width: 16px;
-    height: 16px;
-    transform: translateX(3px);
-  }
-
-  .theme-switch[aria-checked="true"] .theme-switch__thumb {
-    transform: translateX(19px);
-  }
-}
 
 /* Header background wrapper (DotGrid behind sticky nav) */
 .header-bg {

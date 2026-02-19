@@ -6,7 +6,6 @@ import Image from 'next/image';
 import DotGrid from './components/DotGrid/DotGrid';
 import BlurText from './components/BlurText/BlurText';
 import DecryptedText from './components/DecryptedText/DecryptedText';
-import Switch from './components/ui/Switch';
 import { Badge } from './components/ui/badge';
 import Particles from './components/ui/Particles';
 import Footer from './components/footer/Footer';
@@ -31,14 +30,7 @@ export default function Home() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [useBurger, setUseBurger] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
-
-  const setTheme = (next: 'light' | 'dark') => {
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    setIsDark(next === 'dark');
-  };
 
   const navItems: NavItem[] = useMemo(
     () => [
@@ -57,9 +49,6 @@ export default function Home() {
 
   // Cierra menú con ESC
   useEffect(() => {
-    const current = document.documentElement.dataset.theme === 'dark';
-    setIsDark(current);
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setMenuOpen(false);
     };
@@ -332,13 +321,6 @@ export default function Home() {
                 ))}
               </div>
             </nav>
-
-            {/* Toggle tema */}
-            <Switch
-              checked={isDark}
-              onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-              ariaLabel="Toggle theme"
-            />
 
             {/* Botón hamburguesa */}
             <button
