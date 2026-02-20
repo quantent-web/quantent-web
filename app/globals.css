@@ -413,7 +413,7 @@ p,
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/images/bg-test.jpg'), url('/images/bg-test.webp');
+  background-image: url('/images/bg-test.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
