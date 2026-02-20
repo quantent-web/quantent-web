@@ -397,6 +397,8 @@ p,
 }
 
 #quantcertify {
+  position: relative;
+  overflow: hidden;
   border-radius: 24px;
   padding-top: 0;
   padding-right: 0;
@@ -405,6 +407,24 @@ p,
   border: 0px solid var(--border);
   background-color: #090c0c45;
   margin-top: 120px;
+}
+
+#quantcertify::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/bg-test.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#quantcertify > * {
+  position: relative;
+  z-index: 1;
 }
 
 .quantcertify-section {
