@@ -19,12 +19,31 @@ type FooterProps = {
 };
 
 export default function Footer({ onOpenLegal }: FooterProps) {
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+  const [email, setEmail] = useState('');
+  const [hp, setHp] = useState('');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const year = new Date().getFullYear();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStatus('success');
+
+    if (!email.trim() || status === 'submitting') {
+      return;
+    }
+
+    setStatus('submitting');
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), hp }),
+      });
+
+      setStatus(response.ok ? 'success' : 'error');
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -44,6 +63,17 @@ export default function Footer({ onOpenLegal }: FooterProps) {
               <p className="footer-form__subtitle">Get the latest QuantEnt insights in your inbox.</p>
             </div>
 
+            <input
+              className="hp-field"
+              type="text"
+              name="hp"
+              value={hp}
+              onChange={(event) => setHp(event.target.value)}
+              autoComplete="off"
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+
             <div className="footer-form__controls">
               <label className="sr-only" htmlFor="footer-email">
                 Email address
@@ -55,15 +85,22 @@ export default function Footer({ onOpenLegal }: FooterProps) {
                 required
                 placeholder="you@company.com"
                 autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               />
-              <button className="btn btn-primary" type="submit">
-                Subscribe
+              <button className="btn btn-primary" type="submit" disabled={status === 'submitting'}>
+                {status === 'submitting' ? 'Submitting...' : 'Subscribe'}
               </button>
             </div>
 
             {status === 'success' ? (
               <p className="footer-form__feedback" role="status">
                 Thanks for subscribing!
+              </p>
+            ) : null}
+            {status === 'error' ? (
+              <p className="footer-form__feedback" role="alert">
+                We could not process your request. Please try again.
               </p>
             ) : null}
           </form>

@@ -15,7 +15,7 @@ type ContactFormState = {
   timeline: string;
   message: string;
   consent: boolean;
-  website?: string;
+  hp: string;
 };
 
 type ContactStepperModalProps = {
@@ -30,8 +30,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
   const submitErrorText = 'Something went wrong. Please try again.';
   const [touched, setTouched] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const successMessage =
-    'Request sent. We will contact you within the timeframe you indicated. Thank you!';
+  const successMessage = 'Thanks, we'll reply soon.';
   const [formState, setFormState] = useState<ContactFormState>({
     firstName: '',
     lastName: '',
@@ -44,7 +43,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
     timeline: '',
     message: '',
     consent: false,
-    website: '',
+    hp: '',
   });
 
   useEffect(() => {
@@ -94,10 +93,10 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
   }, [formState, currentStep]);
 
   const handleSubmit = async () => {
-    if (isSubmitting) return;
+    if (isSubmitting) return false;
 
     setTouched(true);
-    if (!isStepValid) return;
+    if (!isStepValid) return false;
     setSubmitError(null);
     setIsSubmitting(true);
     setStatus('submitting');
@@ -112,14 +111,18 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
       if (!response.ok) {
         setStatus('error');
         setSubmitError(submitErrorText);
-        return;
+        return false;
       }
 
       setStatus('success');
+      console.info('Contact stepper submit success');
+      return true;
     } catch (error) {
       void error;
       setStatus('error');
       setSubmitError(submitErrorText);
+      console.error('Contact stepper submit failed');
+      return false;
     } finally {
       setIsSubmitting(false);
     }
@@ -154,9 +157,9 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
           <input
             className="hp-field"
             type="text"
-            name="website"
-            value={formState.website || ''}
-            onChange={(event) => handleChange('website', event.target.value)}
+            name="hp"
+            value={formState.hp}
+            onChange={(event) => handleChange('hp', event.target.value)}
             autoComplete="off"
             tabIndex={-1}
             aria-hidden="true"
@@ -166,11 +169,14 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
             initialStep={1}
             onStepChange={(step) => {
               setCurrentStep(step);
-              setTouched(false);
+              setTouched(true);
             }}
             onFinalStepCompleted={handleSubmit}
             backButtonText="Previous"
             nextButtonText="Next"
+            backButtonProps={{
+              disabled: isSubmitting,
+            }}
             nextButtonProps={{
               disabled: isSubmitting || !isStepValid,
             }}
@@ -374,6 +380,9 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
             </Step>
           </Stepper>
 
+          {status === 'submitting' && (
+            <small className="muted" role="status">Sending...</small>
+          )}
           {status === 'success' && (
             <div className="contact-success">
               <strong>{successMessage}</strong>

@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export const runtime = "nodejs";
+export const runtime = 'nodejs';
 
 const noCacheHeaders = {
   'Cache-Control': 'no-store',
   Pragma: 'no-cache',
   Expires: '0',
+  'Content-Type': 'application/json; charset=utf-8',
 } as const;
 
 type ContactPayload = {
@@ -21,6 +22,8 @@ type ContactPayload = {
   timeline: string;
   message: string;
   consent: boolean;
+  hp?: string;
+  website?: string;
 };
 
 const escapeHtml = (value: string) =>
@@ -34,8 +37,7 @@ const escapeHtml = (value: string) =>
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
 
-const trimIfString = (value: unknown) =>
-  typeof value === 'string' ? value.trim() : value;
+const trimIfString = (value: unknown) => (typeof value === 'string' ? value.trim() : value);
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
@@ -48,17 +50,68 @@ const MAX_LENGTHS = {
   message: 2000,
 } as const;
 
-const VALIDATION_ERROR = 'Invalid field values.';
+const VALIDATION_ERROR = 'Please review the form fields and try again.';
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const allowedOrigins = new Set(['https://quant-ent.com', 'https://www.quant-ent.com', 'http://localhost:3000']);
+
+const ipRequests = new Map<string, number[]>();
+
+const getRequestIp = (request: Request) => {
+  const xForwardedFor = request.headers.get('x-forwarded-for');
+  if (xForwardedFor) {
+    return xForwardedFor.split(',')[0]?.trim() || 'unknown';
+  }
+
+  return request.headers.get('x-real-ip')?.trim() || 'unknown';
+};
+
+const isRateLimited = (ip: string) => {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const current = ipRequests.get(ip) ?? [];
+  const recent = current.filter((timestamp) => timestamp > windowStart);
+
+  if (recent.length >= RATE_LIMIT_MAX_REQUESTS) {
+    ipRequests.set(ip, recent);
+    return true;
+  }
+
+  recent.push(now);
+  ipRequests.set(ip, recent);
+  return false;
+};
+
+const isAllowedRequestOrigin = (request: Request) => {
+  const origin = request.headers.get('origin');
+  if (origin && allowedOrigins.has(origin)) {
+    return true;
+  }
+
+  const host = request.headers.get('host');
+  if (!host) {
+    return false;
+  }
+
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  return allowedOrigins.has(`${protocol}://${host}`);
+};
 
 export async function POST(request: Request) {
-  const jsonResponse = (
-    body: { ok: true } | { error: string },
-    init?: { status?: number }
-  ) =>
+  const jsonResponse = (body: { ok: true } | { error: string }, init?: { status?: number }) =>
     NextResponse.json(body, {
       ...init,
       headers: noCacheHeaders,
     });
+
+  if (!isAllowedRequestOrigin(request)) {
+    return jsonResponse({ error: 'Forbidden request origin.' }, { status: 403 });
+  }
+
+  const requestIp = getRequestIp(request);
+  if (isRateLimited(requestIp)) {
+    return jsonResponse({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+  }
 
   let payload: Partial<ContactPayload>;
 
@@ -66,6 +119,13 @@ export async function POST(request: Request) {
     payload = (await request.json()) as Partial<ContactPayload>;
   } catch {
     return jsonResponse({ error: 'Invalid request body.' }, { status: 400 });
+  }
+
+  const hp = trimIfString(payload?.hp);
+  const website = trimIfString(payload?.website);
+
+  if ((typeof hp === 'string' && hp.length > 0) || (typeof website === 'string' && website.length > 0)) {
+    return jsonResponse({ ok: true });
   }
 
   const firstName = trimIfString(payload?.firstName);
@@ -91,7 +151,7 @@ export async function POST(request: Request) {
     !isNonEmptyString(message) ||
     payload?.consent !== true
   ) {
-    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
+    return jsonResponse({ error: 'Missing or invalid required fields.' }, { status: 400 });
   }
 
   if (
@@ -106,7 +166,7 @@ export async function POST(request: Request) {
   }
 
   if (!isValidEmail(email)) {
-    return jsonResponse({ error: VALIDATION_ERROR }, { status: 400 });
+    return jsonResponse({ error: 'Please use a valid email address.' }, { status: 400 });
   }
 
   const host = process.env.SMTP_HOST;
@@ -117,18 +177,12 @@ export async function POST(request: Request) {
   const from = process.env.CONTACT_FROM || user;
 
   if (!host || !port || !user || !pass || !to || !from) {
-    return jsonResponse(
-      { error: 'Email service is not configured.' },
-      { status: 500 }
-    );
+    return jsonResponse({ error: 'Email service is not configured.' }, { status: 500 });
   }
 
   const smtpPort = Number(port);
   if (!Number.isFinite(smtpPort) || smtpPort <= 0) {
-    return jsonResponse(
-      { error: 'Email service is not configured.' },
-      { status: 500 }
-    );
+    return jsonResponse({ error: 'Email service is not configured.' }, { status: 500 });
   }
 
   const transporter = nodemailer.createTransport({
@@ -181,9 +235,7 @@ ${message}`;
 
     return jsonResponse({ ok: true });
   } catch (error) {
-    return jsonResponse(
-      { error: error instanceof Error ? error.message : 'Failed to send email.' },
-      { status: 500 }
-    );
+    console.error('Contact email send failed:', error);
+    return jsonResponse({ error: 'Failed to send email. Please try again.' }, { status: 500 });
   }
 }

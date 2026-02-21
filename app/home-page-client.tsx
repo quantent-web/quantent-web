@@ -289,23 +289,29 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           firstName: contactForm.name.trim(),
-          lastName: '',
+          lastName: 'Inline',
           email: contactForm.email.trim(),
           phone: contactForm.phone.trim(),
-          company: '',
-          role: '',
-          companySize: '',
+          company: 'Website lead',
+          role: 'Not provided',
+          companySize: 'Not provided',
           productInterest: 'General inquiry',
           timeline: 'As soon as possible',
           message: contactForm.message.trim(),
           consent: contactForm.consent,
-          website: contactForm.website,
+          hp: contactForm.website,
         }),
       });
 
       setContactStatus(response.ok ? 'success' : 'error');
+      if (response.ok) {
+        console.info('Inline contact submit success');
+      } else {
+        console.error('Inline contact submit failed');
+      }
     } catch (error) {
       void error;
+      console.error('Inline contact submit failed');
       setContactStatus('error');
     }
   };
