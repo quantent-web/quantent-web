@@ -22,6 +22,7 @@ export default function Footer({ onOpenLegal }: FooterProps) {
   const [email, setEmail] = useState('');
   const [hp, setHp] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const year = new Date().getFullYear();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -31,6 +32,7 @@ export default function Footer({ onOpenLegal }: FooterProps) {
       return;
     }
 
+    setSubmitError(null);
     setStatus('submitting');
 
     try {
@@ -40,9 +42,25 @@ export default function Footer({ onOpenLegal }: FooterProps) {
         body: JSON.stringify({ email: email.trim(), hp }),
       });
 
-      setStatus(response.ok ? 'success' : 'error');
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string; debug?: unknown } | null;
+        const serverError = data?.error?.trim() || 'We could not process your request. Please try again.';
+        setSubmitError(serverError);
+        setStatus('error');
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('newsletter failed', response.status, serverError, data?.debug);
+        }
+        return;
+      }
+
+      setStatus('success');
     } catch {
+      const fallbackError = 'We could not process your request. Please try again.';
+      setSubmitError(fallbackError);
       setStatus('error');
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('newsletter failed', 0, fallbackError);
+      }
     }
   };
 
@@ -100,7 +118,7 @@ export default function Footer({ onOpenLegal }: FooterProps) {
             ) : null}
             {status === 'error' ? (
               <p className="footer-form__feedback" role="alert">
-                We could not process your request. Please try again.
+                {submitError || 'We could not process your request. Please try again.'}
               </p>
             ) : null}
           </form>

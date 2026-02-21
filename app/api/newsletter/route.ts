@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { assertAllowedOrigin } from '../_utils/origin';
 
 export const runtime = 'nodejs';
 
@@ -8,23 +9,6 @@ const noCacheHeaders = {
   Expires: '0',
   'Content-Type': 'application/json; charset=utf-8',
 } as const;
-
-const allowedOrigins = new Set(['https://quant-ent.com', 'https://www.quant-ent.com', 'http://localhost:3000']);
-
-const isAllowedRequestOrigin = (request: Request) => {
-  const origin = request.headers.get('origin');
-  if (origin && allowedOrigins.has(origin)) {
-    return true;
-  }
-
-  const host = request.headers.get('host');
-  if (!host) {
-    return false;
-  }
-
-  const protocol = host.includes('localhost') ? 'http' : 'https';
-  return allowedOrigins.has(`${protocol}://${host}`);
-};
 
 type NewsletterPayload = {
   email: string;
@@ -40,8 +24,9 @@ export async function POST(request: Request) {
       headers: noCacheHeaders,
     });
 
-  if (!isAllowedRequestOrigin(request)) {
-    return jsonResponse({ error: 'Forbidden request origin.' }, { status: 403 });
+  const forbidden = assertAllowedOrigin(request);
+  if (forbidden) {
+    return forbidden;
   }
 
   let payload: Partial<NewsletterPayload>;

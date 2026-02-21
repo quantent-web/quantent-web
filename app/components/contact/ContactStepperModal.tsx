@@ -109,12 +109,12 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
       });
 
       if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        const data = (await response.json().catch(() => null)) as { error?: string; debug?: unknown } | null;
         const serverError = data?.error?.trim();
         setStatus('error');
         setSubmitError(serverError || submitErrorText);
         if (process.env.NODE_ENV !== 'production') {
-          console.error('contact failed', response.status, serverError || submitErrorText);
+          console.error('contact failed', response.status, serverError || submitErrorText, data?.debug);
         }
         return false;
       }

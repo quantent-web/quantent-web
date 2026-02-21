@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { assertAllowedOrigin } from '../_utils/origin';
 
 export const runtime = 'nodejs';
 
@@ -75,50 +76,6 @@ const MAX_LENGTHS = {
 
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
-const allowedOrigins = new Set(['https://quant-ent.com', 'https://www.quant-ent.com', 'http://localhost:3000']);
-
-const ipRequests = new Map<string, number[]>();
-
-const getRequestIp = (request: Request) => {
-  const xForwardedFor = request.headers.get('x-forwarded-for');
-  if (xForwardedFor) {
-    return xForwardedFor.split(',')[0]?.trim() || 'unknown';
-  }
-
-  return request.headers.get('x-real-ip')?.trim() || 'unknown';
-};
-
-const isRateLimited = (ip: string) => {
-  const now = Date.now();
-  const windowStart = now - RATE_LIMIT_WINDOW_MS;
-  const current = ipRequests.get(ip) ?? [];
-  const recent = current.filter((timestamp) => timestamp > windowStart);
-
-  if (recent.length >= RATE_LIMIT_MAX_REQUESTS) {
-    ipRequests.set(ip, recent);
-    return true;
-  }
-
-  recent.push(now);
-  ipRequests.set(ip, recent);
-  return false;
-};
-
-const isAllowedRequestOrigin = (request: Request) => {
-  const origin = request.headers.get('origin');
-  if (origin && allowedOrigins.has(origin)) {
-    return true;
-  }
-
-  const host = request.headers.get('host');
-  if (!host) {
-    return false;
-  }
-
-  const protocol = host.includes('localhost') ? 'http' : 'https';
-  return allowedOrigins.has(`${protocol}://${host}`);
-};
-
 const splitName = (name: string) => {
   const parts = name.split(/\s+/).filter(Boolean);
   if (parts.length === 0) {
@@ -230,8 +187,9 @@ export async function POST(request: Request) {
       headers: noCacheHeaders,
     });
 
-  if (!isAllowedRequestOrigin(request)) {
-    return jsonResponse({ error: 'Forbidden request origin.' }, { status: 403 });
+  const forbidden = assertAllowedOrigin(request);
+  if (forbidden) {
+    return forbidden;
   }
 
   const requestIp = getRequestIp(request);

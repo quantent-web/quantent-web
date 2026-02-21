@@ -300,12 +300,12 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        const data = (await response.json().catch(() => null)) as { error?: string; debug?: unknown } | null;
         const serverError = data?.error?.trim() || 'Something went wrong. Please try again.';
         setContactError(serverError);
         setContactStatus('error');
         if (process.env.NODE_ENV !== 'production') {
-          console.error('contact failed', response.status, serverError);
+          console.error('contact failed', response.status, serverError, data?.debug);
         }
         return;
       }
