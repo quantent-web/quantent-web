@@ -30,7 +30,7 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
   const submitErrorText = 'Something went wrong. Please try again.';
   const [touched, setTouched] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const successMessage = 'Thanks, we'll reply soon.';
+  const successMessage = "Thanks, we'll reply soon.";
   const [formState, setFormState] = useState<ContactFormState>({
     firstName: '',
     lastName: '',
