@@ -109,8 +109,13 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
       });
 
       if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null;
+        const serverError = data?.error?.trim();
         setStatus('error');
-        setSubmitError(submitErrorText);
+        setSubmitError(serverError || submitErrorText);
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('contact failed', response.status, serverError || submitErrorText);
+        }
         return false;
       }
 
@@ -121,7 +126,9 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
       void error;
       setStatus('error');
       setSubmitError(submitErrorText);
-      console.error('Contact stepper submit failed');
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('contact failed', 0, submitErrorText);
+      }
       return false;
     } finally {
       setIsSubmitting(false);
