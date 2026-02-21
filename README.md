@@ -59,3 +59,54 @@ Use this checklist before merging visual/style changes to reduce regressions:
   - [ ] Toggle light/dark themes and verify text contrast remains readable.
   - [ ] Check nav open/close behavior at narrow widths.
   - [ ] Scroll through all sections and verify no text overflow at common breakpoints (640, 768, 1024, 1280).
+
+## Contact forms (production setup)
+
+### Endpoints in this project
+- `POST /api/contact`: used by the Contact Stepper modal and inline contact form.
+- `POST /api/newsletter`: used by the footer newsletter form.
+
+### Vercel environment variables
+In **Vercel → Project Settings → Environment Variables**, define these values for Production (and Preview if needed):
+
+- `SMTP_HOST` = your SMTP host (example: `smtp.sendgrid.net`)
+- `SMTP_PORT` = your SMTP port (`587` for STARTTLS or `465` for SMTPS)
+- `SMTP_USER` = SMTP username
+- `SMTP_PASS` = SMTP password or API key
+- `CONTACT_TO` = `aaron.fajardo@quant-ent.com`
+- `CONTACT_FROM` = `no-reply@quant-ent.com` (or a sender address explicitly allowed by your SMTP provider)
+
+> Do not hardcode credentials in code. Use environment variables only.
+
+### SMTP provider notes
+If you do not already have a provider, any of these are suitable:
+- SendGrid
+- Mailgun
+- Postmark
+- SMTP mailbox/provider tied to `quant-ent.com`
+
+### DNS checklist (required for deliverability)
+Apply these DNS records in your DNS provider for `quant-ent.com`:
+
+1. **SPF**
+   - Add/update TXT record for SPF including your SMTP provider.
+   - Keep a single SPF record for the domain.
+2. **DKIM**
+   - Add all DKIM CNAME/TXT records provided by the SMTP provider.
+   - Verify DKIM status in provider dashboard.
+3. **DMARC**
+   - Add TXT record at `_dmarc.quant-ent.com`.
+   - Start with monitoring policy (for example `p=none`) and later tighten (`quarantine`/`reject`).
+
+### Local and production sanity checks
+1. Run locally:
+   - `npm run dev`
+2. Open `http://localhost:3000` and test:
+   - Contact Stepper completes and shows success/error state.
+   - Footer newsletter shows success/error state.
+3. API checks (examples):
+   - Valid contact request returns `200`.
+   - Repeat contact requests from same IP more than 5 times in 10 minutes returns `429`.
+   - Contact request with honeypot field (`hp`) filled returns `200` with no email send.
+   - Contact request with invalid `Origin`/`Host` returns `403`.
+4. In production, verify that contact emails are delivered to `aaron.fajardo@quant-ent.com`.
