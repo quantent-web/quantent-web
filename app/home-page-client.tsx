@@ -44,6 +44,7 @@ export default function Home() {
   const [activeLegalModal, setActiveLegalModal] = useState<LegalType | null>(null);
   const [contactStatus, setContactStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [contactTouched, setContactTouched] = useState(false);
+  const [contactError, setContactError] = useState<string | null>(null);
   const [contactForm, setContactForm] = useState<InlineContactForm>({
     name: '',
     email: '',
@@ -281,6 +282,7 @@ export default function Home() {
 
     if (!isContactInlineValid || contactStatus === 'submitting') return;
 
+    setContactError(null);
     setContactStatus('submitting');
 
     try {
@@ -288,24 +290,35 @@ export default function Home() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: contactForm.name.trim(),
-          lastName: '',
+          name: contactForm.name.trim(),
           email: contactForm.email.trim(),
           phone: contactForm.phone.trim(),
-          company: '',
-          role: '',
-          companySize: '',
-          productInterest: 'General inquiry',
-          timeline: 'As soon as possible',
           message: contactForm.message.trim(),
           consent: contactForm.consent,
-          website: contactForm.website,
+          hp: contactForm.website,
         }),
       });
 
-      setContactStatus(response.ok ? 'success' : 'error');
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string; debug?: unknown } | null;
+        const serverError = data?.error?.trim() || 'Something went wrong. Please try again.';
+        setContactError(serverError);
+        setContactStatus('error');
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('contact failed', response.status, serverError, data?.debug);
+        }
+        return;
+      }
+
+      setContactStatus('success');
+      console.info('Inline contact submit success');
     } catch (error) {
       void error;
+      const fallbackError = 'Something went wrong. Please try again.';
+      setContactError(fallbackError);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('contact failed', 0, fallbackError);
+      }
       setContactStatus('error');
     }
   };
@@ -1162,7 +1175,7 @@ export default function Home() {
             </div>
 
             {contactStatus === 'success' ? <p className="contact-success">Request sent. We will be in touch shortly.</p> : null}
-            {contactStatus === 'error' ? <p className="contact-error">Something went wrong. Please try again.</p> : null}
+            {contactStatus === 'error' ? <p className="contact-error">{contactError || 'Something went wrong. Please try again.'}</p> : null}
           </form>
         </section>
 
