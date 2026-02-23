@@ -10,6 +10,7 @@ const noCacheHeaders = {
 } as const;
 
 type ContactPayload = {
+  name?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -34,8 +35,8 @@ const escapeHtml = (value: string) =>
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
 
-const trimIfString = (value: unknown) =>
-  typeof value === 'string' ? value.trim() : value;
+const trimToString = (value: unknown): string | undefined =>
+  (typeof value === 'string' ? value.trim() : undefined);
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
@@ -60,28 +61,67 @@ export async function POST(request: Request) {
       headers: noCacheHeaders,
     });
 
-  let payload: Partial<ContactPayload>;
+  let rawPayload: unknown;
 
   try {
-    payload = (await request.json()) as Partial<ContactPayload>;
+    rawPayload = await request.json();
   } catch {
     return jsonResponse({ error: 'Invalid request body.' }, { status: 400 });
   }
 
-  const firstName = trimIfString(payload?.firstName);
-  const lastName = trimIfString(payload?.lastName);
-  const email = trimIfString(payload?.email);
-  const phone = trimIfString(payload?.phone);
-  const company = trimIfString(payload?.company);
-  const role = trimIfString(payload?.role);
-  const companySize = trimIfString(payload?.companySize);
-  const productInterest = trimIfString(payload?.productInterest);
-  const timeline = trimIfString(payload?.timeline);
-  const message = trimIfString(payload?.message);
+  if (!rawPayload || typeof rawPayload !== 'object') {
+    return jsonResponse({ error: 'Invalid request body.' }, { status: 400 });
+  }
+
+  const payload = rawPayload as Record<string, unknown>;
+  const providedFirstName = trimToString(payload.firstName);
+  const providedLastName = trimToString(payload.lastName);
+  const basicName = trimToString(payload.name);
+  const isBasicMode =
+    !isNonEmptyString(providedFirstName) && isNonEmptyString(basicName);
+  const isAdvancedMode = isNonEmptyString(providedFirstName);
+
+  if (!isAdvancedMode && !isBasicMode) {
+    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
+  }
+
+  const [basicFirstName = '', ...basicLastNameParts] = isBasicMode
+    ? basicName.split(/\s+/).filter(Boolean)
+    : [];
+
+  const normalizedPayload: ContactPayload = {
+    firstName: isBasicMode ? basicFirstName : providedFirstName ?? '',
+    lastName: isBasicMode ? basicLastNameParts.join(' ') : providedLastName ?? '',
+    email: trimToString(payload.email) ?? '',
+    phone: trimToString(payload.phone),
+    company: isBasicMode ? 'N/A' : trimToString(payload.company) ?? '',
+    role: isBasicMode ? 'General inquiry' : trimToString(payload.role) ?? '',
+    companySize: isBasicMode ? 'Unknown' : trimToString(payload.companySize) ?? '',
+    productInterest: isBasicMode
+      ? 'General contact'
+      : trimToString(payload.productInterest) ?? '',
+    timeline: isBasicMode ? 'Not specified' : trimToString(payload.timeline) ?? '',
+    message: trimToString(payload.message) ?? '',
+    consent: payload.consent === true,
+  };
+
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    company,
+    role,
+    companySize,
+    productInterest,
+    timeline,
+    message,
+    consent,
+  } = normalizedPayload;
 
   if (
     !isNonEmptyString(firstName) ||
-    !isNonEmptyString(lastName) ||
+    (!isBasicMode && !isNonEmptyString(lastName)) ||
     !isNonEmptyString(email) ||
     !isNonEmptyString(company) ||
     !isNonEmptyString(role) ||
@@ -89,7 +129,7 @@ export async function POST(request: Request) {
     !isNonEmptyString(productInterest) ||
     !isNonEmptyString(timeline) ||
     !isNonEmptyString(message) ||
-    payload?.consent !== true
+    consent !== true
   ) {
     return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
   }
