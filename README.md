@@ -75,6 +75,7 @@ In **Vercel → Project Settings → Environment Variables**, define these value
 - `SMTP_PASS` = SMTP password or API key
 - `CONTACT_TO` = `aaron.fajardo@quant-ent.com`
 - `CONTACT_FROM` = `no-reply@quant-ent.com` (or a sender address explicitly allowed by your SMTP provider)
+- `DEBUG_ORIGIN_CHECK` = `true` (optional, temporary diagnostics for origin-check 403 responses; remove/disable after debugging)
 
 > Do not hardcode credentials in code. Use environment variables only.
 
