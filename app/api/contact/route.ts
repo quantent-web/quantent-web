@@ -10,6 +10,7 @@ const noCacheHeaders = {
 } as const;
 
 type ContactPayload = {
+  name?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -68,20 +69,43 @@ export async function POST(request: Request) {
     return jsonResponse({ error: 'Invalid request body.' }, { status: 400 });
   }
 
-  const firstName = trimIfString(payload?.firstName);
-  const lastName = trimIfString(payload?.lastName);
+  const providedFirstName = trimIfString(payload?.firstName);
+  const providedLastName = trimIfString(payload?.lastName);
+  const basicName = trimIfString(payload?.name);
+  const isBasicMode =
+    !isNonEmptyString(providedFirstName) && isNonEmptyString(basicName);
+
+  let firstName = providedFirstName;
+  let lastName = providedLastName;
   const email = trimIfString(payload?.email);
   const phone = trimIfString(payload?.phone);
-  const company = trimIfString(payload?.company);
-  const role = trimIfString(payload?.role);
-  const companySize = trimIfString(payload?.companySize);
-  const productInterest = trimIfString(payload?.productInterest);
-  const timeline = trimIfString(payload?.timeline);
+  let company = trimIfString(payload?.company);
+  let role = trimIfString(payload?.role);
+  let companySize = trimIfString(payload?.companySize);
+  let productInterest = trimIfString(payload?.productInterest);
+  let timeline = trimIfString(payload?.timeline);
   const message = trimIfString(payload?.message);
+
+  if (isBasicMode) {
+    const [basicFirstName = '', ...basicLastNameParts] = basicName
+      .split(/\s+/)
+      .filter(Boolean);
+    firstName = basicFirstName;
+    lastName = basicLastNameParts.join(' ');
+    company = 'N/A';
+    role = 'General inquiry';
+    companySize = 'Unknown';
+    productInterest = 'General contact';
+    timeline = 'Not specified';
+  }
+
+  if (!isNonEmptyString(providedFirstName) && !isBasicMode) {
+    return jsonResponse({ error: 'Missing required fields.' }, { status: 400 });
+  }
 
   if (
     !isNonEmptyString(firstName) ||
-    !isNonEmptyString(lastName) ||
+    (!isBasicMode && !isNonEmptyString(lastName)) ||
     !isNonEmptyString(email) ||
     !isNonEmptyString(company) ||
     !isNonEmptyString(role) ||
