@@ -19,12 +19,35 @@ type FooterProps = {
 };
 
 export default function Footer({ onOpenLegal }: FooterProps) {
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const year = new Date().getFullYear();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStatus('success');
+
+    if (status === 'submitting') return;
+
+    setStatus('submitting');
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setEmail('');
+        return;
+      }
+
+      setStatus('error');
+    } catch (error) {
+      void error;
+      setStatus('error');
+    }
   };
 
   return (
@@ -55,8 +78,10 @@ export default function Footer({ onOpenLegal }: FooterProps) {
                 required
                 placeholder="you@company.com"
                 autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               />
-              <button className="btn btn-primary" type="submit">
+              <button className="btn btn-primary" type="submit" disabled={status === 'submitting'}>
                 Subscribe
               </button>
             </div>
@@ -64,6 +89,11 @@ export default function Footer({ onOpenLegal }: FooterProps) {
             {status === 'success' ? (
               <p className="footer-form__feedback" role="status">
                 Thanks for subscribing!
+              </p>
+            ) : null}
+            {status === 'error' ? (
+              <p className="footer-form__feedback" role="status">
+                Something went wrong. Please try again.
               </p>
             ) : null}
           </form>
