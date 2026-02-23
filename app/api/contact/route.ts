@@ -76,6 +76,30 @@ const MAX_LENGTHS = {
 
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
+const ipRequests = new Map<string, number[]>();
+
+const getRequestIp = (req: Request): string => {
+  const xff = req.headers.get('x-forwarded-for') || '';
+  const first = xff.split(',')[0]?.trim();
+  const xri = req.headers.get('x-real-ip')?.trim();
+  return first || xri || '0.0.0.0';
+};
+
+const isRateLimited = (ip: string) => {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const current = ipRequests.get(ip) ?? [];
+  const recent = current.filter((timestamp) => timestamp > windowStart);
+
+  if (recent.length >= RATE_LIMIT_MAX_REQUESTS) {
+    ipRequests.set(ip, recent);
+    return true;
+  }
+
+  recent.push(now);
+  ipRequests.set(ip, recent);
+  return false;
+};
 const splitName = (name: string) => {
   const parts = name.split(/\s+/).filter(Boolean);
   if (parts.length === 0) {
