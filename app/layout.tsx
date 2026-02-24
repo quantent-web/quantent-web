@@ -5,8 +5,7 @@ import './globals.css';
 const splineSansMono = Spline_Sans_Mono({
   subsets: ['latin'],
   weight: ['500', '600', '700'],
-  variable: '--font-space-mono', // mantenemos el nombre para no tocar globals.css
-});
+  variable: '--font-space-mono', 
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -15,24 +14,29 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://example.com'),
-  title: {
-    default: 'QuantEnt',
-    template: '%s | QuantEnt',
-  },
+  metadataBase: new URL('https://www.quant-ent.com'),
+
+  title:
+    'QuantEnt | Enterprise Entitlement Management & Data Governance Platform',
+
   description:
-    'Quantitative models and mathematics for entitlement and data governance.',
+    'QuantEnt delivers enterprise-grade entitlement management and quantitative data governance software with expert services for large, regulated organizations.',
+
   openGraph: {
-    title: 'QuantEnt',
+    title:
+      'QuantEnt | Enterprise Entitlement Management & Data Governance Platform',
     description:
-      'Quantitative models and mathematics for entitlement and data governance.',
+      'Enterprise-grade entitlement management and quantitative data governance for large, regulated organizations.',
     type: 'website',
+    url: 'https://www.quant-ent.com',
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'QuantEnt',
+    title:
+      'QuantEnt | Enterprise Entitlement Management & Data Governance Platform',
     description:
-      'Quantitative models and mathematics for entitlement and data governance.',
+      'Enterprise-grade entitlement management and quantitative data governance for large, regulated organizations.',
   },
 };
 
