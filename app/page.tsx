@@ -2,20 +2,21 @@ import type { Metadata } from 'next';
 import HomePageClient from './home-page-client';
 
 export const metadata: Metadata = {
-  title: 'Institutional entitlement and data governance',
+  title: 'QuantEnt | Enterprise Entitlement Management & Data Governance Platform',
   description:
-    'QuantEnt helps organizations establish measurable control over entitlements and enterprise data governance.',
+    'QuantEnt delivers enterprise-grade entitlement management and quantitative data governance software with expert services for large, regulated organizations.',
   openGraph: {
-    title: 'Institutional entitlement and data governance',
+    title: 'QuantEnt | Enterprise Entitlement Management & Data Governance Platform',
     description:
-      'QuantEnt helps organizations establish measurable control over entitlements and enterprise data governance.',
+      'Enterprise-grade entitlement management and quantitative data governance for large, regulated organizations.',
     type: 'website',
+    url: 'https://www.quant-ent.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Institutional entitlement and data governance',
+    title: 'QuantEnt | Enterprise Entitlement Management & Data Governance Platform',
     description:
-      'QuantEnt helps organizations establish measurable control over entitlements and enterprise data governance.',
+      'Enterprise-grade entitlement management and quantitative data governance for large, regulated organizations.',
   },
 };
 
