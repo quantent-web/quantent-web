@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/'],
       },
     ],
-    sitemap: 'https://example.com/sitemap.xml',
+    sitemap: 'https://www.quant-ent.com/sitemap.xml',
   };
 }
