@@ -412,7 +412,7 @@ export default function Home() {
           <BlurText
             as="h1"
             className="hero-title"
-            text="Creating Institutional Control over Entitlements and Data"
+            text="Enterprise Entitlement Management with Quantitative Governance"
             delay={120}
             animateBy="words"
             direction="top"
