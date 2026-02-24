@@ -5,7 +5,8 @@ import './globals.css';
 const splineSansMono = Spline_Sans_Mono({
   subsets: ['latin'],
   weight: ['500', '600', '700'],
-  variable: '--font-space-mono', 
+  variable: '--font-space-mono',
+});
 
 const poppins = Poppins({
   subsets: ['latin'],
