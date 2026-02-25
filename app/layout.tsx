@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Spline_Sans_Mono, Poppins } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const splineSansMono = Spline_Sans_Mono({
@@ -53,6 +54,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <main id="main-content">{children}</main>
+        <Analytics />
       </body>
     </html>
   );
