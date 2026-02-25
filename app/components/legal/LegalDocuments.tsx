@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, type ReactNode } from 'react';
+import Link from 'next/link';
 
 export type LegalType = 'privacy' | 'terms' | 'cookies';
 
@@ -151,17 +152,38 @@ type LegalTriggersProps = {
 export function LegalTriggers({ onOpen, className = 'footer-copy' }: LegalTriggersProps) {
   return (
     <nav className={className} aria-label="Legal links">
-      <button type="button" className="footer-legal-trigger" onClick={() => onOpen('privacy')}>
+      <Link
+        href="/privacy"
+        className="footer-legal-trigger"
+        onClick={(event) => {
+          event.preventDefault();
+          onOpen('privacy');
+        }}
+      >
         Privacy
-      </button>
+      </Link>
       {' · '}
-      <button type="button" className="footer-legal-trigger" onClick={() => onOpen('terms')}>
+      <Link
+        href="/terms"
+        className="footer-legal-trigger"
+        onClick={(event) => {
+          event.preventDefault();
+          onOpen('terms');
+        }}
+      >
         Terms
-      </button>
+      </Link>
       {' · '}
-      <button type="button" className="footer-legal-trigger" onClick={() => onOpen('cookies')}>
+      <Link
+        href="/cookies"
+        className="footer-legal-trigger"
+        onClick={(event) => {
+          event.preventDefault();
+          onOpen('cookies');
+        }}
+      >
         Cookies
-      </button>
+      </Link>
     </nav>
   );
 }

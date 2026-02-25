@@ -1,3 +1,14 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Cookie Policy | QuantEnt',
+  description:
+    'See QuantEnt\'s cookie policy and technical cookie usage for enterprise security, governance, and compliance website operations.',
+  alternates: {
+    canonical: '/cookies',
+  },
+};
+
 export default function CookiesPage() {
   return (
     <main className="container section">
