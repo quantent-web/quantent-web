@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     description:
       'Enterprise-grade entitlement management and quantitative data governance for large, regulated organizations.',
     type: 'website',
-    url: 'https://www.quant-ent.com',
+    url: 'https://quant-ent.com',
   },
   twitter: {
     card: 'summary_large_image',
