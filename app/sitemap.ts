@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const BASE_URL = 'https://www.quant-ent.com';
+const BASE_URL = 'https://quant-ent.com';
 
 const publicRoutes = [''];
 
