@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 const BASE_URL = 'https://quant-ent.com';
 
-const publicRoutes = [''];
+const publicRoutes = ['', 'privacy', 'terms', 'cookies'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

@@ -1,3 +1,14 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy | QuantEnt',
+  description:
+    'Read QuantEnt\'s privacy policy and how we handle personal data for enterprise IAM and data governance inquiries.',
+  alternates: {
+    canonical: '/privacy',
+  },
+};
+
 export default function PrivacyPage() {
   return (
     <main className="container section">

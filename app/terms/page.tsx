@@ -1,3 +1,14 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Terms of Use | QuantEnt',
+  description:
+    'Review QuantEnt website terms of use for enterprise users evaluating entitlement management and governance solutions.',
+  alternates: {
+    canonical: '/terms',
+  },
+};
+
 export default function TermsPage() {
   return (
     <main className="container section">
