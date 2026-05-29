@@ -329,34 +329,45 @@ export default function ContactStepperModal({ open, onClose }: ContactStepperMod
 
             <Step>
               <div className="contact-review">
-                <div className="review-grid">
-                  <div>
-                    <span className="review-label">Name</span>
-                    <p>{formState.firstName} {formState.lastName}</p>
-                  </div>
-                  <div>
-                    <span className="review-label">Email</span>
-                    <p>{formState.email}</p>
-                  </div>
-                  <div>
-                    <span className="review-label">Company</span>
-                    <p>{formState.company}</p>
-                  </div>
-                  <div>
-                    <span className="review-label">Role</span>
-                    <p>{formState.role}</p>
-                  </div>
-                  <div>
-                    <span className="review-label">Interest</span>
-                    <p>{formState.productInterest}</p>
-                  </div>
-                  <div>
-                    <span className="review-label">Timeline</span>
-                    <p>{formState.timeline}</p>
-                  </div>
-                  <div className="review-message">
-                    <span className="review-label">Message</span>
-                    <p>{formState.message}</p>
+                <div className="contact-review-mobile">
+                  <span className="review-label">Ready to send</span>
+                  <h4>Your request is ready.</h4>
+                  <p>
+                    We’ll route your message to the right QuantEnt team. Please confirm your
+                    consent before sending.
+                  </p>
+                </div>
+
+                <div className="contact-review-desktop">
+                  <div className="review-grid">
+                    <div>
+                      <span className="review-label">Name</span>
+                      <p>{formState.firstName} {formState.lastName}</p>
+                    </div>
+                    <div>
+                      <span className="review-label">Email</span>
+                      <p>{formState.email}</p>
+                    </div>
+                    <div>
+                      <span className="review-label">Company</span>
+                      <p>{formState.company}</p>
+                    </div>
+                    <div>
+                      <span className="review-label">Role</span>
+                      <p>{formState.role}</p>
+                    </div>
+                    <div>
+                      <span className="review-label">Interest</span>
+                      <p>{formState.productInterest}</p>
+                    </div>
+                    <div>
+                      <span className="review-label">Timeline</span>
+                      <p>{formState.timeline}</p>
+                    </div>
+                    <div className="review-message">
+                      <span className="review-label">Message</span>
+                      <p>{formState.message}</p>
+                    </div>
                   </div>
                 </div>
 
