@@ -148,6 +148,14 @@
   color: var(--primary-foreground);
 }
 
+.contact-review-mobile {
+  display: none;
+}
+
+.contact-review-desktop {
+  display: block;
+}
+
 @media (max-width: 720px) {
   .outer-container {
     min-height: 0;
@@ -180,24 +188,44 @@
   }
 
   .step-default {
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
   }
 
   .footer-container {
-    position: sticky;
-    bottom: 0;
-    z-index: 2;
-    padding-bottom: max(1.25rem, calc(env(safe-area-inset-bottom) + 1rem));
-    background:
-      linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.78) 28%,
-        rgba(0, 0, 0, 0.92)
-      );
+    padding-bottom: max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem));
   }
 
   .footer-nav {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .contact-review-mobile {
+    display: block;
+    padding-bottom: 1rem;
+  }
+
+  .contact-review-mobile h4 {
+    margin: 0.5rem 0 0;
+    color: var(--foreground);
+    font-family: var(--font-spline-sans-mono);
+    font-size: clamp(1.4rem, 7vw, 1.9rem);
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+
+  .contact-review-mobile p {
+    margin: 0.75rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .contact-review-mobile .review-label {
+    margin: 0;
+  }
+
+  .contact-review-desktop {
+    display: none;
   }
 }
