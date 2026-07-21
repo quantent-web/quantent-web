@@ -1841,6 +1841,36 @@ html[data-theme="dark"] .nav {
   color: var(--text-secondary);
 }
 
+/* Responsible business */
+.responsible-page { min-height: 100vh; background: var(--bg); }
+.responsible-nav, .responsible-footer { width: min(90%, 86rem); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.responsible-nav { padding: 28px 0; border-bottom: 1px solid var(--border); }
+.responsible-nav img { display: block; height: auto; }
+.responsible-main { width: min(90%, 72rem); margin: 0 auto; padding: clamp(72px, 10vw, 140px) 0; }
+.responsible-hero { max-width: 58rem; margin-bottom: clamp(72px, 10vw, 120px); }
+.responsible-eyebrow, .responsible-number { color: var(--primary); font-family: var(--font-space-mono), ui-monospace, monospace; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.responsible-hero h1 { max-width: 14ch; margin: 18px 0 28px; font-size: clamp(42px, 7vw, 84px); line-height: .98; letter-spacing: -.045em; }
+.responsible-intro { max-width: 48rem; color: var(--text-secondary); font-size: clamp(18px, 2vw, 23px); line-height: 1.65; }
+.responsible-updated { margin-top: 28px; color: var(--text-secondary); font-size: 13px; }
+.responsible-commitments { border-top: 1px solid var(--border); }
+.responsible-commitment { display: grid; grid-template-columns: 80px 1fr; gap: clamp(20px, 4vw, 64px); padding: clamp(44px, 7vw, 80px) 0; border-bottom: 1px solid var(--border); }
+.responsible-commitment h2, .responsible-honesty h2 { margin: 0 0 24px; font-size: clamp(27px, 4vw, 42px); line-height: 1.15; }
+.responsible-commitment p:not(.responsible-number), .responsible-honesty p:not(.responsible-eyebrow) { max-width: 50rem; color: var(--text-secondary); font-size: 17px; line-height: 1.8; }
+.responsible-commitment p + p { margin-top: 20px; }
+.responsible-honesty { margin-top: clamp(72px, 10vw, 120px); padding: clamp(32px, 6vw, 64px); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.responsible-honesty h2 { margin-top: 14px; }
+.responsible-honesty p + p { margin-top: 18px; }
+.responsible-honesty .btn { display: inline-flex; margin-top: 28px; }
+.responsible-footer { padding: 32px 0; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 13px; }
+.responsible-footer a { color: var(--text-primary); text-decoration: underline; text-underline-offset: 4px; }
+
+@media (max-width: 640px) {
+  .responsible-nav .btn { padding: 10px 14px; }
+  .responsible-nav img { width: 140px; }
+  .responsible-commitment { grid-template-columns: 1fr; gap: 14px; }
+  .responsible-footer { align-items: flex-start; flex-direction: column; }
+}
+
 .footer-socials {
   display: flex;
   align-items: center;
